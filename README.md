@@ -69,3 +69,11 @@ Para esse sistema teremos categorias fixas:
 - Acompanhamento de pedidos: Deve ser possível acompanhar os pedidos em andamento e
 tempo de espera de cada pedido.
 
+# Padrões de Projeto
+
+## Nomenclatura
+
+O código será implementado seguindo a norma de idioma **inglês** esta decisão foi tomada para evitar confusões causadas
+por traduções livres, principalmente de estruturas pertinentes à arquitetura e domínio da aplicação, cuja literatura
+encontra-se majoritariamente neste idioma. As traduções ds termos em português estão definidos juntamente com o dicionário
+de linguagem ubíqua.
