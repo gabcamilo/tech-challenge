@@ -1,5 +1,6 @@
 package br.com.gabrielacamilo.techchallenge.core.domain;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class CustomerDomain {
@@ -7,12 +8,16 @@ public class CustomerDomain {
     private String name;
     private String email;
     private String cpf;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 
     public CustomerDomain(UUID id, String name, String email, String cpf) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.cpf = cpf;
+        createdAt = LocalDateTime.now();
+        updatedAt = LocalDateTime.now();
     }
 
     public UUID getId() {
@@ -42,5 +47,12 @@ public class CustomerDomain {
     public void setCpf(String cpf) {
         this.cpf = cpf;
     }
-    
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
 }

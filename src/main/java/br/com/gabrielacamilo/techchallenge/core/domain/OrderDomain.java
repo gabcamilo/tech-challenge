@@ -1,7 +1,9 @@
 package br.com.gabrielacamilo.techchallenge.core.domain;
 
 import br.com.gabrielacamilo.techchallenge.core.domain.enums.OrderStatus;
+import br.com.gabrielacamilo.techchallenge.core.domain.enums.PaymentStatus;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -13,12 +15,19 @@ public class OrderDomain {
     private String description;
     private List<ItemDomain> items;
 
-    public OrderDomain(UUID id, CustomerDomain customer, OrderStatus status, String description, List<ItemDomain> items) {
+    private PaymentStatus paymentStatus;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+
+    public OrderDomain(UUID id, CustomerDomain customer, String description, List<ItemDomain> items) {
         this.id = id;
         this.customer = customer;
-        this.status = status;
         this.description = description;
         this.items = items;
+        this.paymentStatus = PaymentStatus.PENDING;
+        this.status = OrderStatus.PENDING;
+        createdAt = LocalDateTime.now();
+        updatedAt = LocalDateTime.now();
     }
 
     public UUID getId() {
@@ -55,5 +64,21 @@ public class OrderDomain {
 
     public void setItems(List<ItemDomain> items) {
         this.items = items;
+    }
+
+    public PaymentStatus getPaymentStatus() {
+        return paymentStatus;
+    }
+
+    public void setPaymentStatus(PaymentStatus paymentStatus) {
+        this.paymentStatus = paymentStatus;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
     }
 }

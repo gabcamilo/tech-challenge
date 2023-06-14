@@ -1,25 +1,36 @@
 package br.com.gabrielacamilo.techchallenge.core.domain;
 
+import br.com.gabrielacamilo.techchallenge.core.domain.enums.ProductType;
+
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.UUID;
 
 public abstract class ProductDomain {
     // id name type price description
-    private String id;
+    private UUID id;
     private String name;
-    private String type;
+    private ProductType type;
     private BigDecimal price;
     private String description;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 
-    public ProductDomain(String id, String name, String type, String description) {
+    public ProductDomain(UUID id, String name, ProductType type, String description, BigDecimal price) {
         this.id = id;
         this.name = name;
         this.type = type;
         this.description = description;
+        setPrice(price);
+        createdAt = LocalDateTime.now();
+        updatedAt = LocalDateTime.now();
     }
 
-    public abstract BigDecimal calculatePrice(BigDecimal price);
+    public BigDecimal calculatePrice(BigDecimal price) {
+        return price;
+    }
 
-    public String getId() {
+    public UUID getId() {
         return id;
     }
 
@@ -31,11 +42,11 @@ public abstract class ProductDomain {
         this.name = name;
     }
 
-    public String getType() {
+    public ProductType getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(ProductType type) {
         this.type = type;
     }
 
@@ -53,5 +64,13 @@ public abstract class ProductDomain {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
     }
 }
