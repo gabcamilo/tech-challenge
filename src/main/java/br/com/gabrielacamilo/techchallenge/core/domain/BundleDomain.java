@@ -11,8 +11,8 @@ public class BundleDomain extends ProductDomain{
     private List<ItemDomain> items;
     private BigDecimal discountPercentage;
 
-    public BundleDomain(UUID id, String name, ProductType type, String description, List<ItemDomain> items, BigDecimal discountPercentage) {
-        super(id, name, type, description, BigDecimal.ZERO);
+    public BundleDomain(UUID id, String name, String description, List<ItemDomain> items, BigDecimal discountPercentage) {
+        super(id, name, ProductType.BUNDLE, description, BigDecimal.ZERO);
         BigDecimal sum = items.stream().map(ItemDomain::getPrice).reduce(BigDecimal.ZERO, BigDecimal::add);
         this.items = items;
         this.discountPercentage = discountPercentage;

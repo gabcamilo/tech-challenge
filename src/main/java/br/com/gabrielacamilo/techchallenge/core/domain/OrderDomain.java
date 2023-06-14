@@ -11,10 +11,9 @@ public class OrderDomain {
     // code OrderDomain properties: id, customer, status, price, description, items
     private UUID id;
     private CustomerDomain customer;
-    private OrderStatus status;
     private String description;
     private List<ItemDomain> items;
-
+    private OrderStatus status;
     private PaymentStatus paymentStatus;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
@@ -24,8 +23,8 @@ public class OrderDomain {
         this.customer = customer;
         this.description = description;
         this.items = items;
-        this.paymentStatus = PaymentStatus.PENDING;
         this.status = OrderStatus.PENDING;
+        this.paymentStatus = PaymentStatus.PENDING;
         createdAt = LocalDateTime.now();
         updatedAt = LocalDateTime.now();
     }

@@ -11,8 +11,8 @@ public abstract class ProductDomain {
     private UUID id;
     private String name;
     private ProductType type;
-    private BigDecimal price;
     private String description;
+    private BigDecimal price;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
