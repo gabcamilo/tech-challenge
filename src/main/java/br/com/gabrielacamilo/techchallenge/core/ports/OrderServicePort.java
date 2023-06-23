@@ -2,14 +2,16 @@ package br.com.gabrielacamilo.techchallenge.core.ports;
 
 import br.com.gabrielacamilo.techchallenge.core.domain.CustomerDomain;
 import br.com.gabrielacamilo.techchallenge.core.domain.OrderDomain;
-import br.com.gabrielacamilo.techchallenge.core.domain.enums.PaymentStatus;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 public interface OrderServicePort {
     OrderDomain createOrder(OrderDomain order);
     List<OrderDomain> getAllActiveOrders();
-    List<OrderDomain> getOrderByCustomer(CustomerDomain customer);
+    List<OrderDomain> getOrdersByCustomer(CustomerDomain customer);
+    Optional<OrderDomain> getOrder (UUID id);
 
     // cooking status
     OrderDomain updateOrderStatusCooking(OrderDomain order);
