@@ -1,15 +1,16 @@
 package br.com.gabrielacamilo.techchallenge.adapters.configs;
 
+import br.com.gabrielacamilo.techchallenge.TechChallengeApplication;
 import br.com.gabrielacamilo.techchallenge.core.ports.*;
 import br.com.gabrielacamilo.techchallenge.core.services.*;
 import org.springframework.context.annotation.Bean;
 import org.modelmapper.ModelMapper;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
 
-public class BeanConfiuration {
-    @Bean
-    public AddOnServicePortImpl addOnServicePortImpl(AddOnPersistencePort persistence) {
-        return new AddOnServicePortImpl(persistence);
-    }
+@Configuration
+@ComponentScan(basePackageClasses = TechChallengeApplication.class)
+public class BeanConfiguration {
 
     @Bean
     BundleServicePortImpl bundleServicePortImpl(BundlePersistencePort persistence) {

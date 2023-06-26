@@ -1,24 +1,22 @@
-package br.com.gabrielacamilo.techchallenge.core.domain;
+package br.com.gabrielacamilo.techchallenge.adapters.outbound.persistence.entities;
+
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
-public class CustomerDomain {
+
+@Document(collection = "customers")
+public class CustomerEntity {
+    @Id
     private String id;
     private String name;
+    @Indexed(unique = true)
     private String email;
+    @Indexed(unique = true)
     private String cpf;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-
-    public CustomerDomain(String name, String email, String cpf) {
-        this.name = name;
-        this.email = email;
-        this.cpf = cpf;
-        createdAt = LocalDateTime.now();
-        updatedAt = LocalDateTime.now();
-    }
-
-    public CustomerDomain() {
-    }
 
     public String getId() {
         return id;
@@ -67,11 +65,7 @@ public class CustomerDomain {
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
-
-    public void update(CustomerDomain customer) {
-        this.name = customer.getName();
-        this.email = customer.getEmail();
-        this.cpf = customer.getCpf();
-        this.updatedAt = LocalDateTime.now();
-    }
 }
+
+
+
