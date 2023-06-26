@@ -4,11 +4,9 @@ import br.com.gabrielacamilo.techchallenge.core.domain.enums.ProductType;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 public abstract class ProductDomain {
-    // id name type price description
-    private UUID id;
+    private String id;
     private String name;
     private ProductType type;
     private String description;
@@ -16,8 +14,7 @@ public abstract class ProductDomain {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    public ProductDomain(UUID id, String name, ProductType type, String description, BigDecimal price) {
-        this.id = id;
+    public ProductDomain(String name, ProductType type, String description, BigDecimal price) {
         this.name = name;
         this.type = type;
         this.description = description;
@@ -30,7 +27,7 @@ public abstract class ProductDomain {
         return price;
     }
 
-    public UUID getId() {
+    public String getId() {
         return id;
     }
 
