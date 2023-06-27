@@ -10,8 +10,10 @@ public class CreateCustomerRequest {
     @NotBlank
     private final String name;
     @Email
+    @NotBlank
     private final String email;
     @CPF
+    @NotBlank
     private final String cpf;
 
     public CreateCustomerRequest(String name, String email, String cpf) {

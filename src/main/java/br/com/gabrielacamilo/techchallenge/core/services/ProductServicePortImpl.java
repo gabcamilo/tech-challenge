@@ -6,6 +6,7 @@ import br.com.gabrielacamilo.techchallenge.core.ports.ProductPersistencePort;
 import br.com.gabrielacamilo.techchallenge.core.ports.ProductServicePort;
 
 import java.util.List;
+import java.util.Optional;
 
 public class ProductServicePortImpl implements ProductServicePort {
 
@@ -16,17 +17,27 @@ public class ProductServicePortImpl implements ProductServicePort {
     }
 
     @Override
-    public List<ProductType> getAllProductTypes() {
-        return productPersistencePort.getAllProductTypes();
+    public ProductDomain saveProduct(ProductDomain product) {
+        return productPersistencePort.saveProduct(product);
     }
 
     @Override
-    public List<ProductDomain> getProductsByType(ProductType type) {
-        return productPersistencePort.getProductsByType(type);
+    public Optional<ProductDomain> getProduct(String id) {
+        return productPersistencePort.getProduct(id);
     }
 
     @Override
-    public List<ProductDomain> getAllProducts() {
-        return productPersistencePort.getAllProducts();
+    public List<ProductDomain> listProductsByType(ProductType type) {
+        return productPersistencePort.listProductsByType(type);
+    }
+
+    @Override
+    public List<ProductDomain> listAllProducts() {
+        return productPersistencePort.listAllProducts();
+    }
+
+    @Override
+    public void deleteProduct(ProductDomain product) {
+        productPersistencePort.deleteProduct(product);
     }
 }

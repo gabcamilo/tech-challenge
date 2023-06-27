@@ -1,7 +1,7 @@
 package br.com.gabrielacamilo.techchallenge.core.services;
 
 import br.com.gabrielacamilo.techchallenge.core.domain.BundleDomain;
-import br.com.gabrielacamilo.techchallenge.core.domain.ItemDomain;
+import br.com.gabrielacamilo.techchallenge.core.domain.ProductDomain;
 import br.com.gabrielacamilo.techchallenge.core.ports.BundlePersistencePort;
 import br.com.gabrielacamilo.techchallenge.core.ports.BundleServicePort;
 
@@ -20,8 +20,8 @@ public class BundleServicePortImpl implements BundleServicePort {
     }
 
     @Override
-    public List<BundleDomain> getBundlesByItems(List<ItemDomain> items) {
-        return bundlePersistencePort.getBundlesByItems(items);
+    public List<BundleDomain> getBundlesByItems(List<ProductDomain> products) {
+        return bundlePersistencePort.getBundlesByItems(products);
     }
 
     @Override

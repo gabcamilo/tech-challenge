@@ -12,13 +12,13 @@ public class OrderDomain {
     private UUID id;
     private CustomerDomain customer;
     private String description;
-    private List<ItemDomain> items;
+    private List<ProductDomain> items;
     private OrderStatus status;
     private PaymentStatus paymentStatus;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    public OrderDomain(UUID id, CustomerDomain customer, String description, List<ItemDomain> items) {
+    public OrderDomain(UUID id, CustomerDomain customer, String description, List<ProductDomain> items) {
         this.id = id;
         this.customer = customer;
         this.description = description;
@@ -57,11 +57,11 @@ public class OrderDomain {
         this.description = description;
     }
 
-    public List<ItemDomain> getItems() {
+    public List<ProductDomain> getItems() {
         return items;
     }
 
-    public void setItems(List<ItemDomain> items) {
+    public void setItems(List<ProductDomain> items) {
         this.items = items;
     }
 

@@ -5,7 +5,7 @@ import br.com.gabrielacamilo.techchallenge.core.domain.enums.ProductType;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-public abstract class ProductDomain {
+public class ProductDomain {
     private String id;
     private String name;
     private ProductType type;
@@ -13,6 +13,16 @@ public abstract class ProductDomain {
     private BigDecimal price;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+
+    public ProductDomain(String id, String name, ProductType type, String description, BigDecimal price) {
+        this.id = id;
+        this.name = name;
+        this.type = type;
+        this.description = description;
+        setPrice(price);
+        createdAt = LocalDateTime.now();
+        updatedAt = LocalDateTime.now();
+    }
 
     public ProductDomain(String name, ProductType type, String description, BigDecimal price) {
         this.name = name;
@@ -23,12 +33,19 @@ public abstract class ProductDomain {
         updatedAt = LocalDateTime.now();
     }
 
+    public ProductDomain() {
+    }
+
     public BigDecimal calculatePrice(BigDecimal price) {
         return price;
     }
 
     public String getId() {
         return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -67,7 +84,15 @@ public abstract class ProductDomain {
         return createdAt;
     }
 
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
     public LocalDateTime getUpdatedAt() {
         return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
     }
 }

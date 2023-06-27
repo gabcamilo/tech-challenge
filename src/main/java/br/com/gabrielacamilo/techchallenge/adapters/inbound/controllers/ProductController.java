@@ -1,14 +1,19 @@
 package br.com.gabrielacamilo.techchallenge.adapters.inbound.controllers;
 
+import br.com.gabrielacamilo.techchallenge.adapters.dtos.product.CreateProductRequest;
+import br.com.gabrielacamilo.techchallenge.adapters.dtos.product.CreateProductResponse;
 import br.com.gabrielacamilo.techchallenge.adapters.dtos.product.GetProductResponse;
 import br.com.gabrielacamilo.techchallenge.core.domain.ProductDomain;
 import br.com.gabrielacamilo.techchallenge.core.domain.enums.ProductType;
+import br.com.gabrielacamilo.techchallenge.core.ports.ProductServicePort;
 import br.com.gabrielacamilo.techchallenge.utils.GenericMapper;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import br.com.gabrielacamilo.techchallenge.core.ports.ProductServicePort;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @RequestMapping("/api/v1/products")
 @RestController
@@ -20,16 +25,33 @@ public class ProductController {
         this.port = port;
     }
 
+    @PostMapping
+    public ResponseEntity<CreateProductResponse> createProduct(@RequestBody @Valid CreateProductRequest request) {
+        ProductDomain product = request.toDomain();
+        ProductDomain saved = port.saveProduct(product);
+        CreateProductResponse response = new CreateProductResponse(saved);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<GetProductResponse> getProduct(@PathVariable String id) {
+        Optional<ProductDomain> product = port.getProduct(id);
+        return product.map(value -> ResponseEntity.ok(new GetProductResponse(value)))
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
     @GetMapping("/types")
-    public ResponseEntity<List<ProductType>> getAllProductTypes() {
-        return ResponseEntity.ok(port.getAllProductTypes());
+    public ResponseEntity<List<ProductType>> listAllProductTypes() {
+        return ResponseEntity.ok(
+                Arrays.stream(ProductType.values()).toList()
+        );
     }
 
     @GetMapping("/types/{type}")
     public ResponseEntity<List<GetProductResponse>> listProductsByType(@PathVariable String type) {
         ProductType typeEnum = ProductType.valueOf(type.toUpperCase());
 
-        List<ProductDomain> products = port.getProductsByType(typeEnum);
+        List<ProductDomain> products = port.listProductsByType(typeEnum);
         List<GetProductResponse> productsResponse = GenericMapper.map(products, GetProductResponse.class);
 
         return ResponseEntity.ok(productsResponse);
@@ -37,9 +59,19 @@ public class ProductController {
 
     @GetMapping
     public ResponseEntity<List<GetProductResponse>> listAllProducts() {
-        List<ProductDomain> products = port.getAllProducts();
+        List<ProductDomain> products = port.listAllProducts();
         List<GetProductResponse> productsResponse = GenericMapper.map(products, GetProductResponse.class);
 
         return ResponseEntity.ok(productsResponse);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Object> deleteProduct(@PathVariable String id){
+        Optional<ProductDomain> product = port.getProduct(id);
+        if(product.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        product.ifPresent(value -> port.deleteProduct(value));
+        return ResponseEntity.noContent().build();
     }
 }

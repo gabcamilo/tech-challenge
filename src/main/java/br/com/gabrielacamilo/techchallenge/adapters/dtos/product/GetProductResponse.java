@@ -17,13 +17,70 @@ public class GetProductResponse {
         this.updatedAt = domain.getUpdatedAt();
     }
 
-    private final String id;
-    private final String name;
-    private final ProductType type;
-    private final String description;
-    private final BigDecimal price;
-    private final LocalDateTime createdAt;
-    private final LocalDateTime updatedAt;
+    public GetProductResponse() {
+    }
 
+    private String id;
+    private String name;
+    private ProductType type;
+    private String description;
+    private BigDecimal price;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public ProductType getType() {
+        return type;
+    }
+
+    public void setType(ProductType type) {
+        this.type = type;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
 }
