@@ -5,6 +5,7 @@ import br.com.gabrielacamilo.techchallenge.adapters.dtos.customer.CreateCustomer
 import br.com.gabrielacamilo.techchallenge.adapters.dtos.customer.GetCustomerResponse;
 import br.com.gabrielacamilo.techchallenge.core.domain.CustomerDomain;
 import br.com.gabrielacamilo.techchallenge.core.ports.CustomerServicePort;
+import br.com.gabrielacamilo.techchallenge.utils.GenericMapper;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +17,7 @@ import java.util.Optional;
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class CustomerController {
-    final CustomerServicePort port;
+    private final CustomerServicePort port;
 
     public CustomerController(CustomerServicePort port) {
         this.port = port;
@@ -34,13 +35,14 @@ public class CustomerController {
     public ResponseEntity<GetCustomerResponse> getCustomerByCpf(@PathVariable String cpf) {
         //TODO: less attributes when listing all customers
         Optional<CustomerDomain> customer = port.getCustomerByCpf(cpf);
-        return customer.isEmpty() ?
-                ResponseEntity.notFound().build() :
-                ResponseEntity.ok(customer.get());
+        return customer.map(value -> ResponseEntity.ok(new GetCustomerResponse(value)))
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @GetMapping
-    public ResponseEntity<List<CustomerDomain>> getAllCustomers() {
-        return ResponseEntity.ok(port.getAllCustomers());
+    public ResponseEntity<List<GetCustomerResponse>> listAllCustomers() {
+        List<CustomerDomain> customers = port.getAllCustomers();
+        List<GetCustomerResponse> customersResponse = GenericMapper.map(customers, GetCustomerResponse.class);
+        return ResponseEntity.ok(customersResponse);
     }
 }

@@ -1,7 +1,9 @@
 package br.com.gabrielacamilo.techchallenge.adapters.inbound.controllers;
 
+import br.com.gabrielacamilo.techchallenge.adapters.dtos.product.GetProductResponse;
 import br.com.gabrielacamilo.techchallenge.core.domain.ProductDomain;
 import br.com.gabrielacamilo.techchallenge.core.domain.enums.ProductType;
+import br.com.gabrielacamilo.techchallenge.utils.GenericMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import br.com.gabrielacamilo.techchallenge.core.ports.ProductServicePort;
@@ -12,7 +14,7 @@ import java.util.List;
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class ProductController {
-    final ProductServicePort port;
+    private final ProductServicePort port;
 
     public ProductController(ProductServicePort port) {
         this.port = port;
@@ -24,16 +26,20 @@ public class ProductController {
     }
 
     @GetMapping("/types/{type}")
-    public ResponseEntity<List<ProductDomain>> getProductsByType(@PathVariable String type) {
+    public ResponseEntity<List<GetProductResponse>> listProductsByType(@PathVariable String type) {
         ProductType typeEnum = ProductType.valueOf(type.toUpperCase());
-        return ResponseEntity.ok(port.getProductsByType(typeEnum));
+
+        List<ProductDomain> products = port.getProductsByType(typeEnum);
+        List<GetProductResponse> productsResponse = GenericMapper.map(products, GetProductResponse.class);
+
+        return ResponseEntity.ok(productsResponse);
     }
 
     @GetMapping
-    public ResponseEntity<List<ProductDomain>> getAllProducts() {
-        return ResponseEntity.ok(port.getAllProducts());
-    }
+    public ResponseEntity<List<GetProductResponse>> listAllProducts() {
+        List<ProductDomain> products = port.getAllProducts();
+        List<GetProductResponse> productsResponse = GenericMapper.map(products, GetProductResponse.class);
 
-//    List<ProductDomain> getAllProducts();
-//
+        return ResponseEntity.ok(productsResponse);
+    }
 }

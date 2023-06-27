@@ -5,15 +5,14 @@ import br.com.gabrielacamilo.techchallenge.core.domain.enums.ProductType;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.UUID;
 
 public class ItemDomain extends ProductDomain {
 
     private ItemType itemType;
     private List<AddOnDomain> addOns;
 
-    public ItemDomain(UUID id, String name, String description, BigDecimal price, ItemType itemType, List<AddOnDomain> addOns) {
-        super(id, name, ProductType.ITEM, description, price);
+    public ItemDomain(String name, String description, BigDecimal price, ItemType itemType, List<AddOnDomain> addOns) {
+        super(name, ProductType.ITEM, description, price);
         this.addOns = addOns;
         this.itemType = itemType;
     }

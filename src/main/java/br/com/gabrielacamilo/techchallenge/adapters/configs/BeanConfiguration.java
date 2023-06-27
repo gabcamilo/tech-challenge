@@ -4,7 +4,6 @@ import br.com.gabrielacamilo.techchallenge.TechChallengeApplication;
 import br.com.gabrielacamilo.techchallenge.core.ports.*;
 import br.com.gabrielacamilo.techchallenge.core.services.*;
 import org.springframework.context.annotation.Bean;
-import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
@@ -35,10 +34,5 @@ public class BeanConfiguration {
     @Bean
     ProductServicePortImpl productServicePortImpl (ProductPersistencePort persistence) {
         return new ProductServicePortImpl(persistence);
-    }
-
-    @Bean
-    public ModelMapper modelMapper() {
-        return new ModelMapper();
     }
 }
