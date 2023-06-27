@@ -2,13 +2,16 @@ package br.com.gabrielacamilo.techchallenge.adapters.dtos.customer;
 
 import br.com.gabrielacamilo.techchallenge.core.domain.CustomerDomain;
 
-public class CreateCustomerResponse {
+import java.time.LocalDateTime;
 
-    public CreateCustomerResponse(CustomerDomain domain) {
+public class GetCustomerResponse {
+    public GetCustomerResponse(CustomerDomain domain) {
         this.id = domain.getId();
         this.name = domain.getName();
         this.email = domain.getEmail();
         this.cpf = domain.getCpf();
+        this.createdAt = domain.getCreatedAt();
+        this.updatedAt = domain.getUpdatedAt();
     }
 
     private final String id;
@@ -19,6 +22,10 @@ public class CreateCustomerResponse {
 
     //TODO: mask cpf
     private final String cpf;
+
+    private final LocalDateTime createdAt;
+
+    private final LocalDateTime updatedAt;
 
     public String getId() {
         return id;
@@ -34,5 +41,13 @@ public class CreateCustomerResponse {
 
     public String getCpf() {
         return cpf;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
     }
 }

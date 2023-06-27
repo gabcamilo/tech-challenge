@@ -32,7 +32,7 @@ public class CreateCustomerRequest {
         return cpf;
     }
 
-    public CustomerDomain convertToDomain() {
+    public CustomerDomain toDomain() {
         return new CustomerDomain(name, email, cpf);
     }
 }
