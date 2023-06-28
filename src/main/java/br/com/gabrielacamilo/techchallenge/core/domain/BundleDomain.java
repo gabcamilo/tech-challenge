@@ -10,16 +10,41 @@ public class BundleDomain extends ProductDomain{
     private List<ProductDomain> items;
     private BigDecimal discountPercentage;
 
-    public BundleDomain(String id, String name, String description, List<ProductDomain> items, BigDecimal discountPercentage) {
-        super(id, name, ProductType.BUNDLE, description, BigDecimal.ZERO);
-        BigDecimal sum = items.stream().map(ProductDomain::getPrice).reduce(BigDecimal.ZERO, BigDecimal::add);
+    public BundleDomain() {
+    }
+
+    public BundleDomain(String name, String description, BigDecimal discountPercentage, List<ProductDomain> items) {
+        super(name, ProductType.BUNDLE, description);
         this.items = items;
         this.discountPercentage = discountPercentage;
-        setPrice(sum);
+        BigDecimal sum = items.stream()
+                .map(ProductDomain::getPrice)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+        BigDecimal finalPrice = calculatePrice(sum);
+        this.setPrice(finalPrice);
     }
 
     @Override
     public BigDecimal calculatePrice(BigDecimal price) {
-        return price.multiply(discountPercentage);
+        if(discountPercentage != null){
+            return price.subtract(price.multiply(discountPercentage));
+        }
+        return price;
+    }
+
+    public List<ProductDomain> getItems() {
+        return items;
+    }
+
+    public void setItems(List<ProductDomain> items) {
+        this.items = items;
+    }
+
+    public BigDecimal getDiscountPercentage() {
+        return discountPercentage;
+    }
+
+    public void setDiscountPercentage(BigDecimal discountPercentage) {
+        this.discountPercentage = discountPercentage;
     }
 }

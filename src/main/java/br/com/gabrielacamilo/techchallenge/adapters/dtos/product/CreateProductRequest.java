@@ -18,7 +18,6 @@ public class CreateProductRequest {
     @DecimalMin("0")
     private final BigDecimal price;
 
-
     @NotNull
     private final ProductType type;
 

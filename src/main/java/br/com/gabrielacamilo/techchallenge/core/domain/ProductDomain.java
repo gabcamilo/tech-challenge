@@ -14,27 +14,27 @@ public class ProductDomain {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    public ProductDomain(String id, String name, ProductType type, String description, BigDecimal price) {
-        this.id = id;
-        this.name = name;
-        this.type = type;
-        this.description = description;
-        setPrice(price);
-        createdAt = LocalDateTime.now();
-        updatedAt = LocalDateTime.now();
+    public ProductDomain() {
     }
 
     public ProductDomain(String name, ProductType type, String description, BigDecimal price) {
         this.name = name;
         this.type = type;
         this.description = description;
-        setPrice(price);
+        BigDecimal finalPrice = calculatePrice(price);
+        setPrice(finalPrice);
         createdAt = LocalDateTime.now();
         updatedAt = LocalDateTime.now();
     }
 
-    public ProductDomain() {
+    public ProductDomain(String name, ProductType productType, String description) {
+        this.name = name;
+        this.type = productType;
+        this.description = description;
+        createdAt = LocalDateTime.now();
+        updatedAt = LocalDateTime.now();
     }
+
 
     public BigDecimal calculatePrice(BigDecimal price) {
         return price;
@@ -69,7 +69,7 @@ public class ProductDomain {
     }
 
     public void setPrice(BigDecimal price) {
-        this.price = calculatePrice(price);
+        this.price = price;
     }
 
     public String getDescription() {

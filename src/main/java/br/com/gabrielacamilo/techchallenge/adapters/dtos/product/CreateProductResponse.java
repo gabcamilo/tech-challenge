@@ -8,16 +8,6 @@ import java.time.LocalDateTime;
 
 public class CreateProductResponse {
 
-    public CreateProductResponse(ProductDomain domain) {
-        this.id = domain.getId();
-        this.name = domain.getName();
-        this.description = domain.getDescription();
-        this.price = domain.getPrice();
-        this.type = domain.getType();
-        this.createdAt = domain.getCreatedAt();
-        this.updatedAt = domain.getUpdatedAt();
-    }
-
     private final String id;
 
     private final String name;
@@ -31,6 +21,16 @@ public class CreateProductResponse {
     private final LocalDateTime createdAt;
 
     private final LocalDateTime updatedAt;
+
+    public CreateProductResponse(ProductDomain domain) {
+        this.id = domain.getId();
+        this.name = domain.getName();
+        this.description = domain.getDescription();
+        this.price = domain.getPrice();
+        this.type = domain.getType();
+        this.createdAt = domain.getCreatedAt();
+        this.updatedAt = domain.getUpdatedAt();
+    }
 
     public String getId() {
         return id;

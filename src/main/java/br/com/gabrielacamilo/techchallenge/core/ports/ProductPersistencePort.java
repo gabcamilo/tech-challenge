@@ -1,5 +1,6 @@
 package br.com.gabrielacamilo.techchallenge.core.ports;
 
+import br.com.gabrielacamilo.techchallenge.core.domain.BundleDomain;
 import br.com.gabrielacamilo.techchallenge.core.domain.ProductDomain;
 import br.com.gabrielacamilo.techchallenge.core.domain.enums.ProductType;
 
@@ -12,4 +13,6 @@ public interface ProductPersistencePort {
     List<ProductDomain> listProductsByType(ProductType type);
     List<ProductDomain> listAllProducts();
     void deleteProduct(ProductDomain Product);
+    BundleDomain createBundle(BundleDomain bundleDomain);
+    List<ProductDomain> listProductsByIds(List<String> items);
 }

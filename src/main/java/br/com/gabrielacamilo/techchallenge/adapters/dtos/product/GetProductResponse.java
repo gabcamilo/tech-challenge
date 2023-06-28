@@ -7,15 +7,6 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 public class GetProductResponse {
-    public GetProductResponse(ProductDomain domain) {
-        this.id = domain.getId();
-        this.name = domain.getName();
-        this.type = domain.getType();
-        this.description = domain.getDescription();
-        this.price = domain.getPrice();
-        this.createdAt = domain.getCreatedAt();
-        this.updatedAt = domain.getUpdatedAt();
-    }
 
     public GetProductResponse() {
     }
@@ -27,6 +18,16 @@ public class GetProductResponse {
     private BigDecimal price;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+
+    public GetProductResponse(ProductDomain domain) {
+        this.id = domain.getId();
+        this.name = domain.getName();
+        this.type = domain.getType();
+        this.description = domain.getDescription();
+        this.price = domain.getPrice();
+        this.createdAt = domain.getCreatedAt();
+        this.updatedAt = domain.getUpdatedAt();
+    }
 
     public String getId() {
         return id;

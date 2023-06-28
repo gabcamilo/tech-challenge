@@ -1,5 +1,6 @@
 package br.com.gabrielacamilo.techchallenge.core.services;
 
+import br.com.gabrielacamilo.techchallenge.core.domain.BundleDomain;
 import br.com.gabrielacamilo.techchallenge.core.domain.ProductDomain;
 import br.com.gabrielacamilo.techchallenge.core.domain.enums.ProductType;
 import br.com.gabrielacamilo.techchallenge.core.ports.ProductPersistencePort;
@@ -39,5 +40,15 @@ public class ProductServicePortImpl implements ProductServicePort {
     @Override
     public void deleteProduct(ProductDomain product) {
         productPersistencePort.deleteProduct(product);
+    }
+
+    @Override
+    public List<ProductDomain> listProductsByIds(List<String> items) {
+        return productPersistencePort.listProductsByIds(items);
+    }
+
+    @Override
+    public BundleDomain createBundle(BundleDomain bundleDomain) {
+        return productPersistencePort.createBundle(bundleDomain);
     }
 }
