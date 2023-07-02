@@ -16,10 +16,10 @@ public class BeanConfiguration {
         return new CustomerServicePortImpl(persistence);
     }
 
-//    @Bean
-//    OrderServicePortImpl orderServicePortImpl (OrderPersistencePort persistence) {
-//        return new OrderServicePortImpl(persistence);
-//    }
+    @Bean
+    OrderServicePortImpl orderServicePortImpl (OrderPersistencePort persistence) {
+        return new OrderServicePortImpl(persistence);
+    }
 
     @Bean
     ProductServicePortImpl productServicePortImpl (ProductPersistencePort persistence) {

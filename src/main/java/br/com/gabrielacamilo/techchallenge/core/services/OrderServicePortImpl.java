@@ -7,7 +7,6 @@ import br.com.gabrielacamilo.techchallenge.core.ports.OrderServicePort;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 public class OrderServicePortImpl implements OrderServicePort {
 
@@ -34,7 +33,7 @@ public class OrderServicePortImpl implements OrderServicePort {
     }
 
     @Override
-    public Optional<OrderDomain> getOrder(UUID id) {
+    public Optional<OrderDomain> getOrder(String id) {
         return orderPersistencePort.getOrder(id);
     }
 

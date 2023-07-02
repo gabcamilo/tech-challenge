@@ -5,12 +5,11 @@ import br.com.gabrielacamilo.techchallenge.core.domain.OrderDomain;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 public interface OrderPersistencePort {
     OrderDomain createOrder(OrderDomain order);
 
-    Optional<OrderDomain> getOrder(UUID id);
+    Optional<OrderDomain> getOrder(String id);
     List<OrderDomain> getAllActiveOrders();
     List<OrderDomain> getOrdersByCustomer(CustomerDomain customer);
 

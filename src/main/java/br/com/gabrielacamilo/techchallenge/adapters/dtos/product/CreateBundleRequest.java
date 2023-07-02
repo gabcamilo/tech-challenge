@@ -20,7 +20,7 @@ public class CreateBundleRequest {
 
     @DecimalMin("0")
     @DecimalMax("1")
-    private BigDecimal discountPercentage;
+    private final BigDecimal discountPercentage;
 
     @NotEmpty
     List<String> items;

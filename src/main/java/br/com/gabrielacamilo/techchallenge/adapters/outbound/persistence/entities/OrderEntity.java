@@ -1,13 +1,19 @@
-package br.com.gabrielacamilo.techchallenge.core.domain;
+package br.com.gabrielacamilo.techchallenge.adapters.outbound.persistence.entities;
 
+import br.com.gabrielacamilo.techchallenge.core.domain.CustomerDomain;
+import br.com.gabrielacamilo.techchallenge.core.domain.ProductOrderDomain;
 import br.com.gabrielacamilo.techchallenge.core.domain.enums.OrderStatus;
 import br.com.gabrielacamilo.techchallenge.core.domain.enums.PaymentStatus;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class OrderDomain {
+@Document(collection = "orders")
+public class OrderEntity {
+    @Id
     private String id;
     private CustomerDomain customer;
     private List<ProductOrderDomain> items;
@@ -17,27 +23,6 @@ public class OrderDomain {
     private BigDecimal total;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-
-    public OrderDomain() {
-    }
-
-    public OrderDomain(CustomerDomain customer, String note, List<ProductOrderDomain> items) {
-        this.customer = customer;
-        this.note = note;
-        this.items = items;
-        this.status = OrderStatus.PENDING;
-        this.paymentStatus = PaymentStatus.PENDING;
-        this.total = calculateTotal();
-
-        createdAt = LocalDateTime.now();
-        updatedAt = LocalDateTime.now();
-    }
-
-    private BigDecimal calculateTotal() {
-        return items.stream()
-                .map(ProductOrderDomain::getTotal)
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
-    }
 
     public String getId() {
         return id;
