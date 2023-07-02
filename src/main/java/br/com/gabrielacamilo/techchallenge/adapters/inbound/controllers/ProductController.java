@@ -70,7 +70,7 @@ public class ProductController {
         if(product.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
-        product.ifPresent(value -> port.deleteProduct(value));
+        product.ifPresent(port::deleteProduct);
         return ResponseEntity.noContent().build();
     }
 }
