@@ -13,6 +13,7 @@ public interface ProductPersistencePort {
     List<ProductDomain> listProductsByType(ProductType type);
     List<ProductDomain> listAllProducts();
     void deleteProduct(ProductDomain Product);
-    BundleDomain createBundle(BundleDomain bundleDomain);
     List<ProductDomain> listProductsByIds(List<String> items);
+    BundleDomain createBundle(BundleDomain bundleDomain);
+    List<BundleDomain> listAllBundles();
 }

@@ -51,4 +51,9 @@ public class ProductServicePortImpl implements ProductServicePort {
     public BundleDomain createBundle(BundleDomain bundleDomain) {
         return productPersistencePort.createBundle(bundleDomain);
     }
+
+    @Override
+    public List<BundleDomain> listAllBundles() {
+        return productPersistencePort.listAllBundles();
+    }
 }

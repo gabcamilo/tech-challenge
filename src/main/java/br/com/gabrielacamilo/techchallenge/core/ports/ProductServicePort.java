@@ -18,6 +18,9 @@ public interface ProductServicePort {
 
     void deleteProduct(ProductDomain item);
 
-    BundleDomain createBundle(BundleDomain bundleDomain);
     List<ProductDomain>  listProductsByIds(List<String> items);
+
+    BundleDomain createBundle(BundleDomain bundleDomain);
+
+    List<BundleDomain> listAllBundles();
 }

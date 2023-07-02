@@ -59,4 +59,9 @@ public class ProductPersistencePortImpl implements ProductPersistencePort {
         ProductEntity bundleEntity = productRepository.save(GenericMapper.map(bundle, BundleEntity.class));
         return GenericMapper.map(bundleEntity, BundleDomain.class);
     }
+
+    @Override
+    public List<BundleDomain> listAllBundles() {
+        return GenericMapper.map(productRepository.findByType(ProductType.BUNDLE), BundleDomain.class);
+    }
 }

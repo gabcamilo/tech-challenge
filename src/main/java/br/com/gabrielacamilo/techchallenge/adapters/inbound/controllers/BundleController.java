@@ -28,4 +28,11 @@ public class BundleController {
         return ResponseEntity.ok(new BundleResponse(bundle));
     }
 
+    @GetMapping
+    public ResponseEntity<List<BundleResponse>> listAllBundles() {
+        List<BundleDomain> bundles = port.listAllBundles();
+        var response = bundles.stream().map(BundleResponse::new).toList();
+        return ResponseEntity.ok(response);
+    }
+
 }
