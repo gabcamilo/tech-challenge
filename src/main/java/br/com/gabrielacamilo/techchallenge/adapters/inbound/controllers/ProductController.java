@@ -1,8 +1,7 @@
 package br.com.gabrielacamilo.techchallenge.adapters.inbound.controllers;
 
 import br.com.gabrielacamilo.techchallenge.adapters.dtos.product.CreateProductRequest;
-import br.com.gabrielacamilo.techchallenge.adapters.dtos.product.CreateProductResponse;
-import br.com.gabrielacamilo.techchallenge.adapters.dtos.product.GetProductResponse;
+import br.com.gabrielacamilo.techchallenge.adapters.dtos.product.ProductResponse;
 import br.com.gabrielacamilo.techchallenge.core.domain.ProductDomain;
 import br.com.gabrielacamilo.techchallenge.core.domain.enums.ProductType;
 import br.com.gabrielacamilo.techchallenge.core.ports.ProductServicePort;
@@ -26,17 +25,17 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<CreateProductResponse> createProduct(@RequestBody @Valid CreateProductRequest request) {
+    public ResponseEntity<ProductResponse> createProduct(@RequestBody @Valid CreateProductRequest request) {
         ProductDomain product = request.toDomain();
         ProductDomain saved = port.saveProduct(product);
-        CreateProductResponse response = new CreateProductResponse(saved);
+        ProductResponse response = new ProductResponse(saved);
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<GetProductResponse> getProduct(@PathVariable String id) {
+    public ResponseEntity<ProductResponse> getProduct(@PathVariable String id) {
         Optional<ProductDomain> product = port.getProduct(id);
-        return product.map(value -> ResponseEntity.ok(new GetProductResponse(value)))
+        return product.map(value -> ResponseEntity.ok(new ProductResponse(value)))
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
@@ -48,19 +47,19 @@ public class ProductController {
     }
 
     @GetMapping("/types/{type}")
-    public ResponseEntity<List<GetProductResponse>> listProductsByType(@PathVariable String type) {
+    public ResponseEntity<List<ProductResponse>> listProductsByType(@PathVariable String type) {
         ProductType typeEnum = ProductType.valueOf(type.toUpperCase());
 
         List<ProductDomain> products = port.listProductsByType(typeEnum);
-        List<GetProductResponse> productsResponse = GenericMapper.map(products, GetProductResponse.class);
+        List<ProductResponse> productsResponse = GenericMapper.map(products, ProductResponse.class);
 
         return ResponseEntity.ok(productsResponse);
     }
 
     @GetMapping
-    public ResponseEntity<List<GetProductResponse>> listAllProducts() {
+    public ResponseEntity<List<ProductResponse>> listAllProducts() {
         List<ProductDomain> products = port.listAllProducts();
-        List<GetProductResponse> productsResponse = GenericMapper.map(products, GetProductResponse.class);
+        List<ProductResponse> productsResponse = GenericMapper.map(products, ProductResponse.class);
 
         return ResponseEntity.ok(productsResponse);
     }

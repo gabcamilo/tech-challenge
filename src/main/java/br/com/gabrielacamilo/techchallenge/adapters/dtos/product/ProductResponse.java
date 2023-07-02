@@ -6,23 +6,23 @@ import br.com.gabrielacamilo.techchallenge.core.domain.enums.ProductType;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-public class CreateProductResponse {
+public class ProductResponse {
 
-    private final String id;
+    private String id;
 
-    private final String name;
+    private String name;
 
-    private final String description;
+    private String description;
 
-    private final BigDecimal price;
+    private BigDecimal price;
 
-    private final ProductType type;
+    private ProductType type;
 
-    private final LocalDateTime createdAt;
+    private LocalDateTime createdAt;
 
-    private final LocalDateTime updatedAt;
+    private LocalDateTime updatedAt;
 
-    public CreateProductResponse(ProductDomain domain) {
+    public ProductResponse(ProductDomain domain) {
         this.id = domain.getId();
         this.name = domain.getName();
         this.description = domain.getDescription();
@@ -30,6 +30,9 @@ public class CreateProductResponse {
         this.type = domain.getType();
         this.createdAt = domain.getCreatedAt();
         this.updatedAt = domain.getUpdatedAt();
+    }
+
+    public ProductResponse() {
     }
 
     public String getId() {
@@ -58,5 +61,33 @@ public class CreateProductResponse {
 
     public LocalDateTime getUpdatedAt() {
         return updatedAt;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
+    public void setType(ProductType type) {
+        this.type = type;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
     }
 }

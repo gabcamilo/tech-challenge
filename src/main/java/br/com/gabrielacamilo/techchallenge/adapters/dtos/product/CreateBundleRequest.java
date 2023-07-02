@@ -8,6 +8,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
 
 public class CreateBundleRequest {
@@ -47,7 +48,13 @@ public class CreateBundleRequest {
         return items;
     }
 
-    public BundleDomain toDomain(List<ProductDomain> items) {
-        return new BundleDomain(name, description, discountPercentage, items);
+    public BundleDomain toDomain(List<ProductDomain> products) {
+        HashMap<String, ProductDomain> productsDic = new HashMap<String, ProductDomain>();
+        products.forEach(product -> {
+            productsDic.put(product.getId(), product);
+        });
+
+        List<ProductDomain> itemsDomain = items.stream().map(item -> productsDic.put(item, productsDic.get(item))).toList();
+        return new BundleDomain(name, description, discountPercentage, itemsDomain);
     }
 }

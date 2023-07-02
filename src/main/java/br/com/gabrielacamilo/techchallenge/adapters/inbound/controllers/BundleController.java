@@ -1,7 +1,7 @@
 package br.com.gabrielacamilo.techchallenge.adapters.inbound.controllers;
 
+import br.com.gabrielacamilo.techchallenge.adapters.dtos.product.BundleResponse;
 import br.com.gabrielacamilo.techchallenge.adapters.dtos.product.CreateBundleRequest;
-import br.com.gabrielacamilo.techchallenge.adapters.dtos.product.CreateBundleResponse;
 import br.com.gabrielacamilo.techchallenge.core.domain.BundleDomain;
 import br.com.gabrielacamilo.techchallenge.core.domain.ProductDomain;
 import br.com.gabrielacamilo.techchallenge.core.ports.ProductServicePort;
@@ -22,10 +22,10 @@ public class BundleController {
     }
 
     @PostMapping
-    public ResponseEntity<CreateBundleResponse> createBundle(@RequestBody @Valid CreateBundleRequest request) {
+    public ResponseEntity<BundleResponse> createBundle(@RequestBody @Valid CreateBundleRequest request) {
         List<ProductDomain> items = port.listProductsByIds(request.getItems());
         BundleDomain bundle = port.createBundle(request.toDomain(items));
-        return ResponseEntity.ok(new CreateBundleResponse(bundle));
+        return ResponseEntity.ok(new BundleResponse(bundle));
     }
 
 }

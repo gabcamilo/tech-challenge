@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class CreateBundleResponse {
+public class BundleResponse {
 
     private final String id;
 
@@ -20,13 +20,14 @@ public class CreateBundleResponse {
     private final ProductType type;
 
     private List<CreateBundleResponseItems> items;
+
     private BigDecimal discountPercentage;
 
     private final LocalDateTime createdAt;
 
     private final LocalDateTime updatedAt;
 
-    public CreateBundleResponse(BundleDomain domain) {
+    public BundleResponse(BundleDomain domain) {
         this.id = domain.getId();
         this.name = domain.getName();
         this.description = domain.getDescription();
