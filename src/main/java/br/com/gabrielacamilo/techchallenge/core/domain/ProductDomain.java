@@ -36,7 +36,7 @@ public class ProductDomain {
     }
 
 
-    public BigDecimal calculatePrice(BigDecimal price) {
+    protected BigDecimal calculatePrice(BigDecimal price) {
         return price;
     }
 

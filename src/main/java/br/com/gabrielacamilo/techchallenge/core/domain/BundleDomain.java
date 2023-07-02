@@ -25,7 +25,7 @@ public class BundleDomain extends ProductDomain{
     }
 
     @Override
-    public BigDecimal calculatePrice(BigDecimal price) {
+    protected BigDecimal calculatePrice(BigDecimal price) {
         if(discountPercentage != null){
             return price.subtract(price.multiply(discountPercentage));
         }
