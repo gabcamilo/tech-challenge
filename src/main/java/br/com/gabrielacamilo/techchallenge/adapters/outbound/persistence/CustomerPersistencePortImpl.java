@@ -26,13 +26,18 @@ public class CustomerPersistencePortImpl implements CustomerPersistencePort {
     @Override
     public Optional<CustomerDomain> getCustomerByCpf(String cpf) {
         Optional<CustomerEntity> customerEntity = customerRepository.findByCpf(cpf);
-        Optional<CustomerDomain> customerDomain = GenericMapper.map(customerEntity, CustomerDomain.class);
-        return customerDomain.map(entity -> GenericMapper.map(entity, CustomerDomain.class));
+        return GenericMapper.map(customerEntity, CustomerDomain.class);
     }
 
     @Override
-    public List<CustomerDomain> getAllCustomers() {
+    public List<CustomerDomain> listAllCustomers() {
         List<CustomerEntity> customerEntities = customerRepository.findAll();
         return GenericMapper.map(customerEntities, CustomerDomain.class);
+    }
+
+    @Override
+    public Optional<CustomerDomain> getCustomer(String id) {
+        Optional<CustomerEntity> customerEntity = customerRepository.findById(id);
+        return GenericMapper.map(customerEntity, CustomerDomain.class);
     }
 }

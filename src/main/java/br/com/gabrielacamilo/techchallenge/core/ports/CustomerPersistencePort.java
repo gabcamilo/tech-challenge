@@ -8,5 +8,6 @@ import java.util.Optional;
 public interface CustomerPersistencePort {
     CustomerDomain saveCustomer(CustomerDomain customer);
     Optional<CustomerDomain> getCustomerByCpf(String cpf);
-    List<CustomerDomain> getAllCustomers();
+    List<CustomerDomain> listAllCustomers();
+    Optional<CustomerDomain> getCustomer(String id);
 }

@@ -26,7 +26,12 @@ public class CustomerServicePortImpl implements CustomerServicePort {
     }
 
     @Override
-    public List<CustomerDomain> getAllCustomers() {
-        return customerPersistencePort.getAllCustomers();
+    public List<CustomerDomain> listAllCustomers() {
+        return customerPersistencePort.listAllCustomers();
+    }
+
+    @Override
+    public Optional<CustomerDomain> getCustomer(String id) {
+        return customerPersistencePort.getCustomer(id);
     }
 }
