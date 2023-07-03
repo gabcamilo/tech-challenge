@@ -41,7 +41,7 @@ public class OrderPersistencePortImpl implements OrderPersistencePort {
     }
 
     @Override
-    public List<OrderDomain> getAllActiveOrders() {
+    public List<OrderDomain> listAllActiveOrders() {
         List<OrderEntity> orderEntities = orderRepository.findByStatus(OrderStatus.activeStatusTypes());
         return GenericMapper.map(orderEntities, OrderDomain.class);
     }
@@ -50,7 +50,7 @@ public class OrderPersistencePortImpl implements OrderPersistencePort {
     public List<OrderDomain> getOrdersByCustomer(CustomerDomain customer) {
         CustomerEntity customerEntity = GenericMapper.map(customer, CustomerEntity.class);
         List<OrderEntity> orderEntities = orderRepository.findByCustomer(customerEntity);
-        return GenericMapper.map(orderEntities, OrderDomain.class);
+        return mapOrderEntityToDomain(orderEntities);
     }
 
     @Override
@@ -127,5 +127,9 @@ public class OrderPersistencePortImpl implements OrderPersistencePort {
                 orderEntity.getCreatedAt(),
                 orderEntity.getUpdatedAt());
         return orderDomain;
+    }
+
+    private List<OrderDomain> mapOrderEntityToDomain(List<OrderEntity> orderEntities) {
+        return orderEntities.stream().map(this::mapOrderEntityToDomain).toList();
     }
 }
