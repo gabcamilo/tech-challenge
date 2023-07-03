@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface OrderServicePort {
-    OrderDomain createOrder(OrderDomain order);
+    OrderDomain saveOrder(OrderDomain order);
 
     List<OrderDomain> listAllOrders();
 
@@ -26,4 +26,6 @@ public interface OrderServicePort {
     Optional<OrderDomain> updatePaymentStatusApproved(String id);
 
     Optional<OrderDomain> updatePaymentStatusRejected(String id);
+
+    OrderDomain pay(OrderDomain order);
 }

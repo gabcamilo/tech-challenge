@@ -122,4 +122,15 @@ public class OrderDomain {
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
+
+    public void processPayment() {
+        switch (paymentStatus) {
+            case APPROVED:
+                status = OrderStatus.COOKING;
+                break;
+            case REJECTED:
+                status = OrderStatus.CANCELED;
+                break;
+        }
+    }
 }

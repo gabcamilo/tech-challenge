@@ -2,6 +2,7 @@ package br.com.gabrielacamilo.techchallenge.core.services;
 
 import br.com.gabrielacamilo.techchallenge.core.domain.CustomerDomain;
 import br.com.gabrielacamilo.techchallenge.core.domain.OrderDomain;
+import br.com.gabrielacamilo.techchallenge.core.ports.OrderPaymentPort;
 import br.com.gabrielacamilo.techchallenge.core.ports.OrderPersistencePort;
 import br.com.gabrielacamilo.techchallenge.core.ports.OrderServicePort;
 
@@ -11,15 +12,17 @@ import java.util.Optional;
 public class OrderServicePortImpl implements OrderServicePort {
 
     private final OrderPersistencePort orderPersistencePort;
+    private final OrderPaymentPort orderPaymentPort;
 
-    public OrderServicePortImpl(OrderPersistencePort orderPersistencePort) {
+    public OrderServicePortImpl(OrderPersistencePort orderPersistencePort, OrderPaymentPort orderPaymentPort) {
         this.orderPersistencePort = orderPersistencePort;
+        this.orderPaymentPort = orderPaymentPort;
     }
 
 
     @Override
-    public OrderDomain createOrder(OrderDomain order) {
-        return orderPersistencePort.createOrder(order);
+    public OrderDomain saveOrder(OrderDomain order) {
+        return orderPersistencePort.saveOrder(order);
     }
 
     @Override
@@ -60,5 +63,10 @@ public class OrderServicePortImpl implements OrderServicePort {
     @Override
     public Optional<OrderDomain> updatePaymentStatusRejected(String id) {
         return orderPersistencePort.updatePaymentStatusRejected(id);
+    }
+
+    @Override
+    public OrderDomain pay(OrderDomain order) {
+        return orderPaymentPort.pay(order);
     }
 }

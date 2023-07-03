@@ -40,7 +40,7 @@ public class OrderController {
         List<ProductDomain> products = productPort.listProductsByIds(productsIds);
 
         OrderDomain domain = request.toDomain(products, customer.get());
-        OrderDomain createdOrder = port.createOrder(domain);
+        OrderDomain createdOrder = port.saveOrder(domain);
 
         OrderResponse response = new OrderResponse(createdOrder);
         return ResponseEntity.ok(response);
@@ -104,6 +104,18 @@ public class OrderController {
     public ResponseEntity<OrderResponse> updatePaymentStatusRejected(@PathVariable String id) {
         Optional<OrderDomain> order = port.updatePaymentStatusRejected(id);
         return order.map(value -> ResponseEntity.ok(new OrderResponse(value)))
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @PostMapping("/{id}/payment")
+    public ResponseEntity<OrderResponse> payOrder(@PathVariable String id) {
+        Optional<OrderDomain> orderOptional = port.getOrder(id);
+        return orderOptional.map(order -> {
+                    OrderDomain payedOrder = port.pay(order);
+                    payedOrder.processPayment();
+                    port.saveOrder(payedOrder);
+                    return ResponseEntity.ok(new OrderResponse(payedOrder));
+                })
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 }

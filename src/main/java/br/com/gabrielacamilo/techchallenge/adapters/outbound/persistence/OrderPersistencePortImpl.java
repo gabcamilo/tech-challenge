@@ -27,7 +27,7 @@ public class OrderPersistencePortImpl implements OrderPersistencePort {
     }
 
     @Override
-    public OrderDomain createOrder(OrderDomain order) {
+    public OrderDomain saveOrder(OrderDomain order) {
         OrderEntity orderEntity = mapOrderDomainToEntity(order);
         OrderEntity saved = orderRepository.save(orderEntity);
         return mapOrderEntityToDomain(saved);
@@ -75,6 +75,12 @@ public class OrderPersistencePortImpl implements OrderPersistencePort {
     @Override
     public Optional<OrderDomain> updatePaymentStatusRejected(String id) {
         return updateOrderPaymentStatus(id, PaymentStatus.REJECTED);
+    }
+
+    @Override
+    public OrderDomain updatePaymentStatus(String id, PaymentStatus status) {
+        // existence already verified
+        return updateOrderPaymentStatus(id, status).get();
     }
 
     // update methods
