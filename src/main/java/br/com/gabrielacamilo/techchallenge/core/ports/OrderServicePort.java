@@ -9,7 +9,7 @@ import java.util.Optional;
 public interface OrderServicePort {
     OrderDomain createOrder(OrderDomain order);
 
-    List<OrderDomain> getAllActiveOrders();
+    List<OrderDomain> listAllOrders();
 
     List<OrderDomain> getOrdersByCustomer(CustomerDomain customer);
 

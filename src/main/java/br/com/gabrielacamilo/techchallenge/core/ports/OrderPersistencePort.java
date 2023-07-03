@@ -10,7 +10,7 @@ public interface OrderPersistencePort {
     OrderDomain createOrder(OrderDomain order);
 
     Optional<OrderDomain> getOrder(String id);
-    List<OrderDomain> listAllActiveOrders();
+    List<OrderDomain> listAllOrders();
     List<OrderDomain> getOrdersByCustomer(CustomerDomain customer);
 
     // cooking status

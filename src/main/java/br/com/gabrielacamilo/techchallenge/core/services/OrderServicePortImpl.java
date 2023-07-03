@@ -23,8 +23,8 @@ public class OrderServicePortImpl implements OrderServicePort {
     }
 
     @Override
-    public List<OrderDomain> getAllActiveOrders() {
-        return orderPersistencePort.listAllActiveOrders();
+    public List<OrderDomain> listAllOrders() {
+        return orderPersistencePort.listAllOrders();
     }
 
     @Override

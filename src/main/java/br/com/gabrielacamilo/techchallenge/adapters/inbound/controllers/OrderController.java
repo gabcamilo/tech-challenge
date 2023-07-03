@@ -53,6 +53,14 @@ public class OrderController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    @GetMapping()
+    public ResponseEntity<List<OrderResponse>> listAllOrders() {
+        List<OrderDomain> orders = port.listAllOrders();
+
+        List<OrderResponse> response = orders.stream().map(OrderResponse::new).toList();
+        return ResponseEntity.ok(response);
+    }
+
     @GetMapping("/customer/{cpf}")
     public ResponseEntity<List<OrderResponse>> listOrdersByCustomer(@PathVariable String cpf) {
         Optional<CustomerDomain> customer = customerPort.getCustomerByCpf(cpf);
@@ -64,7 +72,6 @@ public class OrderController {
         List<OrderResponse> response = orders.stream().map(OrderResponse::new).toList();
         return ResponseEntity.ok(response);
     }
-
 
     public OrderDomain updateOrderStatusCooking(OrderDomain order) {
         return null;

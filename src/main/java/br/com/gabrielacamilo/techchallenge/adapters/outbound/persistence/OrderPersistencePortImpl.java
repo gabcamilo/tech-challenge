@@ -8,7 +8,6 @@ import br.com.gabrielacamilo.techchallenge.core.domain.CustomerDomain;
 import br.com.gabrielacamilo.techchallenge.core.domain.OrderDomain;
 import br.com.gabrielacamilo.techchallenge.core.domain.OrderProductDomain;
 import br.com.gabrielacamilo.techchallenge.core.domain.ProductDomain;
-import br.com.gabrielacamilo.techchallenge.core.domain.enums.OrderStatus;
 import br.com.gabrielacamilo.techchallenge.core.ports.OrderPersistencePort;
 import br.com.gabrielacamilo.techchallenge.utils.GenericMapper;
 import org.springframework.stereotype.Component;
@@ -41,9 +40,9 @@ public class OrderPersistencePortImpl implements OrderPersistencePort {
     }
 
     @Override
-    public List<OrderDomain> listAllActiveOrders() {
-        List<OrderEntity> orderEntities = orderRepository.findByStatus(OrderStatus.activeStatusTypes());
-        return GenericMapper.map(orderEntities, OrderDomain.class);
+    public List<OrderDomain> listAllOrders() {
+        List<OrderEntity> orderEntities = orderRepository.findAll();
+        return mapOrderEntityToDomain(orderEntities);
     }
 
     @Override
