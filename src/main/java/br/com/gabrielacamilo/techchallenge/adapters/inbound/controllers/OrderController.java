@@ -56,7 +56,6 @@ public class OrderController {
     @GetMapping()
     public ResponseEntity<List<OrderResponse>> listAllOrders() {
         List<OrderDomain> orders = port.listAllOrders();
-
         List<OrderResponse> response = orders.stream().map(OrderResponse::new).toList();
         return ResponseEntity.ok(response);
     }
@@ -73,28 +72,38 @@ public class OrderController {
         return ResponseEntity.ok(response);
     }
 
-    public OrderDomain updateOrderStatusCooking(OrderDomain order) {
-        return null;
+    @PatchMapping("/{id}/status/cooking")
+    public ResponseEntity<OrderResponse> updateOrderStatusCooking(@PathVariable String id) {
+        Optional<OrderDomain> order = port.updateOrderStatusCooking(id);
+        return order.map(value -> ResponseEntity.ok(new OrderResponse(value)))
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-
-    public OrderDomain updateOrderStatusReady(OrderDomain order) {
-        return null;
+    @PatchMapping("/{id}/status/ready")
+    public ResponseEntity<OrderResponse> updateOrderStatusReady(@PathVariable String id) {
+        Optional<OrderDomain> order = port.updateOrderStatusReady(id);
+        return order.map(value -> ResponseEntity.ok(new OrderResponse(value)))
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-
-    public OrderDomain updateOrderStatusDelivered(OrderDomain order) {
-        return null;
+    @PatchMapping("/{id}/status/delivered")
+    public ResponseEntity<OrderResponse> updateOrderStatusDelivered(@PathVariable String id) {
+        Optional<OrderDomain> order = port.updateOrderStatusDelivered(id);
+        return order.map(value -> ResponseEntity.ok(new OrderResponse(value)))
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-
-    public OrderDomain updatePaymentStatusApproved(OrderDomain order) {
-        return null;
+    @PatchMapping("/{id}/payment/approved")
+    public ResponseEntity<OrderResponse> updatePaymentStatusApproved(@PathVariable String id) {
+        Optional<OrderDomain> order = port.updatePaymentStatusApproved(id);
+        return order.map(value -> ResponseEntity.ok(new OrderResponse(value)))
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-
-    public OrderDomain updatePaymentStatusRejected(OrderDomain order) {
-        return null;
+    @PatchMapping("/{id}/payment/rejected")
+    public ResponseEntity<OrderResponse> updatePaymentStatusRejected(@PathVariable String id) {
+        Optional<OrderDomain> order = port.updatePaymentStatusRejected(id);
+        return order.map(value -> ResponseEntity.ok(new OrderResponse(value)))
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
-
 }

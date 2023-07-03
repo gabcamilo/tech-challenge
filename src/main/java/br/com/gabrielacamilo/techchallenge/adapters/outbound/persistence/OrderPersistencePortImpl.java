@@ -8,6 +8,8 @@ import br.com.gabrielacamilo.techchallenge.core.domain.CustomerDomain;
 import br.com.gabrielacamilo.techchallenge.core.domain.OrderDomain;
 import br.com.gabrielacamilo.techchallenge.core.domain.OrderProductDomain;
 import br.com.gabrielacamilo.techchallenge.core.domain.ProductDomain;
+import br.com.gabrielacamilo.techchallenge.core.domain.enums.OrderStatus;
+import br.com.gabrielacamilo.techchallenge.core.domain.enums.PaymentStatus;
 import br.com.gabrielacamilo.techchallenge.core.ports.OrderPersistencePort;
 import br.com.gabrielacamilo.techchallenge.utils.GenericMapper;
 import org.springframework.stereotype.Component;
@@ -19,11 +21,9 @@ import java.util.Optional;
 public class OrderPersistencePortImpl implements OrderPersistencePort {
 
     private final OrderRepository orderRepository;
-    private final CustomerRepository customerRepository;
 
-    public OrderPersistencePortImpl(OrderRepository orderRepository, CustomerRepository customerRepository) {
+    public OrderPersistencePortImpl(OrderRepository orderRepository) {
         this.orderRepository = orderRepository;
-        this.customerRepository = customerRepository;
     }
 
     @Override
@@ -53,30 +53,52 @@ public class OrderPersistencePortImpl implements OrderPersistencePort {
     }
 
     @Override
-    public OrderDomain updateOrderStatusCooking(OrderDomain order) {
-        return null;
+    public Optional<OrderDomain> updateOrderStatusCooking(String id) {
+        return updateOrderStatus(id, OrderStatus.COOKING);
     }
 
     @Override
-    public OrderDomain updateOrderStatusReady(OrderDomain order) {
-        return null;
+    public Optional<OrderDomain> updateOrderStatusReady(String id) {
+        return updateOrderStatus(id, OrderStatus.READY);
     }
 
     @Override
-    public OrderDomain updateOrderStatusDelivered(OrderDomain order) {
-        return null;
+    public Optional<OrderDomain> updateOrderStatusDelivered(String id) {
+        return updateOrderStatus(id, OrderStatus.DELIVERED);
     }
 
     @Override
-    public OrderDomain updatePaymentStatusApproved(OrderDomain order) {
-        return null;
+    public Optional<OrderDomain> updatePaymentStatusApproved(String id) {
+        return updateOrderPaymentStatus(id, PaymentStatus.APPROVED);
     }
 
     @Override
-    public OrderDomain updatePaymentStatusRejected(OrderDomain order) {
-        return null;
+    public Optional<OrderDomain> updatePaymentStatusRejected(String id) {
+        return updateOrderPaymentStatus(id, PaymentStatus.REJECTED);
     }
 
+    // update methods
+    private Optional<OrderDomain> updateOrderStatus(String id, OrderStatus status) {
+        Optional<OrderEntity> orderEntity = orderRepository.findById(id);
+        if (orderEntity.isPresent()) {
+            orderEntity.get().setStatus(status);
+            OrderEntity saved = orderRepository.save(orderEntity.get());
+            return Optional.of(mapOrderEntityToDomain(saved));
+        }
+        return Optional.empty();
+    }
+
+    private Optional<OrderDomain> updateOrderPaymentStatus(String id, PaymentStatus status) {
+        Optional<OrderEntity> orderEntity = orderRepository.findById(id);
+        if (orderEntity.isPresent()) {
+            orderEntity.get().setPaymentStatus(status);
+            OrderEntity saved = orderRepository.save(orderEntity.get());
+            return Optional.of(mapOrderEntityToDomain(saved));
+        }
+        return Optional.empty();
+    }
+
+    // order mappers
     private OrderEntity mapOrderDomainToEntity(OrderDomain orderDomain) {
         OrderEntity orderEntity = new OrderEntity();
 

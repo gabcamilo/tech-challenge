@@ -14,11 +14,11 @@ public interface OrderPersistencePort {
     List<OrderDomain> getOrdersByCustomer(CustomerDomain customer);
 
     // cooking status
-    OrderDomain updateOrderStatusCooking(OrderDomain order);
-    OrderDomain updateOrderStatusReady(OrderDomain order);
-    OrderDomain updateOrderStatusDelivered(OrderDomain order);
+    Optional<OrderDomain> updateOrderStatusCooking(String id);
+    Optional<OrderDomain> updateOrderStatusReady(String id);
+    Optional<OrderDomain> updateOrderStatusDelivered(String id);
 
     // payment status
-    OrderDomain updatePaymentStatusApproved(OrderDomain order);
-    OrderDomain updatePaymentStatusRejected(OrderDomain order);
+    Optional<OrderDomain> updatePaymentStatusApproved(String id);
+    Optional<OrderDomain> updatePaymentStatusRejected(String id);
 }

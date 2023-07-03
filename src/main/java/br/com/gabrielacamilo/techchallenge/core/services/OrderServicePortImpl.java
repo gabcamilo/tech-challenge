@@ -38,27 +38,27 @@ public class OrderServicePortImpl implements OrderServicePort {
     }
 
     @Override
-    public OrderDomain updateOrderStatusCooking(OrderDomain order) {
-        return orderPersistencePort.updateOrderStatusCooking(order);
+    public Optional<OrderDomain> updateOrderStatusCooking(String id) {
+        return orderPersistencePort.updateOrderStatusCooking(id);
     }
 
     @Override
-    public OrderDomain updateOrderStatusReady(OrderDomain order) {
-        return orderPersistencePort.updateOrderStatusReady(order);
+    public Optional<OrderDomain> updateOrderStatusReady(String id) {
+        return orderPersistencePort.updateOrderStatusReady(id);
     }
 
     @Override
-    public OrderDomain updateOrderStatusDelivered(OrderDomain order) {
-        return orderPersistencePort.updateOrderStatusDelivered(order);
+    public Optional<OrderDomain> updateOrderStatusDelivered(String id) {
+        return orderPersistencePort.updateOrderStatusDelivered(id);
     }
 
     @Override
-    public OrderDomain updatePaymentStatusApproved(OrderDomain order) {
-        return orderPersistencePort.updatePaymentStatusApproved(order);
+    public Optional<OrderDomain> updatePaymentStatusApproved(String id) {
+        return orderPersistencePort.updatePaymentStatusApproved(id);
     }
 
     @Override
-    public OrderDomain updatePaymentStatusRejected(OrderDomain order) {
-        return orderPersistencePort.updatePaymentStatusRejected(order);
+    public Optional<OrderDomain> updatePaymentStatusRejected(String id) {
+        return orderPersistencePort.updatePaymentStatusRejected(id);
     }
 }

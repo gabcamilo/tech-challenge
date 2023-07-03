@@ -16,14 +16,14 @@ public interface OrderServicePort {
     Optional<OrderDomain> getOrder(String id);
 
     // cooking status
-    OrderDomain updateOrderStatusCooking(OrderDomain order);
+    Optional<OrderDomain> updateOrderStatusCooking(String order);
 
-    OrderDomain updateOrderStatusReady(OrderDomain order);
+    Optional<OrderDomain> updateOrderStatusReady(String id);
 
-    OrderDomain updateOrderStatusDelivered(OrderDomain order);
+    Optional<OrderDomain> updateOrderStatusDelivered(String id);
 
     // payment status
-    OrderDomain updatePaymentStatusApproved(OrderDomain order);
+    Optional<OrderDomain> updatePaymentStatusApproved(String id);
 
-    OrderDomain updatePaymentStatusRejected(OrderDomain order);
+    Optional<OrderDomain> updatePaymentStatusRejected(String id);
 }
