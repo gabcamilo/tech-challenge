@@ -2,6 +2,7 @@ package br.com.gabrielacamilo.techchallenge.adapters.inbound.controllers;
 
 import br.com.gabrielacamilo.techchallenge.adapters.dtos.customer.CreateCustomerRequest;
 import br.com.gabrielacamilo.techchallenge.adapters.dtos.customer.CustomerResponse;
+import br.com.gabrielacamilo.techchallenge.adapters.dtos.customer.UpdateCustomerRequest;
 import br.com.gabrielacamilo.techchallenge.core.domain.CustomerDomain;
 import br.com.gabrielacamilo.techchallenge.core.ports.CustomerServicePort;
 import br.com.gabrielacamilo.techchallenge.utils.GenericMapper;
@@ -32,7 +33,6 @@ public class CustomerController {
 
     @GetMapping("/{cpf}")
     public ResponseEntity<CustomerResponse> getCustomerByCpf(@PathVariable String cpf) {
-        //TODO: less attributes when listing all customers
         Optional<CustomerDomain> customer = port.getCustomerByCpf(cpf);
         return customer.map(value -> ResponseEntity.ok(new CustomerResponse(value)))
                 .orElseGet(() -> ResponseEntity.notFound().build());
@@ -40,8 +40,21 @@ public class CustomerController {
 
     @GetMapping
     public ResponseEntity<List<CustomerResponse>> listAllCustomers() {
+        //TODO: less attributes DTO when listing all customers
         List<CustomerDomain> customers = port.listAllCustomers();
         List<CustomerResponse> customersResponse = GenericMapper.map(customers, CustomerResponse.class);
         return ResponseEntity.ok(customersResponse);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<CustomerResponse> updateCustomer(@RequestBody @Valid UpdateCustomerRequest request, @PathVariable String id) {
+        Optional<CustomerDomain> customerDomainOptional = port.getCustomer(id);
+        return customerDomainOptional.map(customer -> {
+                    customer.setName(request.getName());
+                    customer.setEmail(request.getEmail());
+                    CustomerDomain saved = port.saveCustomer(customer);
+                    return ResponseEntity.ok(new CustomerResponse(saved));
+                })
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 }

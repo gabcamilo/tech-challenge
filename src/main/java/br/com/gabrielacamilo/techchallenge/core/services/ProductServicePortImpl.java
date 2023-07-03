@@ -48,8 +48,13 @@ public class ProductServicePortImpl implements ProductServicePort {
     }
 
     @Override
-    public BundleDomain createBundle(BundleDomain bundleDomain) {
-        return productPersistencePort.createBundle(bundleDomain);
+    public BundleDomain saveBundle(BundleDomain bundleDomain) {
+        return productPersistencePort.saveBundle(bundleDomain);
+    }
+
+    @Override
+    public Optional<BundleDomain> getBundle(String id) {
+        return productPersistencePort.getBundle(id);
     }
 
     @Override

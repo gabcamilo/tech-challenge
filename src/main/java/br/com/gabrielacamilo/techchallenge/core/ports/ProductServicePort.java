@@ -20,7 +20,9 @@ public interface ProductServicePort {
 
     List<ProductDomain>  listProductsByIds(List<String> items);
 
-    BundleDomain createBundle(BundleDomain bundleDomain);
+    BundleDomain saveBundle(BundleDomain bundleDomain);
+
+    Optional<BundleDomain> getBundle(String id);
 
     List<BundleDomain> listAllBundles();
 }

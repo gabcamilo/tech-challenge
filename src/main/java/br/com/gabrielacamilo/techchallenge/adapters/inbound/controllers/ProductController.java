@@ -2,6 +2,7 @@ package br.com.gabrielacamilo.techchallenge.adapters.inbound.controllers;
 
 import br.com.gabrielacamilo.techchallenge.adapters.dtos.product.CreateProductRequest;
 import br.com.gabrielacamilo.techchallenge.adapters.dtos.product.ProductResponse;
+import br.com.gabrielacamilo.techchallenge.adapters.dtos.product.UpdateProductRequest;
 import br.com.gabrielacamilo.techchallenge.core.domain.ProductDomain;
 import br.com.gabrielacamilo.techchallenge.core.domain.enums.ProductType;
 import br.com.gabrielacamilo.techchallenge.core.ports.ProductServicePort;
@@ -65,12 +66,27 @@ public class ProductController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deleteProduct(@PathVariable String id){
+    public ResponseEntity<Object> deleteProduct(@PathVariable String id) {
         Optional<ProductDomain> product = port.getProduct(id);
-        if(product.isEmpty()) {
+        if (product.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
         product.ifPresent(port::deleteProduct);
         return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ProductResponse> updateProduct(@RequestBody @Valid UpdateProductRequest request, @PathVariable String id) {
+        Optional<ProductDomain> productDomainOptional = port.getProduct(id);
+        return productDomainOptional.map(product -> {
+                    product.setName(request.getName());
+                    product.setDescription(request.getDescription());
+                    product.setPrice(request.getPrice());
+                    product.setType(request.getType());
+
+                    ProductDomain saved = port.saveProduct(product);
+                    return ResponseEntity.ok(new ProductResponse(saved));
+                })
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 }

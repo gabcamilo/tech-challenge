@@ -55,7 +55,7 @@ public class ProductPersistencePortImpl implements ProductPersistencePort {
     }
 
     @Override
-    public BundleDomain createBundle(BundleDomain bundle) {
+    public BundleDomain saveBundle(BundleDomain bundle) {
         ProductEntity bundleEntity = productRepository.save(GenericMapper.map(bundle, BundleEntity.class));
         return GenericMapper.map(bundleEntity, BundleDomain.class);
     }
@@ -63,5 +63,10 @@ public class ProductPersistencePortImpl implements ProductPersistencePort {
     @Override
     public List<BundleDomain> listAllBundles() {
         return GenericMapper.map(productRepository.findByType(ProductType.BUNDLE), BundleDomain.class);
+    }
+
+    @Override
+    public Optional<BundleDomain> getBundle(String id) {
+        return GenericMapper.map(productRepository.findById(id), BundleDomain.class);
     }
 }
