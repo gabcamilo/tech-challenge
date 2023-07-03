@@ -127,17 +127,16 @@ public class OrderPersistencePortImpl implements OrderPersistencePort {
 
     private OrderDomain mapOrderEntityToDomain(OrderEntity orderEntity) {
 
-        List<OrderProductDomain> itemsDomain = orderEntity.getItems().stream().map(item -> {
-            OrderProductDomain domain = new OrderProductDomain(
+        List<OrderProductDomain> itemsDomain = orderEntity.getItems().stream().map(item ->
+            new OrderProductDomain(
                     GenericMapper.map(item.getProduct(), ProductDomain.class),
                     item.getQuantity(),
                     GenericMapper.map(item.getAddOns(), ProductDomain.class),
                     item.getTotal()
-            );
-            return domain;
-        }).toList();
+            )
+        ).toList();
 
-        OrderDomain orderDomain = new OrderDomain(
+        return new OrderDomain(
                 orderEntity.getId(),
                 GenericMapper.map(orderEntity.getCustomer(), CustomerDomain.class),
                 itemsDomain,
@@ -147,7 +146,6 @@ public class OrderPersistencePortImpl implements OrderPersistencePort {
                 orderEntity.getTotal(),
                 orderEntity.getCreatedAt(),
                 orderEntity.getUpdatedAt());
-        return orderDomain;
     }
 
     private List<OrderDomain> mapOrderEntityToDomain(List<OrderEntity> orderEntities) {

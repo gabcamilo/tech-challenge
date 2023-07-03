@@ -20,7 +20,7 @@ public class UpdateProductRequest {
     @NotNull
     private final ProductType type;
 
-    public UpdateProductRequest(String name, String description, @NotNull BigDecimal price, @NotNull ProductType type) {
+    public UpdateProductRequest(@NotBlank String name, String description, @NotNull BigDecimal price, @NotNull ProductType type) {
         this.name = name;
         this.description = description;
         this.price = price;

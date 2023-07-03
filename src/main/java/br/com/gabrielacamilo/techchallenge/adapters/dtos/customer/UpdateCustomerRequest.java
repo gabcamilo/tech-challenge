@@ -1,6 +1,5 @@
 package br.com.gabrielacamilo.techchallenge.adapters.dtos.customer;
 
-import br.com.gabrielacamilo.techchallenge.core.domain.CustomerDomain;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 

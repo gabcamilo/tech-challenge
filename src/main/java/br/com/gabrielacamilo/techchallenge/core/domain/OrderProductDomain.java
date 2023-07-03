@@ -30,11 +30,9 @@ public class OrderProductDomain {
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 
 
-        BigDecimal finalPrice = product.getPrice()
+        return product.getPrice()
                 .add(addOnsTotalPrice)
                 .multiply(BigDecimal.valueOf(quantity));
-
-        return finalPrice;
     }
 
     public ProductDomain getProduct() {
