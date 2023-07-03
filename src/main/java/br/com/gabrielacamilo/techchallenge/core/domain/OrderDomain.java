@@ -10,7 +10,7 @@ import java.util.List;
 public class OrderDomain {
     private String id;
     private CustomerDomain customer;
-    private List<ProductOrderDomain> items;
+    private List<OrderProductDomain> items;
     private OrderStatus status;
     private PaymentStatus paymentStatus;
     private String note;
@@ -21,7 +21,7 @@ public class OrderDomain {
     public OrderDomain() {
     }
 
-    public OrderDomain(CustomerDomain customer, String note, List<ProductOrderDomain> items) {
+    public OrderDomain(CustomerDomain customer, String note, List<OrderProductDomain> items) {
         this.customer = customer;
         this.note = note;
         this.items = items;
@@ -33,9 +33,21 @@ public class OrderDomain {
         updatedAt = LocalDateTime.now();
     }
 
+    public OrderDomain(String id, CustomerDomain customer, List<OrderProductDomain> items, OrderStatus status, PaymentStatus paymentStatus, String note, BigDecimal total, LocalDateTime createdAt, LocalDateTime updatedAt) {
+        this.id = id;
+        this.customer = customer;
+        this.items = items;
+        this.status = status;
+        this.paymentStatus = paymentStatus;
+        this.note = note;
+        this.total = total;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
+
     private BigDecimal calculateTotal() {
         return items.stream()
-                .map(ProductOrderDomain::getTotal)
+                .map(OrderProductDomain::getTotal)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
@@ -55,11 +67,11 @@ public class OrderDomain {
         this.customer = customer;
     }
 
-    public List<ProductOrderDomain> getItems() {
+    public List<OrderProductDomain> getItems() {
         return items;
     }
 
-    public void setItems(List<ProductOrderDomain> items) {
+    public void setItems(List<OrderProductDomain> items) {
         this.items = items;
     }
 

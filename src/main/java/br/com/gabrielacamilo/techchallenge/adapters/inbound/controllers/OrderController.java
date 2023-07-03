@@ -53,5 +53,41 @@ public class OrderController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    @GetMapping("/customer/{cpf}")
+    public ResponseEntity<List<OrderResponse>> listOrdersByCustomer(@PathVariable String cpf) {
+        Optional<CustomerDomain> customer = customerPort.getCustomerByCpf(cpf);
+        if (customer.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        List<OrderDomain> orders = port.getOrdersByCustomer(customer.get());
+        List<OrderResponse> response = orders.stream().map(OrderResponse::new).toList();
+        return ResponseEntity.ok(response);
+    }
+
+
+    public OrderDomain updateOrderStatusCooking(OrderDomain order) {
+        return null;
+    }
+
+
+    public OrderDomain updateOrderStatusReady(OrderDomain order) {
+        return null;
+    }
+
+
+    public OrderDomain updateOrderStatusDelivered(OrderDomain order) {
+        return null;
+    }
+
+
+    public OrderDomain updatePaymentStatusApproved(OrderDomain order) {
+        return null;
+    }
+
+
+    public OrderDomain updatePaymentStatusRejected(OrderDomain order) {
+        return null;
+    }
 
 }

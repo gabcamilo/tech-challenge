@@ -1,10 +1,9 @@
 package br.com.gabrielacamilo.techchallenge.adapters.outbound.persistence.entities;
 
-import br.com.gabrielacamilo.techchallenge.core.domain.CustomerDomain;
-import br.com.gabrielacamilo.techchallenge.core.domain.ProductOrderDomain;
 import br.com.gabrielacamilo.techchallenge.core.domain.enums.OrderStatus;
 import br.com.gabrielacamilo.techchallenge.core.domain.enums.PaymentStatus;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.math.BigDecimal;
@@ -15,8 +14,9 @@ import java.util.List;
 public class OrderEntity {
     @Id
     private String id;
-    private CustomerDomain customer;
-    private List<ProductOrderDomain> items;
+    @DBRef
+    private CustomerEntity customer;
+    private List<OrderProductEntity> items;
     private OrderStatus status;
     private PaymentStatus paymentStatus;
     private String note;
@@ -32,19 +32,19 @@ public class OrderEntity {
         this.id = id;
     }
 
-    public CustomerDomain getCustomer() {
+    public CustomerEntity getCustomer() {
         return customer;
     }
 
-    public void setCustomer(CustomerDomain customer) {
+    public void setCustomer(CustomerEntity customer) {
         this.customer = customer;
     }
 
-    public List<ProductOrderDomain> getItems() {
+    public List<OrderProductEntity> getItems() {
         return items;
     }
 
-    public void setItems(List<ProductOrderDomain> items) {
+    public void setItems(List<OrderProductEntity> items) {
         this.items = items;
     }
 
@@ -95,4 +95,5 @@ public class OrderEntity {
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
+
 }

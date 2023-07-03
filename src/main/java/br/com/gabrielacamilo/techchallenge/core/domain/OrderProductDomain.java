@@ -3,7 +3,7 @@ package br.com.gabrielacamilo.techchallenge.core.domain;
 import java.math.BigDecimal;
 import java.util.List;
 
-public class ProductOrderDomain {
+public class OrderProductDomain {
     private ProductDomain product;
 
     private Integer quantity;
@@ -12,11 +12,16 @@ public class ProductOrderDomain {
 
     private BigDecimal total;
 
-    public ProductOrderDomain (ProductDomain product, int quantity, List<ProductDomain> addOns) {
+    public OrderProductDomain(ProductDomain product, int quantity, List<ProductDomain> addOns) {
         this.product = product;
         this.quantity = quantity;
         this.addOns = addOns;
         this.total = calculatePrice();
+    }public OrderProductDomain(ProductDomain product, int quantity, List<ProductDomain> addOns, BigDecimal total) {
+        this.product = product;
+        this.quantity = quantity;
+        this.addOns = addOns;
+        this.total = total;
     }
 
     private BigDecimal calculatePrice() {

@@ -3,7 +3,7 @@ package br.com.gabrielacamilo.techchallenge.adapters.dtos.order;
 import br.com.gabrielacamilo.techchallenge.adapters.dtos.product.ProductResponse;
 import br.com.gabrielacamilo.techchallenge.core.domain.CustomerDomain;
 import br.com.gabrielacamilo.techchallenge.core.domain.OrderDomain;
-import br.com.gabrielacamilo.techchallenge.core.domain.ProductOrderDomain;
+import br.com.gabrielacamilo.techchallenge.core.domain.OrderProductDomain;
 import br.com.gabrielacamilo.techchallenge.core.domain.enums.OrderStatus;
 import br.com.gabrielacamilo.techchallenge.core.domain.enums.PaymentStatus;
 import br.com.gabrielacamilo.techchallenge.utils.GenericMapper;
@@ -109,7 +109,7 @@ public class OrderResponse {
 
         private List<ProductResponse> addOns;
 
-        public OrderItem(ProductOrderDomain domainItem) {
+        public OrderItem(OrderProductDomain domainItem) {
             this.product = GenericMapper.map(domainItem.getProduct(), ProductResponse.class);
             this.quantity = domainItem.getQuantity();
             this.addOns = new ArrayList<>();

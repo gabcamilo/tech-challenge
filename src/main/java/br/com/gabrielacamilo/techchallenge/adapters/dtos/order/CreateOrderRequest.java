@@ -2,8 +2,8 @@ package br.com.gabrielacamilo.techchallenge.adapters.dtos.order;
 
 import br.com.gabrielacamilo.techchallenge.core.domain.CustomerDomain;
 import br.com.gabrielacamilo.techchallenge.core.domain.OrderDomain;
+import br.com.gabrielacamilo.techchallenge.core.domain.OrderProductDomain;
 import br.com.gabrielacamilo.techchallenge.core.domain.ProductDomain;
-import br.com.gabrielacamilo.techchallenge.core.domain.ProductOrderDomain;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,10 +22,9 @@ public class CreateOrderRequest {
     private List<String> getAddOnsList() {
         List<String> addOns = new ArrayList<>();
         items.forEach(item ->
-            addOns.addAll(item.getAddOnds())
+                addOns.addAll(item.getAddOnds())
         );
         return addOns;
-//        return new ArrayList<>(new HashSet<>(addOns));
     }
 
     public List<String> getProductsList() {
@@ -53,16 +52,16 @@ public class CreateOrderRequest {
         HashMap<String, ProductDomain> productsDic = new HashMap<>();
 
         products.forEach(product ->
-            productsDic.put(product.getId(), product)
+                productsDic.put(product.getId(), product)
         );
 
-        List<ProductOrderDomain> productsDomain = items.stream().map(item -> {
+        List<OrderProductDomain> productsDomain = items.stream().map(item -> {
             ProductDomain product = productsDic.get(item.getId());
             List<ProductDomain> addOns = new ArrayList<>();
             item.getAddOnds().forEach(addOnId ->
-                addOns.add(productsDic.get(addOnId))
+                    addOns.add(productsDic.get(addOnId))
             );
-            return new ProductOrderDomain(product, item.getQuantity(), addOns);
+            return new OrderProductDomain(product, item.getQuantity(), addOns);
         }).toList();
 
         return new OrderDomain(customer, note, productsDomain);
