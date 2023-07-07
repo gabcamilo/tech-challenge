@@ -5,30 +5,50 @@ services:
   mongodb:
     image: mongo:latest
     restart: always
+    container_name: mongodb-tech-challenge
     ports:
       - 27017:27017
+    expose:
+      - 27017
     volumes:
       - type: bind
         source: ./data
         target: /data/db
 #    environment:
-#      MONGO_INITDB_ROOT_USERNAME: root
-#      MONGO_INITDB_ROOT_PASSWORD: example
+#      - MONGO_INITDB_ROOT_USERNAME=root
+#      - MONGO_INITDB_ROOT_PASSWORD=example
 
   mongo-express:
     image: mongo-express
     restart: always
     ports:
       - 8081:8081
+#    environment:
+#      - ME_CONFIG_MONGODB_ADMINUSERNAME=root
+#      - ME_CONFIG_MONGODB_ADMINPASSWORD=changeit
+#      - ME_CONFIG_MONGODB_URL=mongodb://root:example@mongodb:27017/
+
+  tech-challenge-app:
+    build:
+      dockerfile: Dockerfile
+      context: .
+    image: gabcamilo/tech-challenge:latest
+    restart: on-failure
+    container_name: tech-challenge-app
+    ports:
+      - 8080:8080
+    depends_on:
+      - mongodb
     environment:
-#      ME_CONFIG_MONGODB_ADMINUSERNAME: root
-#      ME_CONFIG_MONGODB_ADMINPASSWORD: changeit
-#      ME_CONFIG_MONGODB_URL: mongodb://root:example@mongodb:27017/
-      ME_CONFIG_MONGODB_URL: mongodb://localhost:27017
+      - SPRING_DATA_MONGODB_.HOST=mongodb
+      - SPRING_DATA_MONGODB_.PORT=27017
+      - SPRING_DATA_MONGODB_.DATABASE=tech-challenge
+#      - SPRING_DATA_MONGODB_.USERNAME=root
+#      - SPRING_DATA_MONGODB_.PASSWORD=example
 
 volumes:
   data: {}
 
 networks:
   default:
-    name: mongodb-network
+    name: tech-challenge-network
