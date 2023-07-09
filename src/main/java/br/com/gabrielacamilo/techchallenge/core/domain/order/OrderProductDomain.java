@@ -1,4 +1,6 @@
-package br.com.gabrielacamilo.techchallenge.core.domain;
+package br.com.gabrielacamilo.techchallenge.core.domain.order;
+
+import br.com.gabrielacamilo.techchallenge.core.domain.product.ProductDomain;
 
 import java.math.BigDecimal;
 import java.util.List;

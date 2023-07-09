@@ -1,9 +1,9 @@
-package br.com.gabrielacamilo.techchallenge.adapters.dtos.order;
+package br.com.gabrielacamilo.techchallenge.adapters.inbound.api.dtos.order;
 
-import br.com.gabrielacamilo.techchallenge.adapters.dtos.product.ProductResponse;
-import br.com.gabrielacamilo.techchallenge.core.domain.CustomerDomain;
-import br.com.gabrielacamilo.techchallenge.core.domain.OrderDomain;
-import br.com.gabrielacamilo.techchallenge.core.domain.OrderProductDomain;
+import br.com.gabrielacamilo.techchallenge.adapters.inbound.api.dtos.product.ProductResponse;
+import br.com.gabrielacamilo.techchallenge.core.domain.customer.CustomerDomain;
+import br.com.gabrielacamilo.techchallenge.core.domain.order.OrderDomain;
+import br.com.gabrielacamilo.techchallenge.core.domain.order.OrderProductDomain;
 import br.com.gabrielacamilo.techchallenge.core.domain.enums.OrderStatus;
 import br.com.gabrielacamilo.techchallenge.core.domain.enums.PaymentStatus;
 import br.com.gabrielacamilo.techchallenge.utils.GenericMapper;

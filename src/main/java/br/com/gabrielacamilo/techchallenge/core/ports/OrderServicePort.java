@@ -1,7 +1,7 @@
 package br.com.gabrielacamilo.techchallenge.core.ports;
 
-import br.com.gabrielacamilo.techchallenge.core.domain.CustomerDomain;
-import br.com.gabrielacamilo.techchallenge.core.domain.OrderDomain;
+import br.com.gabrielacamilo.techchallenge.core.domain.customer.CustomerDomain;
+import br.com.gabrielacamilo.techchallenge.core.domain.order.OrderDomain;
 
 import java.util.List;
 import java.util.Optional;

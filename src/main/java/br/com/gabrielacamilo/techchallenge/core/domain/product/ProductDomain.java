@@ -1,12 +1,13 @@
-package br.com.gabrielacamilo.techchallenge.core.domain;
+package br.com.gabrielacamilo.techchallenge.core.domain.product;
 
+import br.com.gabrielacamilo.techchallenge.core.domain.BaseDomain;
 import br.com.gabrielacamilo.techchallenge.core.domain.enums.ProductType;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-public class ProductDomain {
-    private String id;
+public class ProductDomain extends BaseDomain {
+
     private String name;
     private ProductType type;
     private String description;

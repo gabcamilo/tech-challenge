@@ -1,4 +1,4 @@
-package br.com.gabrielacamilo.techchallenge.core.domain;
+package br.com.gabrielacamilo.techchallenge.core.domain.product;
 
 import br.com.gabrielacamilo.techchallenge.core.domain.enums.ProductType;
 

@@ -4,10 +4,10 @@ import br.com.gabrielacamilo.techchallenge.adapters.outbound.persistence.entitie
 import br.com.gabrielacamilo.techchallenge.adapters.outbound.persistence.entities.OrderEntity;
 import br.com.gabrielacamilo.techchallenge.adapters.outbound.persistence.entities.OrderProductEntity;
 import br.com.gabrielacamilo.techchallenge.adapters.outbound.persistence.entities.ProductEntity;
-import br.com.gabrielacamilo.techchallenge.core.domain.CustomerDomain;
-import br.com.gabrielacamilo.techchallenge.core.domain.OrderDomain;
-import br.com.gabrielacamilo.techchallenge.core.domain.OrderProductDomain;
-import br.com.gabrielacamilo.techchallenge.core.domain.ProductDomain;
+import br.com.gabrielacamilo.techchallenge.core.domain.customer.CustomerDomain;
+import br.com.gabrielacamilo.techchallenge.core.domain.order.OrderDomain;
+import br.com.gabrielacamilo.techchallenge.core.domain.order.OrderProductDomain;
+import br.com.gabrielacamilo.techchallenge.core.domain.product.ProductDomain;
 import br.com.gabrielacamilo.techchallenge.core.domain.enums.OrderStatus;
 import br.com.gabrielacamilo.techchallenge.core.domain.enums.PaymentStatus;
 import br.com.gabrielacamilo.techchallenge.core.ports.OrderPersistencePort;

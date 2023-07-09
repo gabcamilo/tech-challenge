@@ -1,42 +1,25 @@
-package br.com.gabrielacamilo.techchallenge.adapters.dtos.customer;
+package br.com.gabrielacamilo.techchallenge.core.domain.customer;
 
-import br.com.gabrielacamilo.techchallenge.core.domain.CustomerDomain;
+import br.com.gabrielacamilo.techchallenge.core.domain.BaseDomain;
 
 import java.time.LocalDateTime;
 
-public class CustomerResponse {
-
-    public CustomerResponse(CustomerDomain domain) {
-        this.id = domain.getId();
-        this.name = domain.getName();
-        this.email = domain.getEmail();
-        this.cpf = domain.getCpf();
-        this.createdAt = domain.getCreatedAt();
-        this.updatedAt = domain.getUpdatedAt();
-    }
-
-    public CustomerResponse() {
-    }
-
-    private String id;
-
+public class CustomerDomain extends BaseDomain {
     private String name;
-
     private String email;
-
-    //TODO: mask cpf
     private String cpf;
-
     private LocalDateTime createdAt;
-
     private LocalDateTime updatedAt;
 
-    public String getId() {
-        return id;
+    public CustomerDomain(String name, String email, String cpf) {
+        this.name = name;
+        this.email = email;
+        this.cpf = cpf;
+        createdAt = LocalDateTime.now();
+        updatedAt = LocalDateTime.now();
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public CustomerDomain() {
     }
 
     public String getName() {
@@ -77,5 +60,12 @@ public class CustomerResponse {
 
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public void update(CustomerDomain customer) {
+        this.name = customer.getName();
+        this.email = customer.getEmail();
+        this.cpf = customer.getCpf();
+        this.updatedAt = LocalDateTime.now();
     }
 }

@@ -1,7 +1,7 @@
 package br.com.gabrielacamilo.techchallenge.core.services;
 
-import br.com.gabrielacamilo.techchallenge.core.domain.BundleDomain;
-import br.com.gabrielacamilo.techchallenge.core.domain.ProductDomain;
+import br.com.gabrielacamilo.techchallenge.core.domain.product.BundleDomain;
+import br.com.gabrielacamilo.techchallenge.core.domain.product.ProductDomain;
 import br.com.gabrielacamilo.techchallenge.core.domain.enums.ProductType;
 import br.com.gabrielacamilo.techchallenge.core.ports.ProductPersistencePort;
 import br.com.gabrielacamilo.techchallenge.core.ports.ProductServicePort;

@@ -1,5 +1,7 @@
 package br.com.gabrielacamilo.techchallenge.core.domain;
 
+import br.com.gabrielacamilo.techchallenge.core.domain.BaseDomain;
+import br.com.gabrielacamilo.techchallenge.core.domain.customer.CustomerDomain;
 import br.com.gabrielacamilo.techchallenge.core.domain.enums.OrderStatus;
 import br.com.gabrielacamilo.techchallenge.core.domain.enums.PaymentStatus;
 
@@ -7,8 +9,8 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class OrderDomain {
-    private String id;
+public class OrderDomain extends BaseDomain {
+
     private CustomerDomain customer;
     private List<OrderProductDomain> items;
     private OrderStatus status;
@@ -34,13 +36,14 @@ public class OrderDomain {
     }
 
     public OrderDomain(String id, CustomerDomain customer, List<OrderProductDomain> items, OrderStatus status, PaymentStatus paymentStatus, String note, BigDecimal total, LocalDateTime createdAt, LocalDateTime updatedAt) {
-        this.id = id;
+        super(id);
         this.customer = customer;
         this.items = items;
         this.status = status;
         this.paymentStatus = paymentStatus;
         this.note = note;
         this.total = total;
+
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }

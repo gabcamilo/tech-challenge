@@ -1,10 +1,10 @@
-package br.com.gabrielacamilo.techchallenge.adapters.inbound.controllers;
+package br.com.gabrielacamilo.techchallenge.adapters.inbound.api.controllers;
 
-import br.com.gabrielacamilo.techchallenge.adapters.dtos.order.CreateOrderRequest;
-import br.com.gabrielacamilo.techchallenge.adapters.dtos.order.OrderResponse;
-import br.com.gabrielacamilo.techchallenge.core.domain.CustomerDomain;
-import br.com.gabrielacamilo.techchallenge.core.domain.OrderDomain;
-import br.com.gabrielacamilo.techchallenge.core.domain.ProductDomain;
+import br.com.gabrielacamilo.techchallenge.adapters.inbound.api.dtos.order.CreateOrderRequest;
+import br.com.gabrielacamilo.techchallenge.adapters.inbound.api.dtos.order.OrderResponse;
+import br.com.gabrielacamilo.techchallenge.core.domain.customer.CustomerDomain;
+import br.com.gabrielacamilo.techchallenge.core.domain.order.OrderDomain;
+import br.com.gabrielacamilo.techchallenge.core.domain.product.ProductDomain;
 import br.com.gabrielacamilo.techchallenge.core.ports.CustomerServicePort;
 import br.com.gabrielacamilo.techchallenge.core.ports.OrderServicePort;
 import br.com.gabrielacamilo.techchallenge.core.ports.ProductServicePort;

@@ -1,6 +1,6 @@
-package br.com.gabrielacamilo.techchallenge.adapters.dtos.customer;
+package br.com.gabrielacamilo.techchallenge.adapters.inbound.api.dtos.customer;
 
-import br.com.gabrielacamilo.techchallenge.core.domain.CustomerDomain;
+import br.com.gabrielacamilo.techchallenge.core.domain.customer.CustomerDomain;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import org.hibernate.validator.constraints.br.CPF;

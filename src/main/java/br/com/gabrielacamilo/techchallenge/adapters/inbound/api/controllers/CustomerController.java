@@ -1,9 +1,9 @@
-package br.com.gabrielacamilo.techchallenge.adapters.inbound.controllers;
+package br.com.gabrielacamilo.techchallenge.adapters.inbound.api.controllers;
 
-import br.com.gabrielacamilo.techchallenge.adapters.dtos.customer.CreateCustomerRequest;
-import br.com.gabrielacamilo.techchallenge.adapters.dtos.customer.CustomerResponse;
-import br.com.gabrielacamilo.techchallenge.adapters.dtos.customer.UpdateCustomerRequest;
-import br.com.gabrielacamilo.techchallenge.core.domain.CustomerDomain;
+import br.com.gabrielacamilo.techchallenge.adapters.inbound.api.dtos.customer.CreateCustomerRequest;
+import br.com.gabrielacamilo.techchallenge.adapters.inbound.api.dtos.customer.CustomerResponse;
+import br.com.gabrielacamilo.techchallenge.adapters.inbound.api.dtos.customer.UpdateCustomerRequest;
+import br.com.gabrielacamilo.techchallenge.core.domain.customer.CustomerDomain;
 import br.com.gabrielacamilo.techchallenge.core.ports.CustomerServicePort;
 import br.com.gabrielacamilo.techchallenge.utils.GenericMapper;
 import jakarta.validation.Valid;

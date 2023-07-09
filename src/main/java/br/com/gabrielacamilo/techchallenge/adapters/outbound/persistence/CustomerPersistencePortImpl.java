@@ -1,7 +1,7 @@
 package br.com.gabrielacamilo.techchallenge.adapters.outbound.persistence;
 
 import br.com.gabrielacamilo.techchallenge.adapters.outbound.persistence.entities.CustomerEntity;
-import br.com.gabrielacamilo.techchallenge.core.domain.CustomerDomain;
+import br.com.gabrielacamilo.techchallenge.core.domain.customer.CustomerDomain;
 import br.com.gabrielacamilo.techchallenge.core.ports.CustomerPersistencePort;
 import br.com.gabrielacamilo.techchallenge.utils.GenericMapper;
 import org.springframework.stereotype.Component;

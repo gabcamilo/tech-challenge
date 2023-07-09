@@ -1,5 +1,6 @@
-package br.com.gabrielacamilo.techchallenge.adapters.dtos.product;
+package br.com.gabrielacamilo.techchallenge.adapters.inbound.api.dtos.product;
 
+import br.com.gabrielacamilo.techchallenge.core.domain.product.ProductDomain;
 import br.com.gabrielacamilo.techchallenge.core.domain.enums.ProductType;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
@@ -7,7 +8,7 @@ import jakarta.validation.constraints.NotNull;
 
 import java.math.BigDecimal;
 
-public class UpdateProductRequest {
+public class CreateProductRequest {
     @NotBlank
     private final String name;
 
@@ -20,7 +21,7 @@ public class UpdateProductRequest {
     @NotNull
     private final ProductType type;
 
-    public UpdateProductRequest(@NotBlank String name, String description, @NotNull BigDecimal price, @NotNull ProductType type) {
+    public CreateProductRequest(String name, String description, BigDecimal price, ProductType type) {
         this.name = name;
         this.description = description;
         this.price = price;
@@ -39,7 +40,12 @@ public class UpdateProductRequest {
         return price;
     }
 
-    public ProductType getType() {
+    public ProductType getItemType() {
         return type;
+    }
+
+
+    public ProductDomain toDomain() {
+        return new ProductDomain(name, type, description, price);
     }
 }

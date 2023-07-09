@@ -1,4 +1,4 @@
-package br.com.gabrielacamilo.techchallenge.adapters.dtos.customer;
+package br.com.gabrielacamilo.techchallenge.adapters.inbound.api.dtos.customer;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
