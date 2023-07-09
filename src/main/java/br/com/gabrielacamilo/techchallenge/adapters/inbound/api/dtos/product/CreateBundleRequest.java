@@ -2,10 +2,6 @@ package br.com.gabrielacamilo.techchallenge.adapters.inbound.api.dtos.product;
 
 import br.com.gabrielacamilo.techchallenge.core.domain.product.BundleDomain;
 import br.com.gabrielacamilo.techchallenge.core.domain.product.ProductDomain;
-import jakarta.validation.constraints.DecimalMax;
-import jakarta.validation.constraints.DecimalMin;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -13,16 +9,12 @@ import java.util.List;
 
 public class CreateBundleRequest {
 
-    @NotBlank
     private final String name;
 
     private final String description;
 
-    @DecimalMin("0")
-    @DecimalMax("1")
     private final BigDecimal discountPercentage;
 
-    @NotEmpty
     List<String> items;
 
     public CreateBundleRequest(String name, String description, BigDecimal discountPercentage, List<String> items) {
@@ -51,7 +43,7 @@ public class CreateBundleRequest {
     public BundleDomain toDomain(List<ProductDomain> products) {
         HashMap<String, ProductDomain> productsDic = new HashMap<>();
         products.forEach(product ->
-            productsDic.put(product.getId(), product)
+                productsDic.put(product.getId(), product)
         );
 
         List<ProductDomain> itemsDomain = items.stream().map(item -> productsDic.put(item, productsDic.get(item))).toList();

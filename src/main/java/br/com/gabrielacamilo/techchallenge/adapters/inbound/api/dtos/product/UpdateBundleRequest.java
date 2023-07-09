@@ -13,16 +13,12 @@ import java.util.List;
 
 public class UpdateBundleRequest {
 
-    @NotBlank
     private final String name;
 
     private final String description;
 
-    @DecimalMin("0")
-    @DecimalMax("1")
     private final BigDecimal discountPercentage;
 
-    @NotEmpty
     List<String> items;
 
     public UpdateBundleRequest(String name, String description, BigDecimal discountPercentage, List<String> items) {

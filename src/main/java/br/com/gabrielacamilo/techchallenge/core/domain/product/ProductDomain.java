@@ -2,19 +2,32 @@ package br.com.gabrielacamilo.techchallenge.core.domain.product;
 
 import br.com.gabrielacamilo.techchallenge.core.domain.BaseDomain;
 import br.com.gabrielacamilo.techchallenge.core.domain.enums.ProductType;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 public class ProductDomain extends BaseDomain {
 
+    @NotBlank
     private String name;
+
+    @NotNull
     private ProductType type;
+
     private String description;
+
+    @NotNull
+    @DecimalMin("0")
     private BigDecimal price;
+
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
+    @Deprecated
     public ProductDomain() {
     }
 
@@ -26,6 +39,8 @@ public class ProductDomain extends BaseDomain {
         setPrice(finalPrice);
         createdAt = LocalDateTime.now();
         updatedAt = LocalDateTime.now();
+
+        this.validate(this);
     }
 
     public ProductDomain(String name, ProductType productType, String description) {
@@ -34,19 +49,12 @@ public class ProductDomain extends BaseDomain {
         this.description = description;
         createdAt = LocalDateTime.now();
         updatedAt = LocalDateTime.now();
-    }
 
+        this.validate(this);
+    }
 
     protected BigDecimal calculatePrice(BigDecimal price) {
         return price;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getName() {
