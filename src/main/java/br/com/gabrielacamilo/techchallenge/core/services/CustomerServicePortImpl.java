@@ -17,6 +17,7 @@ public class CustomerServicePortImpl implements CustomerServicePort {
 
     @Override
     public CustomerDomain saveCustomer(CustomerDomain customer) {
+        customerPersistencePort.validateCustomer(customer.getCpf(), customer.getEmail());
         return customerPersistencePort.saveCustomer(customer);
     }
 

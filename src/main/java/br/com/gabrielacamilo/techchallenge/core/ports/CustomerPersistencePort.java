@@ -10,4 +10,5 @@ public interface CustomerPersistencePort {
     Optional<CustomerDomain> getCustomerByCpf(String cpf);
     List<CustomerDomain> listAllCustomers();
     Optional<CustomerDomain> getCustomer(String id);
+    void validateCustomer(String cpf, String email);
 }

@@ -40,4 +40,18 @@ public class CustomerPersistencePortImpl implements CustomerPersistencePort {
         Optional<CustomerEntity> customerEntity = customerRepository.findById(id);
         return GenericMapper.map(customerEntity, CustomerDomain.class);
     }
+
+    @Override
+    public void validateCustomer(String cpf, String email) {
+        Optional<CustomerEntity> byCpf = customerRepository.findByCpf(cpf);
+        Optional<CustomerEntity> byEmail = customerRepository.findByEmail(email);
+
+    // TODO validate with custom annotation
+        if (byCpf.isPresent()) {
+            throw new IllegalArgumentException("cpf");
+        } else if (byEmail.isPresent()) {
+            throw new IllegalArgumentException("email");
+        }
+
+    }
 }

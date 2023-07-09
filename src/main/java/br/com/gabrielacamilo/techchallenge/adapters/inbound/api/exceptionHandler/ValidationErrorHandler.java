@@ -38,6 +38,18 @@ public class ValidationErrorHandler {
 
     }
 
+    @ResponseStatus(code = HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ValidationErrorsOutputDto handle(IllegalArgumentException exception) {
+
+        List<FieldError> fieldErrors =new ArrayList<>();
+
+        fieldErrors.add(new FieldError("", exception.getMessage(), exception.getMessage() + " already registered"  ));
+
+        return buildValidationErrors(fieldErrors);
+
+    }
+
     private ValidationErrorsOutputDto buildValidationErrors(List<FieldError> fieldErrors) {
         ValidationErrorsOutputDto validationErrors = new ValidationErrorsOutputDto();
 
