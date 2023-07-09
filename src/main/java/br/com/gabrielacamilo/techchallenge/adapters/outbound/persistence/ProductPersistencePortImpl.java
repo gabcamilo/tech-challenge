@@ -2,8 +2,8 @@ package br.com.gabrielacamilo.techchallenge.adapters.outbound.persistence;
 
 import br.com.gabrielacamilo.techchallenge.adapters.outbound.persistence.entities.BundleEntity;
 import br.com.gabrielacamilo.techchallenge.adapters.outbound.persistence.entities.ProductEntity;
-import br.com.gabrielacamilo.techchallenge.core.domain.BundleDomain;
-import br.com.gabrielacamilo.techchallenge.core.domain.ProductDomain;
+import br.com.gabrielacamilo.techchallenge.core.domain.product.BundleDomain;
+import br.com.gabrielacamilo.techchallenge.core.domain.product.ProductDomain;
 import br.com.gabrielacamilo.techchallenge.core.domain.enums.ProductType;
 import br.com.gabrielacamilo.techchallenge.core.ports.ProductPersistencePort;
 import br.com.gabrielacamilo.techchallenge.utils.GenericMapper;

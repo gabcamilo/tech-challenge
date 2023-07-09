@@ -1,9 +1,9 @@
-package br.com.gabrielacamilo.techchallenge.adapters.dtos.order;
+package br.com.gabrielacamilo.techchallenge.adapters.inbound.api.dtos.order;
 
-import br.com.gabrielacamilo.techchallenge.core.domain.CustomerDomain;
-import br.com.gabrielacamilo.techchallenge.core.domain.OrderDomain;
-import br.com.gabrielacamilo.techchallenge.core.domain.OrderProductDomain;
-import br.com.gabrielacamilo.techchallenge.core.domain.ProductDomain;
+import br.com.gabrielacamilo.techchallenge.core.domain.customer.CustomerDomain;
+import br.com.gabrielacamilo.techchallenge.core.domain.order.OrderDomain;
+import br.com.gabrielacamilo.techchallenge.core.domain.order.OrderProductDomain;
+import br.com.gabrielacamilo.techchallenge.core.domain.product.ProductDomain;
 
 import java.util.ArrayList;
 import java.util.HashMap;

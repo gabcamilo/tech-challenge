@@ -1,7 +1,7 @@
 package br.com.gabrielacamilo.techchallenge.core.services;
 
-import br.com.gabrielacamilo.techchallenge.core.domain.CustomerDomain;
-import br.com.gabrielacamilo.techchallenge.core.domain.OrderDomain;
+import br.com.gabrielacamilo.techchallenge.core.domain.customer.CustomerDomain;
+import br.com.gabrielacamilo.techchallenge.core.domain.order.OrderDomain;
 import br.com.gabrielacamilo.techchallenge.core.ports.OrderPaymentPort;
 import br.com.gabrielacamilo.techchallenge.core.ports.OrderPersistencePort;
 import br.com.gabrielacamilo.techchallenge.core.ports.OrderServicePort;

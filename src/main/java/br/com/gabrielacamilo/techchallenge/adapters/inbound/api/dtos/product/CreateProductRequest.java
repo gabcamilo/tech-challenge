@@ -1,24 +1,17 @@
-package br.com.gabrielacamilo.techchallenge.adapters.dtos.product;
+package br.com.gabrielacamilo.techchallenge.adapters.inbound.api.dtos.product;
 
-import br.com.gabrielacamilo.techchallenge.core.domain.ProductDomain;
 import br.com.gabrielacamilo.techchallenge.core.domain.enums.ProductType;
-import jakarta.validation.constraints.DecimalMin;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import br.com.gabrielacamilo.techchallenge.core.domain.product.ProductDomain;
 
 import java.math.BigDecimal;
 
 public class CreateProductRequest {
-    @NotBlank
     private final String name;
 
     private final String description;
 
-    @NotNull
-    @DecimalMin("0")
     private final BigDecimal price;
 
-    @NotNull
     private final ProductType type;
 
     public CreateProductRequest(String name, String description, BigDecimal price, ProductType type) {

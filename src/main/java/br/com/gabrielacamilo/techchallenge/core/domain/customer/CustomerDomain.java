@@ -1,31 +1,43 @@
-package br.com.gabrielacamilo.techchallenge.core.domain;
+package br.com.gabrielacamilo.techchallenge.core.domain.customer;
+
+import br.com.gabrielacamilo.techchallenge.adapters.outbound.persistence.CustomerPersistencePortImpl;
+import br.com.gabrielacamilo.techchallenge.core.domain.BaseDomain;
+import br.com.gabrielacamilo.techchallenge.core.ports.CustomerPersistencePort;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import org.hibernate.validator.constraints.br.CPF;
 
 import java.time.LocalDateTime;
-public class CustomerDomain {
-    private String id;
-    private String name;
-    private String email;
-    private String cpf;
+
+public class CustomerDomain extends BaseDomain {
+
+    @NotBlank
+    private String name; // unico
+
+    @NotBlank
+    @Email
+    private String email; //unico
+
+    @NotBlank
+    @CPF
+    private String cpf; //unico
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    public CustomerDomain(String name, String email, String cpf) {
+    public CustomerDomain(
+            String name,
+            String email,
+            String cpf) {
         this.name = name;
         this.email = email;
         this.cpf = cpf;
         createdAt = LocalDateTime.now();
         updatedAt = LocalDateTime.now();
+
+        BaseDomain.validate(this);
     }
 
     public CustomerDomain() {
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getName() {

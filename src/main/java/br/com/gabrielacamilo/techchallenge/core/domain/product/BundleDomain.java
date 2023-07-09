@@ -1,15 +1,24 @@
-package br.com.gabrielacamilo.techchallenge.core.domain;
+package br.com.gabrielacamilo.techchallenge.core.domain.product;
 
+import br.com.gabrielacamilo.techchallenge.core.domain.BaseDomain;
 import br.com.gabrielacamilo.techchallenge.core.domain.enums.ProductType;
+import jakarta.validation.constraints.DecimalMax;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.Min;
 
 import java.math.BigDecimal;
 import java.util.List;
 
 public class BundleDomain extends ProductDomain{
 
+    @Min(2)
     private List<ProductDomain> items;
+
+    @DecimalMin("0")
+    @DecimalMax("1")
     private BigDecimal discountPercentage;
 
+    @Deprecated
     public BundleDomain() {
     }
 
@@ -22,6 +31,8 @@ public class BundleDomain extends ProductDomain{
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
         BigDecimal finalPrice = calculatePrice(sum);
         this.setPrice(finalPrice);
+
+        BaseDomain.validate(this);
     }
 
     @Override

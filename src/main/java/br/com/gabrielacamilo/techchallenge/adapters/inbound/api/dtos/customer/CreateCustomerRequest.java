@@ -1,19 +1,11 @@
-package br.com.gabrielacamilo.techchallenge.adapters.dtos.customer;
+package br.com.gabrielacamilo.techchallenge.adapters.inbound.api.dtos.customer;
 
-import br.com.gabrielacamilo.techchallenge.core.domain.CustomerDomain;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import org.hibernate.validator.constraints.br.CPF;
+import br.com.gabrielacamilo.techchallenge.core.domain.customer.CustomerDomain;
 
 public class CreateCustomerRequest {
 
-    @NotBlank
     private final String name;
-    @Email
-    @NotBlank
     private final String email;
-    @CPF
-    @NotBlank
     private final String cpf;
 
     public CreateCustomerRequest(String name, String email, String cpf) {

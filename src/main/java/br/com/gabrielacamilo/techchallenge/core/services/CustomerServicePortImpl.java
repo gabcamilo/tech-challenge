@@ -1,6 +1,6 @@
 package br.com.gabrielacamilo.techchallenge.core.services;
 
-import br.com.gabrielacamilo.techchallenge.core.domain.CustomerDomain;
+import br.com.gabrielacamilo.techchallenge.core.domain.customer.CustomerDomain;
 import br.com.gabrielacamilo.techchallenge.core.ports.CustomerPersistencePort;
 import br.com.gabrielacamilo.techchallenge.core.ports.CustomerServicePort;
 
@@ -17,6 +17,7 @@ public class CustomerServicePortImpl implements CustomerServicePort {
 
     @Override
     public CustomerDomain saveCustomer(CustomerDomain customer) {
+        customerPersistencePort.validateCustomer(customer.getCpf(), customer.getEmail());
         return customerPersistencePort.saveCustomer(customer);
     }
 

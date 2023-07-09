@@ -1,10 +1,10 @@
-package br.com.gabrielacamilo.techchallenge.adapters.inbound.controllers;
+package br.com.gabrielacamilo.techchallenge.adapters.inbound.api.controllers;
 
-import br.com.gabrielacamilo.techchallenge.adapters.dtos.product.BundleResponse;
-import br.com.gabrielacamilo.techchallenge.adapters.dtos.product.CreateBundleRequest;
-import br.com.gabrielacamilo.techchallenge.adapters.dtos.product.UpdateBundleRequest;
-import br.com.gabrielacamilo.techchallenge.core.domain.BundleDomain;
-import br.com.gabrielacamilo.techchallenge.core.domain.ProductDomain;
+import br.com.gabrielacamilo.techchallenge.adapters.inbound.api.dtos.product.BundleResponse;
+import br.com.gabrielacamilo.techchallenge.adapters.inbound.api.dtos.product.CreateBundleRequest;
+import br.com.gabrielacamilo.techchallenge.adapters.inbound.api.dtos.product.UpdateBundleRequest;
+import br.com.gabrielacamilo.techchallenge.core.domain.product.BundleDomain;
+import br.com.gabrielacamilo.techchallenge.core.domain.product.ProductDomain;
 import br.com.gabrielacamilo.techchallenge.core.ports.ProductServicePort;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;

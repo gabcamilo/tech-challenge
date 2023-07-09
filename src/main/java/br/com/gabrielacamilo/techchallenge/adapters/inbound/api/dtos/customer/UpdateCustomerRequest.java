@@ -1,13 +1,7 @@
-package br.com.gabrielacamilo.techchallenge.adapters.dtos.customer;
-
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
+package br.com.gabrielacamilo.techchallenge.adapters.inbound.api.dtos.customer;
 
 public class UpdateCustomerRequest {
-    @NotBlank
     private final String name;
-    @Email
-    @NotBlank
     private final String email;
 
     public UpdateCustomerRequest(String name, String email) {

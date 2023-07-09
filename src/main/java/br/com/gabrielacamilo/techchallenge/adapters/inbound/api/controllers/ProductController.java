@@ -1,9 +1,9 @@
-package br.com.gabrielacamilo.techchallenge.adapters.inbound.controllers;
+package br.com.gabrielacamilo.techchallenge.adapters.inbound.api.controllers;
 
-import br.com.gabrielacamilo.techchallenge.adapters.dtos.product.CreateProductRequest;
-import br.com.gabrielacamilo.techchallenge.adapters.dtos.product.ProductResponse;
-import br.com.gabrielacamilo.techchallenge.adapters.dtos.product.UpdateProductRequest;
-import br.com.gabrielacamilo.techchallenge.core.domain.ProductDomain;
+import br.com.gabrielacamilo.techchallenge.adapters.inbound.api.dtos.product.CreateProductRequest;
+import br.com.gabrielacamilo.techchallenge.adapters.inbound.api.dtos.product.ProductResponse;
+import br.com.gabrielacamilo.techchallenge.adapters.inbound.api.dtos.product.UpdateProductRequest;
+import br.com.gabrielacamilo.techchallenge.core.domain.product.ProductDomain;
 import br.com.gabrielacamilo.techchallenge.core.domain.enums.ProductType;
 import br.com.gabrielacamilo.techchallenge.core.ports.ProductServicePort;
 import br.com.gabrielacamilo.techchallenge.utils.GenericMapper;

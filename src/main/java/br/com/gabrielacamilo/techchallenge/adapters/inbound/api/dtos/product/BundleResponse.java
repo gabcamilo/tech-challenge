@@ -1,6 +1,6 @@
-package br.com.gabrielacamilo.techchallenge.adapters.dtos.product;
+package br.com.gabrielacamilo.techchallenge.adapters.inbound.api.dtos.product;
 
-import br.com.gabrielacamilo.techchallenge.core.domain.BundleDomain;
+import br.com.gabrielacamilo.techchallenge.core.domain.product.BundleDomain;
 import br.com.gabrielacamilo.techchallenge.core.domain.enums.ProductType;
 
 import java.math.BigDecimal;

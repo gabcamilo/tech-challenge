@@ -1,6 +1,6 @@
 package br.com.gabrielacamilo.techchallenge.adapters.outbound.services;
 
-import br.com.gabrielacamilo.techchallenge.core.domain.OrderDomain;
+import br.com.gabrielacamilo.techchallenge.core.domain.order.OrderDomain;
 import br.com.gabrielacamilo.techchallenge.core.domain.enums.PaymentStatus;
 import org.springframework.stereotype.Component;
 

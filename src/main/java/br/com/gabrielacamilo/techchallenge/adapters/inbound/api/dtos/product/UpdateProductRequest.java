@@ -1,4 +1,4 @@
-package br.com.gabrielacamilo.techchallenge.adapters.dtos.product;
+package br.com.gabrielacamilo.techchallenge.adapters.inbound.api.dtos.product;
 
 import br.com.gabrielacamilo.techchallenge.core.domain.enums.ProductType;
 import jakarta.validation.constraints.DecimalMin;
@@ -8,16 +8,13 @@ import jakarta.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 public class UpdateProductRequest {
-    @NotBlank
+
     private final String name;
 
     private final String description;
 
-    @NotNull
-    @DecimalMin("0")
     private final BigDecimal price;
 
-    @NotNull
     private final ProductType type;
 
     public UpdateProductRequest(@NotBlank String name, String description, @NotNull BigDecimal price, @NotNull ProductType type) {
