@@ -24,16 +24,25 @@ A proposta completa do trabalho pode ser encontrada [aqui](PROPOSTA.md).
     - [Portas/ Adaptadores](#portas-adaptadores)
       - [**Service Ports/ Adapters**](#service-ports-adapters)
       - [**Persistence Ports/ Adapters**](#persistence-ports-adapters)
-    - [**Considerações Sobre a Arquitetura**](#considerações-sobre-a-arquitetura)
+    - [Considerações Sobre a Arquitetura](#considerações-sobre-a-arquitetura)
   - [Dicionário de Linguagem Ubíqua](#dicionário-de-linguagem-ubíqua)
   
-# Executando o Projeto
+# Executando o Projeto Localmente
 
-# Requisitos
+O único requisito **obrigatório** para executar este projeto é ter o [Docker](https://www.docker.com) instalado.
 
-O único requisito para executar este projeto é ter o [Docker](https://www.docker.com) instalado.
+No diretório do projeto:
+    
+```bash
 
+    $ docker-compose up
+    
+``` 
 
+**URL Padrão da API: http://localhost:8080/api/v1**
+
+É recomendada a utilização do [Insomnia](https://insomnia.rest) para testar a API. A Collection para teste encontra-se no arquivo
+`insomnia-collection.json` na raiz do projeto.
 
 # Padrões de Projeto
 
@@ -124,7 +133,7 @@ Os serviços implementados foram referentes à uma **API REST** implementada uti
 
 A interface de persistência de dados acessa uma implementação que utiliza um repository Spring Data MongoDB a qual persiste os dados da aplicação.
 
-### **Considerações Sobre a Arquitetura**
+### Considerações Sobre a Arquitetura
 
 A **Arquitetura Hexagonal**, ou **Ports and Adapters Architecture** provê um alto desacoplamento entre as regras do "core" da aplicação e as tecnologias utilizadas para implementar os diferentes serviços. Nesta aplicação isto fica claro quando observa-se que cada serviço utiliza uma tecnologia própria, e que se um dia estas tecnologias necessitarem ser trocadas isto não deve impactar o core business da aplicação que está isolado e permanecerá funcionando da mesma forma.
 
