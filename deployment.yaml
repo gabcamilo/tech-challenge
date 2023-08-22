@@ -1,0 +1,28 @@
+# deployment type watches version updates on replicasets
+
+# deployment config
+apiVersion: apps/v1
+kind: Deployment # just like replicaset, except "kind"
+metadata:
+  name: tech-challenge-app-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: tech-challenge-app
+
+  # pod
+  template:
+    metadata:
+      labels:
+        app: tech-challenge-app
+    spec:
+      containers:
+      - name: tech-challenge-app
+        image: nginx:latest
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 80
