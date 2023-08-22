@@ -3,6 +3,9 @@ kind: Service
 metadata:
   name: tech-challenge-app-service
 spec:
+  type: LoadBalancer # allows creation of an address without port-forward. If the cluster is hosted in some cloud a public ip address will be provided
+  # type: ClusterIP - exposes app inside the cluster (e.g. bff)
+  # type: NodePort - exposes app outside the cluster
   selector:
     app: tech-challenge-app
   ports:
