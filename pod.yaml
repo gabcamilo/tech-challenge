@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: tech-challenge-app
+  labels:
+    name: tech-challenge-app
+spec:
+  containers:
+  - name: tech-challenge-app
+    image: gabcamilo/tech-challenge:1.0
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
+    ports:
+      - containerPort: 8080
