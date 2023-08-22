@@ -1,0 +1,25 @@
+# replicaset config
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: tech-challenge-app-replicaset
+spec:
+  selector:
+    matchLabels:
+      app: tech-challenge-app
+
+  # pods config
+  template:
+    metadata:
+      labels:
+        app: tech-challenge-app
+    spec:
+      containers:
+      - name: tech-challenge-app
+        image: gabcamilo/tech-challenge:1.0
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 8080
