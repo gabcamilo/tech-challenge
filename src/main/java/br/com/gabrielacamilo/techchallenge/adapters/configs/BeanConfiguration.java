@@ -25,6 +25,4 @@ public class BeanConfiguration {
     ProductServicePortImpl productServicePortImpl (ProductPersistencePort persistence) {
         return new ProductServicePortImpl(persistence);
     }
-
-
 }

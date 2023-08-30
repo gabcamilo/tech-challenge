@@ -1,8 +1,6 @@
 package br.com.gabrielacamilo.techchallenge.core.domain.customer;
 
-import br.com.gabrielacamilo.techchallenge.adapters.outbound.persistence.CustomerPersistencePortImpl;
 import br.com.gabrielacamilo.techchallenge.core.domain.BaseDomain;
-import br.com.gabrielacamilo.techchallenge.core.ports.CustomerPersistencePort;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import org.hibernate.validator.constraints.br.CPF;
