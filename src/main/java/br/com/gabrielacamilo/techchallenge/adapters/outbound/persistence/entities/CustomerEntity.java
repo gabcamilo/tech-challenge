@@ -66,6 +66,3 @@ public class CustomerEntity {
         this.updatedAt = updatedAt;
     }
 }
-
-
-
