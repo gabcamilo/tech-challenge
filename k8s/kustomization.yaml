@@ -1,0 +1,8 @@
+secretGenerator:
+- name: tech-challenge-mongodb-secret
+  literals:
+  - mongodb-user=ROOT
+  - mongodb-password=PASSWORD
+resources:
+  - mongodb-configmap.yaml
+  - mongodb-deployment.yaml

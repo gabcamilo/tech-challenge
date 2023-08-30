@@ -1,0 +1,79 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: tech-challenge-mongodb-service
+  labels:
+    app: tech-challenge
+spec:
+  selector:
+    app: tech-challenge
+    tier: mongodb
+  ports:
+  - protocol: TCP
+    port: 27017
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: tech-challenge-mongodb-pvclaim
+  labels:
+    app: tech-challenge
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
+  volumeMode: Filesystem
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tech-challenge-mongodb
+  labels:
+    app: tech-challenge
+spec:
+  selector:
+    matchLabels:
+      app: tech-challenge
+      tier: mongodb
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: tech-challenge
+        tier: mongodb
+    spec:
+      containers:
+      - name: mongodb
+        image: mongo:4.4
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        env:
+        - name: MONGO_INITDB_ROOT_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: tech-challenge-mongodb-secret
+              key: mongodb-user
+        - name: MONGO_INITDB_ROOT_PASSWORD
+          valueFrom:
+              secretKeyRef:
+                name: tech-challenge-mongodb-secret
+                key: mongodb-password
+        ports:
+        - containerPort: 27017
+          name: mongodb
+        volumeMounts:
+        - name: mongodb-persistent-storage
+          mountPath: /data/db
+      volumes:
+      - name: mongodb-persistent-storage
+        persistentVolumeClaim:
+          claimName: tech-challenge-mongodb-pvclaim
+
+      
