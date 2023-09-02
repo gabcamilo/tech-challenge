@@ -7,3 +7,5 @@ resources:
   - mongodb-configmap.yaml
   - mongodb-deployment.yaml
   - mongo-express-deployment.yaml
+  - api-deployment.yaml
+

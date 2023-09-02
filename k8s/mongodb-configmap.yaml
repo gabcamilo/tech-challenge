@@ -6,4 +6,5 @@ metadata:
     app: tech-challenge
 data:
   mongodb-url: tech-challenge-mongodb-service
-
+  mongodb-port: "27017"
+  mongodb-database: "tech-challenge"
