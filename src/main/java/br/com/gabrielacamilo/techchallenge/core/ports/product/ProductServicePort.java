@@ -1,4 +1,4 @@
-package br.com.gabrielacamilo.techchallenge.core.ports;
+package br.com.gabrielacamilo.techchallenge.core.ports.product;
 
 import br.com.gabrielacamilo.techchallenge.core.domain.product.BundleDomain;
 import br.com.gabrielacamilo.techchallenge.core.domain.product.ProductDomain;
@@ -19,10 +19,4 @@ public interface ProductServicePort {
     void deleteProduct(ProductDomain item);
 
     List<ProductDomain>  listProductsByIds(List<String> items);
-
-    BundleDomain saveBundle(BundleDomain bundleDomain);
-
-    Optional<BundleDomain> getBundle(String id);
-
-    List<BundleDomain> listAllBundles();
 }

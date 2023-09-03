@@ -32,7 +32,7 @@ public class BundleDomain extends ProductDomain{
         BigDecimal finalPrice = calculatePrice(sum);
         this.setPrice(finalPrice);
 
-        BaseDomain.validate(this);
+        BaseDomain.isValid(this);
     }
 
     @Override

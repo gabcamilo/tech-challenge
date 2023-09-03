@@ -1,17 +1,18 @@
 package br.com.gabrielacamilo.techchallenge.adapters.inbound.api.controllers;
 
+import br.com.gabrielacamilo.techchallenge.adapters.inbound.api.dtos.ApiResponse;
 import br.com.gabrielacamilo.techchallenge.adapters.inbound.api.dtos.customer.CreateCustomerRequest;
 import br.com.gabrielacamilo.techchallenge.adapters.inbound.api.dtos.customer.CustomerResponse;
+import br.com.gabrielacamilo.techchallenge.adapters.inbound.api.dtos.customer.ListCustomersResponse;
 import br.com.gabrielacamilo.techchallenge.adapters.inbound.api.dtos.customer.UpdateCustomerRequest;
 import br.com.gabrielacamilo.techchallenge.core.domain.customer.CustomerDomain;
-import br.com.gabrielacamilo.techchallenge.core.ports.CustomerServicePort;
-import br.com.gabrielacamilo.techchallenge.utils.GenericMapper;
+import br.com.gabrielacamilo.techchallenge.core.ports.customer.CustomerServicePort;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.List;
-import java.util.Optional;
 
 @RequestMapping("/api/v1/customers")
 @RestController
@@ -24,37 +25,42 @@ public class CustomerController {
     }
 
     @PostMapping
-    public ResponseEntity<CustomerResponse> createCustomer(@RequestBody @Valid CreateCustomerRequest request) {
+    public ResponseEntity<ApiResponse> createCustomer(@RequestBody @Valid CreateCustomerRequest request) throws Throwable {
         CustomerDomain customer = request.toDomain();
-        CustomerDomain saved = port.saveCustomer(customer);
-        CustomerResponse response = new CustomerResponse(saved);
-        return ResponseEntity.ok(response);
+        CustomerDomain saved = port.create(customer);
+        CustomerResponse data = new CustomerResponse(saved);
+        ApiResponse response = new ApiResponse("Customer created successfully", 201, data);
+
+        return ResponseEntity.created(new URI("/api/v1/customers/" + saved.getId())).body(response);
     }
 
     @GetMapping("/{cpf}")
-    public ResponseEntity<CustomerResponse> getCustomerByCpf(@PathVariable String cpf) {
-        Optional<CustomerDomain> customer = port.getCustomerByCpf(cpf);
-        return customer.map(value -> ResponseEntity.ok(new CustomerResponse(value)))
-                .orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<ApiResponse> getCustomerByCpf(@PathVariable String cpf) throws Throwable {
+        var customer = port.getCustomerByCpf(cpf);
+        CustomerResponse data = new CustomerResponse(customer);
+        ApiResponse response = new ApiResponse("Customer found successfully", 200, data);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping
-    public ResponseEntity<List<CustomerResponse>> listAllCustomers() {
-        //TODO: less attributes DTO when listing all customers
-        List<CustomerDomain> customers = port.listAllCustomers();
-        List<CustomerResponse> customersResponse = GenericMapper.map(customers, CustomerResponse.class);
-        return ResponseEntity.ok(customersResponse);
+    public ResponseEntity<ApiResponse> listAllCustomers() throws Throwable {
+        List<CustomerDomain> customers = port.list();
+        ListCustomersResponse responseData = new ListCustomersResponse(customers);
+
+        ApiResponse response = new ApiResponse("List of customers obtained successfully", 200, responseData);
+        return ResponseEntity.ok(response);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CustomerResponse> updateCustomer(@RequestBody @Valid UpdateCustomerRequest request, @PathVariable String id) {
-        Optional<CustomerDomain> customerDomainOptional = port.getCustomer(id);
-        return customerDomainOptional.map(customer -> {
-                    customer.setName(request.getName());
-                    customer.setEmail(request.getEmail());
-                    CustomerDomain saved = port.saveCustomer(customer);
-                    return ResponseEntity.ok(new CustomerResponse(saved));
-                })
-                .orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<ApiResponse> updateCustomer(@RequestBody @Valid UpdateCustomerRequest request, @PathVariable String id) throws Throwable {
+        var updatedData = port.update(request.toDomain(), id);
+        var responseData = new CustomerResponse(updatedData);
+
+        var response = new ApiResponse(
+                "Customer updated successfully",
+                200,
+                responseData);
+
+        return ResponseEntity.ok(response);
     }
 }

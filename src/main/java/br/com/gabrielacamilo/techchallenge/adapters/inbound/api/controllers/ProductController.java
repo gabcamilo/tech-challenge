@@ -5,7 +5,7 @@ import br.com.gabrielacamilo.techchallenge.adapters.inbound.api.dtos.product.Pro
 import br.com.gabrielacamilo.techchallenge.adapters.inbound.api.dtos.product.UpdateProductRequest;
 import br.com.gabrielacamilo.techchallenge.core.domain.product.ProductDomain;
 import br.com.gabrielacamilo.techchallenge.core.domain.enums.ProductType;
-import br.com.gabrielacamilo.techchallenge.core.ports.ProductServicePort;
+import br.com.gabrielacamilo.techchallenge.core.ports.product.ProductServicePort;
 import br.com.gabrielacamilo.techchallenge.utils.GenericMapper;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;

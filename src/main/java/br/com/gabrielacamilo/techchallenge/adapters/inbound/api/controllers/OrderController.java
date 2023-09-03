@@ -5,9 +5,9 @@ import br.com.gabrielacamilo.techchallenge.adapters.inbound.api.dtos.order.Order
 import br.com.gabrielacamilo.techchallenge.core.domain.customer.CustomerDomain;
 import br.com.gabrielacamilo.techchallenge.core.domain.order.OrderDomain;
 import br.com.gabrielacamilo.techchallenge.core.domain.product.ProductDomain;
-import br.com.gabrielacamilo.techchallenge.core.ports.CustomerServicePort;
-import br.com.gabrielacamilo.techchallenge.core.ports.OrderServicePort;
-import br.com.gabrielacamilo.techchallenge.core.ports.ProductServicePort;
+import br.com.gabrielacamilo.techchallenge.core.ports.customer.CustomerServicePort;
+import br.com.gabrielacamilo.techchallenge.core.ports.order.OrderServicePort;
+import br.com.gabrielacamilo.techchallenge.core.ports.product.ProductServicePort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,17 +29,17 @@ public class OrderController {
     }
 
     @PostMapping
-    public ResponseEntity<OrderResponse> createOrder(@RequestBody CreateOrderRequest request) {
+    public ResponseEntity<OrderResponse> createOrder(@RequestBody CreateOrderRequest request) throws Throwable {
 
-        Optional<CustomerDomain> customer = customerPort.getCustomer(request.getCustomer());
-        if (customer.isEmpty()) {
-            return ResponseEntity.badRequest().build();
-        }
+        CustomerDomain customer = customerPort.get(request.getCustomer());
+//        if (customer.isEmpty()) {
+//            return ResponseEntity.badRequest().build();
+//        }
 
         List<String> productsIds = request.getProductsList();
         List<ProductDomain> products = productPort.listProductsByIds(productsIds);
 
-        OrderDomain domain = request.toDomain(products, customer.get());
+        OrderDomain domain = request.toDomain(products, customer);
         OrderDomain createdOrder = port.saveOrder(domain);
 
         OrderResponse response = new OrderResponse(createdOrder);
@@ -61,13 +61,13 @@ public class OrderController {
     }
 
     @GetMapping("/customer/{cpf}")
-    public ResponseEntity<List<OrderResponse>> listOrdersByCustomer(@PathVariable String cpf) {
-        Optional<CustomerDomain> customer = customerPort.getCustomerByCpf(cpf);
-        if (customer.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<List<OrderResponse>> listOrdersByCustomer(@PathVariable String cpf) throws Throwable {
+        CustomerDomain customer = customerPort.getCustomerByCpf(cpf);
+//        if (customer.isEmpty()) {
+//            return ResponseEntity.notFound().build();
+//        }
 
-        List<OrderDomain> orders = port.getOrdersByCustomer(customer.get());
+        List<OrderDomain> orders = port.getOrdersByCustomer(customer);
         List<OrderResponse> response = orders.stream().map(OrderResponse::new).toList();
         return ResponseEntity.ok(response);
     }

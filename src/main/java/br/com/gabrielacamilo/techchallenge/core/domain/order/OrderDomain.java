@@ -40,7 +40,7 @@ public class OrderDomain extends BaseDomain {
         createdAt = LocalDateTime.now();
         updatedAt = LocalDateTime.now();
 
-        BaseDomain.validate(this);
+        BaseDomain.isValid(this);
     }
 
     public OrderDomain(String id, CustomerDomain customer, List<OrderProductDomain> items, OrderStatus status, PaymentStatus paymentStatus, String note, BigDecimal total, LocalDateTime createdAt, LocalDateTime updatedAt) {
@@ -55,7 +55,7 @@ public class OrderDomain extends BaseDomain {
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
 
-        BaseDomain.validate(this);
+        BaseDomain.isValid(this);
     }
 
     private BigDecimal calculateTotal() {

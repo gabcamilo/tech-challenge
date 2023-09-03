@@ -1,10 +1,9 @@
 package br.com.gabrielacamilo.techchallenge.core.services;
 
-import br.com.gabrielacamilo.techchallenge.core.domain.product.BundleDomain;
 import br.com.gabrielacamilo.techchallenge.core.domain.product.ProductDomain;
 import br.com.gabrielacamilo.techchallenge.core.domain.enums.ProductType;
-import br.com.gabrielacamilo.techchallenge.core.ports.ProductPersistencePort;
-import br.com.gabrielacamilo.techchallenge.core.ports.ProductServicePort;
+import br.com.gabrielacamilo.techchallenge.core.ports.product.ProductPersistencePort;
+import br.com.gabrielacamilo.techchallenge.core.ports.product.ProductServicePort;
 
 import java.util.List;
 import java.util.Optional;
@@ -19,12 +18,12 @@ public class ProductServicePortImpl implements ProductServicePort {
 
     @Override
     public ProductDomain saveProduct(ProductDomain product) {
-        return productPersistencePort.saveProduct(product);
+        return productPersistencePort.save(product);
     }
 
     @Override
     public Optional<ProductDomain> getProduct(String id) {
-        return productPersistencePort.getProduct(id);
+        return productPersistencePort.get(id);
     }
 
     @Override
@@ -34,31 +33,16 @@ public class ProductServicePortImpl implements ProductServicePort {
 
     @Override
     public List<ProductDomain> listAllProducts() {
-        return productPersistencePort.listAllProducts();
+        return productPersistencePort.list();
     }
 
     @Override
     public void deleteProduct(ProductDomain product) {
-        productPersistencePort.deleteProduct(product);
+        productPersistencePort.delete(product);
     }
 
     @Override
     public List<ProductDomain> listProductsByIds(List<String> items) {
         return productPersistencePort.listProductsByIds(items);
-    }
-
-    @Override
-    public BundleDomain saveBundle(BundleDomain bundleDomain) {
-        return productPersistencePort.saveBundle(bundleDomain);
-    }
-
-    @Override
-    public Optional<BundleDomain> getBundle(String id) {
-        return productPersistencePort.getBundle(id);
-    }
-
-    @Override
-    public List<BundleDomain> listAllBundles() {
-        return productPersistencePort.listAllBundles();
     }
 }

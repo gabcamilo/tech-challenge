@@ -14,11 +14,11 @@ public class CustomerDomain extends BaseDomain {
 
     @NotBlank
     @Email
-    private String email; //unico
+    private String email;
 
     @NotBlank
     @CPF
-    private String cpf; //unico
+    private String cpf;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
@@ -31,8 +31,6 @@ public class CustomerDomain extends BaseDomain {
         this.cpf = cpf;
         createdAt = LocalDateTime.now();
         updatedAt = LocalDateTime.now();
-
-        BaseDomain.validate(this);
     }
 
     public CustomerDomain() {
@@ -42,46 +40,25 @@ public class CustomerDomain extends BaseDomain {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getEmail() {
         return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String getCpf() {
         return cpf;
     }
 
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
-    }
-
     public LocalDateTime getCreatedAt() {
         return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
     }
 
     public LocalDateTime getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
     public void update(CustomerDomain customer) {
         this.name = customer.getName();
         this.email = customer.getEmail();
-        this.cpf = customer.getCpf();
         this.updatedAt = LocalDateTime.now();
     }
 }

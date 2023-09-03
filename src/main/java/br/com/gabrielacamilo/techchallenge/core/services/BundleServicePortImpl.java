@@ -2,8 +2,8 @@ package br.com.gabrielacamilo.techchallenge.core.services;
 
 import br.com.gabrielacamilo.techchallenge.core.domain.product.BundleDomain;
 import br.com.gabrielacamilo.techchallenge.core.domain.product.ProductDomain;
-import br.com.gabrielacamilo.techchallenge.core.ports.BundlePersistencePort;
-import br.com.gabrielacamilo.techchallenge.core.ports.BundleServicePort;
+import br.com.gabrielacamilo.techchallenge.core.ports.bundle.BundlePersistencePort;
+import br.com.gabrielacamilo.techchallenge.core.ports.bundle.BundleServicePort;
 
 import java.util.List;
 
@@ -16,7 +16,7 @@ public class BundleServicePortImpl implements BundleServicePort {
 
     @Override
     public BundleDomain saveBundle(BundleDomain bundle) {
-        return bundlePersistencePort.saveBundle(bundle);
+        return bundlePersistencePort.save(bundle);
     }
 
     @Override
@@ -26,11 +26,11 @@ public class BundleServicePortImpl implements BundleServicePort {
 
     @Override
     public List<BundleDomain> getAllBundles() {
-        return bundlePersistencePort.getAllBundles();
+        return bundlePersistencePort.list();
     }
 
     @Override
     public void deleteBundle(BundleDomain bundle) {
-        bundlePersistencePort.deleteBundle(bundle);
+        bundlePersistencePort.delete(bundle);
     }
 }

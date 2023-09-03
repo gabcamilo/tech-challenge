@@ -1,11 +1,9 @@
 package br.com.gabrielacamilo.techchallenge.adapters.outbound.persistence;
 
-import br.com.gabrielacamilo.techchallenge.adapters.outbound.persistence.entities.BundleEntity;
 import br.com.gabrielacamilo.techchallenge.adapters.outbound.persistence.entities.ProductEntity;
-import br.com.gabrielacamilo.techchallenge.core.domain.product.BundleDomain;
 import br.com.gabrielacamilo.techchallenge.core.domain.product.ProductDomain;
 import br.com.gabrielacamilo.techchallenge.core.domain.enums.ProductType;
-import br.com.gabrielacamilo.techchallenge.core.ports.ProductPersistencePort;
+import br.com.gabrielacamilo.techchallenge.core.ports.product.ProductPersistencePort;
 import br.com.gabrielacamilo.techchallenge.utils.GenericMapper;
 import org.springframework.stereotype.Component;
 
@@ -21,14 +19,20 @@ public class ProductPersistencePortImpl implements ProductPersistencePort {
     }
 
     @Override
-    public ProductDomain saveProduct(ProductDomain Product) {
-        ProductEntity productEntity = productRepository.save(GenericMapper.map(Product, ProductEntity.class));
+    public ProductDomain save(ProductDomain product) {
+        ProductEntity productEntity = productRepository.save(GenericMapper.map(product, ProductEntity.class));
         return GenericMapper.map(productEntity, ProductDomain.class);
     }
 
     @Override
-    public Optional<ProductDomain> getProduct(String id) {
+    public Optional<ProductDomain> get(String id) {
         Optional<ProductEntity> productEntity = productRepository.findById(id);
+        return GenericMapper.map(productEntity, ProductDomain.class);
+    }
+
+    @Override
+    public ProductDomain update(ProductDomain product) {
+        ProductEntity productEntity = productRepository.save(GenericMapper.map(product, ProductEntity.class));
         return GenericMapper.map(productEntity, ProductDomain.class);
     }
 
@@ -38,35 +42,19 @@ public class ProductPersistencePortImpl implements ProductPersistencePort {
     }
 
     @Override
-    public List<ProductDomain> listAllProducts() {
+    public List<ProductDomain> list() {
         productRepository.findAll();
         return GenericMapper.map(productRepository.findAll(), ProductDomain.class);
     }
 
     @Override
-    public void deleteProduct(ProductDomain product) {
+    public void delete(ProductDomain product) {
         productRepository.delete(GenericMapper.map(product, ProductEntity.class));
     }
 
     @Override
-    public List<ProductDomain> listProductsByIds(List<String> items) {
-        List<ProductEntity> itemsEntities = productRepository.findAllById(items);
-        return GenericMapper.map(itemsEntities, ProductDomain.class);
-    }
-
-    @Override
-    public BundleDomain saveBundle(BundleDomain bundle) {
-        ProductEntity bundleEntity = productRepository.save(GenericMapper.map(bundle, BundleEntity.class));
-        return GenericMapper.map(bundleEntity, BundleDomain.class);
-    }
-
-    @Override
-    public List<BundleDomain> listAllBundles() {
-        return GenericMapper.map(productRepository.findByType(ProductType.BUNDLE), BundleDomain.class);
-    }
-
-    @Override
-    public Optional<BundleDomain> getBundle(String id) {
-        return GenericMapper.map(productRepository.findById(id), BundleDomain.class);
+    public List<ProductDomain> listProductsByIds(List<String> products) {
+        List<ProductEntity> productsEntities = productRepository.findAllById(products);
+        return GenericMapper.map(productsEntities, ProductDomain.class);
     }
 }

@@ -8,9 +8,7 @@ import br.com.gabrielacamilo.techchallenge.core.domain.customer.CustomerDomain;
 import br.com.gabrielacamilo.techchallenge.core.domain.order.OrderDomain;
 import br.com.gabrielacamilo.techchallenge.core.domain.order.OrderProductDomain;
 import br.com.gabrielacamilo.techchallenge.core.domain.product.ProductDomain;
-import br.com.gabrielacamilo.techchallenge.core.domain.enums.OrderStatus;
-import br.com.gabrielacamilo.techchallenge.core.domain.enums.PaymentStatus;
-import br.com.gabrielacamilo.techchallenge.core.ports.OrderPersistencePort;
+import br.com.gabrielacamilo.techchallenge.core.ports.order.OrderPersistencePort;
 import br.com.gabrielacamilo.techchallenge.utils.GenericMapper;
 import org.springframework.stereotype.Component;
 
@@ -27,20 +25,33 @@ public class OrderPersistencePortImpl implements OrderPersistencePort {
     }
 
     @Override
-    public OrderDomain saveOrder(OrderDomain order) {
+    public OrderDomain save(OrderDomain order) {
         OrderEntity orderEntity = mapOrderDomainToEntity(order);
         OrderEntity saved = orderRepository.save(orderEntity);
         return mapOrderEntityToDomain(saved);
     }
 
     @Override
-    public Optional<OrderDomain> getOrder(String id) {
+    public Optional<OrderDomain> get(String id) {
         var orderEntity = orderRepository.findById(id);
         return orderEntity.map(this::mapOrderEntityToDomain);
     }
 
     @Override
-    public List<OrderDomain> listAllOrders() {
+    public OrderDomain update(OrderDomain item) {
+        OrderEntity orderEntity = mapOrderDomainToEntity(item);
+        OrderEntity saved = orderRepository.save(orderEntity);
+        return mapOrderEntityToDomain(saved);
+    }
+
+    @Override
+    public void delete(OrderDomain item) {
+        OrderEntity orderEntity = mapOrderDomainToEntity(item);
+        orderRepository.delete(orderEntity);
+    }
+
+    @Override
+    public List<OrderDomain> list() {
         List<OrderEntity> orderEntities = orderRepository.findAll();
         return mapOrderEntityToDomain(orderEntities);
     }
@@ -50,58 +61,6 @@ public class OrderPersistencePortImpl implements OrderPersistencePort {
         CustomerEntity customerEntity = GenericMapper.map(customer, CustomerEntity.class);
         List<OrderEntity> orderEntities = orderRepository.findByCustomer(customerEntity);
         return mapOrderEntityToDomain(orderEntities);
-    }
-
-    @Override
-    public Optional<OrderDomain> updateOrderStatusCooking(String id) {
-        return updateOrderStatus(id, OrderStatus.COOKING);
-    }
-
-    @Override
-    public Optional<OrderDomain> updateOrderStatusReady(String id) {
-        return updateOrderStatus(id, OrderStatus.READY);
-    }
-
-    @Override
-    public Optional<OrderDomain> updateOrderStatusDelivered(String id) {
-        return updateOrderStatus(id, OrderStatus.DELIVERED);
-    }
-
-    @Override
-    public Optional<OrderDomain> updatePaymentStatusApproved(String id) {
-        return updateOrderPaymentStatus(id, PaymentStatus.APPROVED);
-    }
-
-    @Override
-    public Optional<OrderDomain> updatePaymentStatusRejected(String id) {
-        return updateOrderPaymentStatus(id, PaymentStatus.REJECTED);
-    }
-
-    @Override
-    public OrderDomain updatePaymentStatus(String id, PaymentStatus status) {
-        // existence already verified
-        return updateOrderPaymentStatus(id, status).get();
-    }
-
-    // update methods
-    private Optional<OrderDomain> updateOrderStatus(String id, OrderStatus status) {
-        Optional<OrderEntity> orderEntity = orderRepository.findById(id);
-        if (orderEntity.isPresent()) {
-            orderEntity.get().setStatus(status);
-            OrderEntity saved = orderRepository.save(orderEntity.get());
-            return Optional.of(mapOrderEntityToDomain(saved));
-        }
-        return Optional.empty();
-    }
-
-    private Optional<OrderDomain> updateOrderPaymentStatus(String id, PaymentStatus status) {
-        Optional<OrderEntity> orderEntity = orderRepository.findById(id);
-        if (orderEntity.isPresent()) {
-            orderEntity.get().setPaymentStatus(status);
-            OrderEntity saved = orderRepository.save(orderEntity.get());
-            return Optional.of(mapOrderEntityToDomain(saved));
-        }
-        return Optional.empty();
     }
 
     // order mappers
@@ -134,12 +93,12 @@ public class OrderPersistencePortImpl implements OrderPersistencePort {
     private OrderDomain mapOrderEntityToDomain(OrderEntity orderEntity) {
 
         List<OrderProductDomain> itemsDomain = orderEntity.getItems().stream().map(item ->
-            new OrderProductDomain(
-                    GenericMapper.map(item.getProduct(), ProductDomain.class),
-                    item.getQuantity(),
-                    GenericMapper.map(item.getAddOns(), ProductDomain.class),
-                    item.getTotal()
-            )
+                new OrderProductDomain(
+                        GenericMapper.map(item.getProduct(), ProductDomain.class),
+                        item.getQuantity(),
+                        GenericMapper.map(item.getAddOns(), ProductDomain.class),
+                        item.getTotal()
+                )
         ).toList();
 
         return new OrderDomain(

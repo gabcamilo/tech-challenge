@@ -2,7 +2,7 @@ package br.com.gabrielacamilo.techchallenge.adapters.outbound.persistence;
 
 import br.com.gabrielacamilo.techchallenge.adapters.outbound.persistence.entities.CustomerEntity;
 import br.com.gabrielacamilo.techchallenge.core.domain.customer.CustomerDomain;
-import br.com.gabrielacamilo.techchallenge.core.ports.CustomerPersistencePort;
+import br.com.gabrielacamilo.techchallenge.core.ports.customer.CustomerPersistencePort;
 import br.com.gabrielacamilo.techchallenge.utils.GenericMapper;
 import org.springframework.stereotype.Component;
 
@@ -18,9 +18,34 @@ public class CustomerPersistencePortImpl implements CustomerPersistencePort {
     }
 
     @Override
-    public CustomerDomain saveCustomer(CustomerDomain customerDomain) {
-        CustomerEntity customerEntity = customerRepository.save(GenericMapper.map(customerDomain, CustomerEntity.class));
+    public CustomerDomain save(CustomerDomain item) {
+        CustomerEntity customerEntity = customerRepository.save(GenericMapper.map(item, CustomerEntity.class));
         return GenericMapper.map(customerEntity, CustomerDomain.class);
+    }
+
+    @Override
+    public List<CustomerDomain> list() {
+        List<CustomerEntity> customerEntities = customerRepository.findAll();
+        return GenericMapper.map(customerEntities, CustomerDomain.class);
+    }
+
+    @Override
+    public Optional<CustomerDomain> get(String id) {
+        Optional<CustomerEntity> customerEntity = customerRepository.findById(id);
+        return GenericMapper.map(customerEntity, CustomerDomain.class);
+    }
+
+    @Override
+    public void delete(CustomerDomain item) {
+        CustomerEntity customerEntity = GenericMapper.map(item, CustomerEntity.class);
+        customerRepository.delete(customerEntity);
+    }
+
+    @Override
+    public CustomerDomain update(CustomerDomain item) {
+        CustomerEntity customerEntity = GenericMapper.map(item, CustomerEntity.class);
+        CustomerEntity saved = customerRepository.save(customerEntity);
+        return GenericMapper.map(saved, CustomerDomain.class);
     }
 
     @Override
@@ -30,28 +55,8 @@ public class CustomerPersistencePortImpl implements CustomerPersistencePort {
     }
 
     @Override
-    public List<CustomerDomain> listAllCustomers() {
-        List<CustomerEntity> customerEntities = customerRepository.findAll();
-        return GenericMapper.map(customerEntities, CustomerDomain.class);
-    }
-
-    @Override
-    public Optional<CustomerDomain> getCustomer(String id) {
-        Optional<CustomerEntity> customerEntity = customerRepository.findById(id);
+    public Optional<CustomerDomain> getCustomerByEmail(String email) {
+        Optional<CustomerEntity> customerEntity = customerRepository.findByEmail(email);
         return GenericMapper.map(customerEntity, CustomerDomain.class);
-    }
-
-    @Override
-    public void validateCustomer(String cpf, String email) {
-        Optional<CustomerEntity> byCpf = customerRepository.findByCpf(cpf);
-        Optional<CustomerEntity> byEmail = customerRepository.findByEmail(email);
-
-    // TODO validate with custom annotation
-        if (byCpf.isPresent()) {
-            throw new IllegalArgumentException("cpf");
-        } else if (byEmail.isPresent()) {
-            throw new IllegalArgumentException("email");
-        }
-
     }
 }
