@@ -1,7 +1,8 @@
 package br.com.gabrielacamilo.techchallenge.adapters.inbound.api.exceptionHandler;
 
+import br.com.gabrielacamilo.techchallenge.adapters.inbound.api.exceptionHandler.errorDtos.FormValidationErrorsResponse;
+import br.com.gabrielacamilo.techchallenge.adapters.inbound.api.exceptionHandler.errorDtos.UnexpectedErrorResponse;
 import jakarta.validation.ConstraintViolationException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
@@ -15,32 +16,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestControllerAdvice
-public class ValidationErrorHandler {
-
-    @Autowired
-    ValidationErrorHandler(MessageSource messageSource) {
-        this.messageSource = messageSource;
-    }
+public class ValidationExceptionHandler {
 
     private MessageSource messageSource;
 
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)
     @ExceptionHandler(ConstraintViolationException.class)
-    public ValidationErrorsOutputDto handle(ConstraintViolationException exception) {
+    public FormValidationErrorsResponse handle(ConstraintViolationException exception) {
 
-        List<FieldError> fieldErrors =new ArrayList<>();
+        List<FieldError> fieldErrors = new ArrayList<>();
 
         exception.getConstraintViolations().forEach(violation -> {
             fieldErrors.add(new FieldError(violation.getRootBeanClass().getName(), violation.getPropertyPath().toString(), violation.getMessage()));
         });
 
         return buildValidationErrors(fieldErrors);
-
     }
 
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)
     @ExceptionHandler(IllegalArgumentException.class)
-    public ValidationErrorsOutputDto handle(IllegalArgumentException exception) {
+    public FormValidationErrorsResponse handle(IllegalArgumentException exception) {
 
         List<FieldError> fieldErrors =new ArrayList<>();
 
@@ -50,8 +45,20 @@ public class ValidationErrorHandler {
 
     }
 
-    private ValidationErrorsOutputDto buildValidationErrors(List<FieldError> fieldErrors) {
-        ValidationErrorsOutputDto validationErrors = new ValidationErrorsOutputDto();
+//    @ResponseStatus(code = HttpStatus.INTERNAL_SERVER_ERROR)
+//    @ExceptionHandler(RuntimeException.class)
+//    public UnexpectedErrorResponse handle(RuntimeException exception) {
+//
+//        List<FieldError> fieldErrors =new ArrayList<>();
+//
+//        fieldErrors.add(new FieldError("", exception.getMessage(), exception.getMessage() + " already registered"  ));
+//
+//        return buildValidationErrors(fieldErrors);
+//
+//    }
+
+    private FormValidationErrorsResponse buildValidationErrors(List<FieldError> fieldErrors) {
+        FormValidationErrorsResponse validationErrors = new FormValidationErrorsResponse();
 
         fieldErrors.forEach(error -> {
             String errorMessage = getErrorMessage(error);
@@ -59,7 +66,6 @@ public class ValidationErrorHandler {
         });
         return validationErrors;
     }
-
 
     private String getErrorMessage(ObjectError error) {
         return messageSource.getMessage(error, LocaleContextHolder.getLocale());
