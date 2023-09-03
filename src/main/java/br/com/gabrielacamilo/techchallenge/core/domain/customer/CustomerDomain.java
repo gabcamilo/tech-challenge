@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 public class CustomerDomain extends BaseDomain {
 
     @NotBlank
-    private String name; // unico
+    private String name;
 
     @NotBlank
     @Email

@@ -8,12 +8,13 @@ import br.com.gabrielacamilo.techchallenge.core.domain.enums.OrderStatus;
 import br.com.gabrielacamilo.techchallenge.core.domain.enums.PaymentStatus;
 import br.com.gabrielacamilo.techchallenge.utils.GenericMapper;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OrderResponse {
+public class OrderResponse implements Serializable {
     private String id;
     private Customer customer;
     private List<OrderItem> items;

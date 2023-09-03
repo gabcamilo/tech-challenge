@@ -3,11 +3,12 @@ package br.com.gabrielacamilo.techchallenge.adapters.inbound.api.dtos.product;
 import br.com.gabrielacamilo.techchallenge.core.domain.product.BundleDomain;
 import br.com.gabrielacamilo.techchallenge.core.domain.enums.ProductType;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class BundleResponse {
+public class BundleResponse implements Serializable {
 
     private final String id;
 

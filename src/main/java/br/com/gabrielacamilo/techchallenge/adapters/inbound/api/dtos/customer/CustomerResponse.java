@@ -2,9 +2,10 @@ package br.com.gabrielacamilo.techchallenge.adapters.inbound.api.dtos.customer;
 
 import br.com.gabrielacamilo.techchallenge.core.domain.customer.CustomerDomain;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class CustomerResponse {
+public class CustomerResponse implements Serializable {
 
     public CustomerResponse(CustomerDomain domain) {
         this.id = domain.getId();
