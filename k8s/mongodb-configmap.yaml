@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: tech-challenge-mongodb-config
+  labels:
+    app: tech-challenge
+data:
+  mongodb-url: tech-challenge-mongodb-service
+  mongodb-port: "27017"
+  mongodb-database: "tech-challenge"
