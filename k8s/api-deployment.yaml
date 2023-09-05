@@ -1,0 +1,70 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: tech-challenge-api-service
+  labels:
+    app: tech-challenge
+spec:
+  type: LoadBalancer
+  selector:
+    app: tech-challenge
+    tier: backend
+  ports:
+  - protocol: TCP
+    port: 8080
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tech-challenge-api
+  labels:
+    app: tech-challenge
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tech-challenge
+      tier: backend
+  template:
+    metadata:
+      labels:
+        app: tech-challenge
+        tier: backend
+    spec:
+      containers:
+      - name: tech-challenge-api
+        image: gabcamilo/tech-challenge:1.0
+        resources:
+          limits:
+            memory: "2048Mi"
+            cpu: "500m"
+        env:
+        - name: MONGODB_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: tech-challenge-mongodb-config
+              key:  mongodb-url
+        - name: MONGODB_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: tech-challenge-mongodb-config
+              key:  mongodb-port
+        - name: MONGODB_DATABASE
+          valueFrom:
+            configMapKeyRef:
+              name: tech-challenge-mongodb-config
+              key:  mongodb-database
+        - name: MONGODB_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: tech-challenge-mongodb-secret
+              key: mongodb-user
+        - name: MONGODB_PASSWORD
+          valueFrom:
+              secretKeyRef:
+                name: tech-challenge-mongodb-secret
+                key: mongodb-password
+        ports:
+        - containerPort: 8081
+          name: api

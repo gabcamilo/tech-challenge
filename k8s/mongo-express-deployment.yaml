@@ -1,0 +1,62 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: tech-challenge-mongo-express-service
+  labels:
+    app: tech-challenge
+spec:
+  type: LoadBalancer
+  selector:
+    app: tech-challenge
+    tier: bd-admin
+  ports:
+  - protocol: TCP
+    port: 8081
+    # targetPort: 8081
+    # nodePort: 30100
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tech-challenge-mongo-express
+  labels:
+    app: tech-challenge
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tech-challenge
+      tier: bd-admin
+  template:
+    metadata:
+      labels:
+        app: tech-challenge
+        tier: bd-admin
+    spec:
+      containers:
+      - name: mongo-express
+        image: mongo-express:latest
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        env:
+        - name: ME_CONFIG_MONGODB_SERVER
+          valueFrom:
+            configMapKeyRef:
+              name: tech-challenge-mongodb-config
+              key:  mongodb-url
+        - name: ME_CONFIG_MONGODB_ADMINUSERNAME
+          valueFrom:
+            secretKeyRef:
+              name: tech-challenge-mongodb-secret
+              key: mongodb-user
+        - name: ME_CONFIG_MONGODB_ADMINPASSWORD
+          valueFrom:
+              secretKeyRef:
+                name: tech-challenge-mongodb-secret
+                key: mongodb-password
+        ports:
+        - containerPort: 8081
+          name: mongo-express
