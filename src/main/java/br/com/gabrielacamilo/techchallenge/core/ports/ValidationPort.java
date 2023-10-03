@@ -6,28 +6,28 @@ import jakarta.validation.*;
 import java.util.Optional;
 import java.util.Set;
 
-public interface ValidationPort<T extends BaseDomain, G extends PersistencePort> {
-    default void validateDomainData(T domainItem) throws ConstraintViolationException {
+public interface ValidationPort<D extends BaseDomain, P extends PersistencePort> {
+    default void validateDomainData(D domainItem) throws ConstraintViolationException {
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         Validator validator = factory.getValidator();
-        Set<ConstraintViolation<T>> violations = validator.validate(domainItem);
+        Set<ConstraintViolation<D>> violations = validator.validate(domainItem);
         if (!violations.isEmpty()) {
             throw new ConstraintViolationException(violations);
         }
     }
 
-    default T mustExist(Optional<T> item) throws IllegalArgumentException {
-        return item.orElseThrow(() -> new IllegalArgumentException("The item does not exist", new Throwable(item.toString())));
+    default D mustExist(Optional<D> item, String fieldName) throws IllegalArgumentException {
+        return item.orElseThrow(() -> new IllegalArgumentException(fieldName));
     }
 
-    default void mustNotExist(Optional<T> item) throws IllegalArgumentException {
+    default void mustNotExist(Optional<D> item, String fieldName) throws IllegalArgumentException {
         item.ifPresent((domainItem) -> {
-            throw new IllegalArgumentException("The item already exists", new Throwable(item.toString()));
+            throw new IllegalArgumentException(fieldName);
         });
     }
 
-    void validateCreationalBusinessRules(T domainItem, G persistencePort) throws IllegalArgumentException;
-    void validateUpdateBusinessRules(T updatedData, T domainData, G persistencePort) throws IllegalArgumentException;
-    void validateDeleteBusinessRules(T domainItem, G persistencePort) throws IllegalArgumentException;
+    void validateCreationalBusinessRules(D domainItem, P persistencePort) throws IllegalArgumentException;
+    void validateUpdateBusinessRules(D updatedData, D domainData, P persistencePort) throws IllegalArgumentException;
+    void validateDeleteBusinessRules(D domainItem, P persistencePort) throws IllegalArgumentException;
 }
 

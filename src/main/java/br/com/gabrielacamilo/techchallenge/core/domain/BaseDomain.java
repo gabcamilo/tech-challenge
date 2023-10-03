@@ -1,28 +1,41 @@
 package br.com.gabrielacamilo.techchallenge.core.domain;
 
-public abstract class BaseDomain {
-    private String id;
+import java.time.LocalDateTime;
 
-    public BaseDomain(String id) {
+public abstract class BaseDomain {
+    private final String id;
+    private final LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+
+    public BaseDomain() {
+        this.id = null;
+        this.createdAt = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
     }
 
-    @Deprecated
-    public BaseDomain() {
+    public BaseDomain(String id, LocalDateTime createdAt, LocalDateTime updatedAt) {
+        this.id = id;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
+
+    public void update(){
+        this.updatedAt = LocalDateTime.now();
     }
 
     public String getId() {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public static <T> void isValid(T domain){
-        System.out.println("Validating domain - TODO");
-    }
-
     public String getDomainName() {
         return this.getClass().getSimpleName();
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
     }
 }

@@ -12,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RequestMapping("/api/v1/orders")
 @RestController
@@ -31,7 +30,7 @@ public class OrderController {
     @PostMapping
     public ResponseEntity<OrderResponse> createOrder(@RequestBody CreateOrderRequest request) throws Throwable {
 
-        CustomerDomain customer = customerPort.get(request.getCustomer());
+//        CustomerDomain customer = customerPort.get(request.getCustomer());
 //        if (customer.isEmpty()) {
 //            return ResponseEntity.badRequest().build();
 //        }
@@ -39,23 +38,22 @@ public class OrderController {
         List<String> productsIds = request.getProductsList();
         List<ProductDomain> products = productPort.listProductsByIds(productsIds);
 
-        OrderDomain domain = request.toDomain(products, customer);
-        OrderDomain createdOrder = port.saveOrder(domain);
+        OrderDomain domain = request.toDomain("");
+        OrderDomain createdOrder = port.create(domain);
 
         OrderResponse response = new OrderResponse(createdOrder);
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<OrderResponse> getOrder(@PathVariable String id) {
-        Optional<OrderDomain> order = port.getOrder(id);
-        return order.map(value -> ResponseEntity.ok(new OrderResponse(value)))
-                .orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<OrderResponse> getOrder(@PathVariable String id) throws Throwable {
+        OrderDomain order = port.get(id);
+        return ResponseEntity.ok(new OrderResponse(order));
     }
 
     @GetMapping()
-    public ResponseEntity<List<OrderResponse>> listAllOrders() {
-        List<OrderDomain> orders = port.listAllOrders();
+    public ResponseEntity<List<OrderResponse>> listAllOrders() throws Throwable {
+        List<OrderDomain> orders = port.list();
         List<OrderResponse> response = orders.stream().map(OrderResponse::new).toList();
         return ResponseEntity.ok(response);
     }
@@ -63,59 +61,45 @@ public class OrderController {
     @GetMapping("/customer/{cpf}")
     public ResponseEntity<List<OrderResponse>> listOrdersByCustomer(@PathVariable String cpf) throws Throwable {
         CustomerDomain customer = customerPort.getCustomerByCpf(cpf);
-//        if (customer.isEmpty()) {
-//            return ResponseEntity.notFound().build();
-//        }
-
         List<OrderDomain> orders = port.getOrdersByCustomer(customer);
         List<OrderResponse> response = orders.stream().map(OrderResponse::new).toList();
         return ResponseEntity.ok(response);
     }
 
     @PatchMapping("/{id}/status/cooking")
-    public ResponseEntity<OrderResponse> updateOrderStatusCooking(@PathVariable String id) {
-        Optional<OrderDomain> order = port.updateOrderStatusCooking(id);
-        return order.map(value -> ResponseEntity.ok(new OrderResponse(value)))
-                .orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<OrderResponse> updateOrderStatusCooking(@PathVariable String id) throws Throwable {
+        OrderDomain order = port.updateOrderStatusCooking(id);
+        return ResponseEntity.ok(new OrderResponse(order));
     }
 
     @PatchMapping("/{id}/status/ready")
-    public ResponseEntity<OrderResponse> updateOrderStatusReady(@PathVariable String id) {
-        Optional<OrderDomain> order = port.updateOrderStatusReady(id);
-        return order.map(value -> ResponseEntity.ok(new OrderResponse(value)))
-                .orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<OrderResponse> updateOrderStatusReady(@PathVariable String id) throws Throwable {
+        OrderDomain order = port.updateOrderStatusReady(id);
+        return ResponseEntity.ok(new OrderResponse(order));
     }
 
     @PatchMapping("/{id}/status/delivered")
-    public ResponseEntity<OrderResponse> updateOrderStatusDelivered(@PathVariable String id) {
-        Optional<OrderDomain> order = port.updateOrderStatusDelivered(id);
-        return order.map(value -> ResponseEntity.ok(new OrderResponse(value)))
-                .orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<OrderResponse> updateOrderStatusDelivered(@PathVariable String id) throws Throwable {
+        OrderDomain order = port.updateOrderStatusDelivered(id);
+        return ResponseEntity.ok(new OrderResponse(order));
     }
 
     @PatchMapping("/{id}/payment/approved")
-    public ResponseEntity<OrderResponse> updatePaymentStatusApproved(@PathVariable String id) {
-        Optional<OrderDomain> order = port.updatePaymentStatusApproved(id);
-        return order.map(value -> ResponseEntity.ok(new OrderResponse(value)))
-                .orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<OrderResponse> updatePaymentStatusApproved(@PathVariable String id) throws Throwable {
+        OrderDomain order = port.updatePaymentStatusApproved(id);
+        return ResponseEntity.ok(new OrderResponse(order));
     }
 
     @PatchMapping("/{id}/payment/rejected")
-    public ResponseEntity<OrderResponse> updatePaymentStatusRejected(@PathVariable String id) {
-        Optional<OrderDomain> order = port.updatePaymentStatusRejected(id);
-        return order.map(value -> ResponseEntity.ok(new OrderResponse(value)))
-                .orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<OrderResponse> updatePaymentStatusRejected(@PathVariable String id) throws Throwable {
+        OrderDomain order = port.updatePaymentStatusRejected(id);
+        return ResponseEntity.ok(new OrderResponse(order));
     }
 
     @PostMapping("/{id}/payment")
-    public ResponseEntity<OrderResponse> payOrder(@PathVariable String id) {
-        Optional<OrderDomain> orderOptional = port.getOrder(id);
-        return orderOptional.map(order -> {
-                    OrderDomain payedOrder = port.pay(order);
-                    payedOrder.processPayment();
-                    port.saveOrder(payedOrder);
-                    return ResponseEntity.ok(new OrderResponse(payedOrder));
-                })
-                .orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<OrderResponse> payOrder(@PathVariable String id) throws Throwable {
+        OrderDomain order = port.get(id);
+        port.pay(order);
+        return ResponseEntity.ok(new OrderResponse(order));
     }
 }

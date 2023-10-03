@@ -31,8 +31,6 @@ public class OrderProductDomain {
             this.addOns = addOns;
         }
         this.total = calculatePrice();
-
-        BaseDomain.isValid(this);
     }
 
     public OrderProductDomain(ProductDomain product, int quantity, List<ProductDomain> addOns, BigDecimal total) {
@@ -40,8 +38,6 @@ public class OrderProductDomain {
         this.quantity = quantity;
         this.addOns = addOns;
         this.total = total;
-
-        BaseDomain.isValid(this);
     }
 
     private BigDecimal calculatePrice() {

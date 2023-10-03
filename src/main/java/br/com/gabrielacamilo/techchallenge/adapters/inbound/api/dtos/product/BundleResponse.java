@@ -2,6 +2,7 @@ package br.com.gabrielacamilo.techchallenge.adapters.inbound.api.dtos.product;
 
 import br.com.gabrielacamilo.techchallenge.core.domain.product.BundleDomain;
 import br.com.gabrielacamilo.techchallenge.core.domain.enums.ProductType;
+import br.com.gabrielacamilo.techchallenge.core.domain.product.ProductDomain;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -20,7 +21,7 @@ public class BundleResponse implements Serializable {
 
     private final ProductType type;
 
-    private List<CreateBundleResponseItems> items;
+    private List<CreateBundleResponseItem> items;
 
     private BigDecimal discountPercentage;
 
@@ -38,12 +39,7 @@ public class BundleResponse implements Serializable {
         this.createdAt = domain.getCreatedAt();
         this.updatedAt = domain.getUpdatedAt();
 
-        this.items = domain.getItems().stream().map(item -> new CreateBundleResponseItems(
-                item.getId(),
-                item.getName(),
-                item.getType(),
-                item.getPrice()
-        )).toList();
+        this.items = domain.getProducts().stream().map(CreateBundleResponseItem::new).toList();
     }
 
     public String getId() {
@@ -74,7 +70,7 @@ public class BundleResponse implements Serializable {
         return updatedAt;
     }
 
-    public List<CreateBundleResponseItems> getItems() {
+    public List<CreateBundleResponseItem> getItems() {
         return items;
     }
 
@@ -82,17 +78,17 @@ public class BundleResponse implements Serializable {
         return discountPercentage;
     }
 
-    private class CreateBundleResponseItems {
+    private class CreateBundleResponseItem {
         private String id;
         private String name;
         private ProductType type;
         private BigDecimal price;
 
-        public CreateBundleResponseItems(String id, String name, ProductType type, BigDecimal price) {
-            this.id = id;
-            this.name = name;
-            this.type = type;
-            this.price = price;
+        public CreateBundleResponseItem(ProductDomain domain) {
+            this.id = domain.getId();
+            this.name = domain.getName();
+            this.type = domain.getType();
+            this.price = domain.getPrice();
         }
 
         public String getId() {

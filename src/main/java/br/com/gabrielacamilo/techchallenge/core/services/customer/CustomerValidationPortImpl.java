@@ -33,12 +33,12 @@ public class CustomerValidationPortImpl implements CustomerValidationPort {
 
     @Override
     public void validateUniqueCpf(String cpf, CustomerPersistencePort customerPersistencePort) throws IllegalArgumentException {
-        mustNotExist(customerPersistencePort.getCustomerByCpf(cpf));
+        mustNotExist(customerPersistencePort.getCustomerByCpf(cpf), "CPF");
     }
 
     @Override
     public void validateUniqueEmail(String email, CustomerPersistencePort customerPersistencePort) {
-        mustNotExist(customerPersistencePort.getCustomerByEmail(email));
+        mustNotExist(customerPersistencePort.getCustomerByEmail(email), "Email");
     }
 }
 

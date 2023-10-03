@@ -1,7 +1,12 @@
 # Tech Challenge
 Trabalho desenvolvido pela aluna **Gabriela Carvalho Camilo** como forma de avaliação da **1ª Fase** no curso de pós-graduação em **software architecture** na FIAP.
 
-# Aplicação proposta
+## Roadmap
+
+[x] - **1ª Fase**
+# FASE 1 - Aplicação proposta
+
+**STATUS**: **Finalizada**
 
 Implementar uma aplicação de backend para automatizar o processo de pedidos de uma lanchonete. Para isto deve-se usar a arquitetura hexagonal e a implementação deve ser feita em um monolito.
 

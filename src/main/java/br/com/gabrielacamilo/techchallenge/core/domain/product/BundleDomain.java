@@ -7,55 +7,48 @@ import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Min;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 
-public class BundleDomain extends ProductDomain{
+public class BundleDomain extends ProductDomain {
 
     @Min(2)
-    private List<ProductDomain> items;
+    private List<ProductDomain> products;
 
     @DecimalMin("0")
     @DecimalMax("1")
     private BigDecimal discountPercentage;
 
-    @Deprecated
-    public BundleDomain() {
+    public BundleDomain(String id, String name, ProductType type, String description, BigDecimal price, List<ProductDomain> products, BigDecimal discountPercentage, LocalDateTime createdAt, LocalDateTime updatedAt) {
+        super(id, name, type, description, price, createdAt, updatedAt);
+        this.products = products;
+        this.discountPercentage = discountPercentage;
     }
 
-    public BundleDomain(String name, String description, BigDecimal discountPercentage, List<ProductDomain> items) {
-        super(name, ProductType.BUNDLE, description);
-        this.items = items;
+    public BundleDomain(String name, String description, List<ProductDomain> products, BigDecimal discountPercentage) {
+        super(name, ProductType.BUNDLE, description, BigDecimal.ZERO);
+        this.products = products;
         this.discountPercentage = discountPercentage;
-        BigDecimal sum = items.stream()
+        updatePrice(calculateTotalPrice());
+    }
+
+    public void updateDiscountPercentage(BigDecimal discountPercentage) {
+        this.discountPercentage = discountPercentage;
+        updatePrice(calculateTotalPrice());
+    }
+
+    private BigDecimal calculateTotalPrice() {
+        BigDecimal totalPrice = products.stream()
                 .map(ProductDomain::getPrice)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
-        BigDecimal finalPrice = calculatePrice(sum);
-        this.setPrice(finalPrice);
-
-        BaseDomain.isValid(this);
+        return totalPrice.subtract(totalPrice.multiply(discountPercentage));
     }
 
-    @Override
-    protected BigDecimal calculatePrice(BigDecimal price) {
-        if(discountPercentage != null){
-            return price.subtract(price.multiply(discountPercentage));
-        }
-        return price;
-    }
-
-    public List<ProductDomain> getItems() {
-        return items;
-    }
-
-    public void setItems(List<ProductDomain> items) {
-        this.items = items;
+    public List<ProductDomain> getProducts() {
+        return products;
     }
 
     public BigDecimal getDiscountPercentage() {
         return discountPercentage;
-    }
-
-    public void setDiscountPercentage(BigDecimal discountPercentage) {
-        this.discountPercentage = discountPercentage;
     }
 }

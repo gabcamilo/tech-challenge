@@ -1,16 +1,17 @@
 package br.com.gabrielacamilo.techchallenge.adapters.inbound.api.dtos.customer;
 
 import br.com.gabrielacamilo.techchallenge.core.domain.customer.CustomerDomain;
-import br.com.gabrielacamilo.techchallenge.utils.GenericMapper;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.io.Serializable;
 import java.util.List;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ListCustomersResponse implements Serializable {
     private List<CustomerFromList> customers;
 
     public ListCustomersResponse(List<CustomerDomain> customers) {
-        this.customers = GenericMapper.map(customers, CustomerFromList.class);
+        this.customers = customers.stream().map(CustomerFromList::new).toList();
     }
 
     public List<CustomerFromList> getCustomers() {
@@ -18,17 +19,17 @@ public class ListCustomersResponse implements Serializable {
     }
 
     static class CustomerFromList implements Serializable {
-        private Long id;
+        private String id;
         private String name;
         private String email;
 
-        public CustomerFromList(Long id, String name, String email) {
-            this.id = id;
-            this.name = name;
-            this.email = email;
+        public CustomerFromList(CustomerDomain domain) {
+            this.id = domain.getId();
+            this.name = domain.getName();
+            this.email = domain.getEmail();
         }
 
-        public Long getId() {
+        public String getId() {
             return id;
         }
 

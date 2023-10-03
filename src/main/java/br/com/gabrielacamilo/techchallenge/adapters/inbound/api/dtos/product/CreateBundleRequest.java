@@ -4,6 +4,7 @@ import br.com.gabrielacamilo.techchallenge.core.domain.product.BundleDomain;
 import br.com.gabrielacamilo.techchallenge.core.domain.product.ProductDomain;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -40,13 +41,7 @@ public class CreateBundleRequest {
         return items;
     }
 
-    public BundleDomain toDomain(List<ProductDomain> products) {
-        HashMap<String, ProductDomain> productsDic = new HashMap<>();
-        products.forEach(product ->
-                productsDic.put(product.getId(), product)
-        );
-
-        List<ProductDomain> itemsDomain = items.stream().map(item -> productsDic.put(item, productsDic.get(item))).toList();
-        return new BundleDomain(name, description, discountPercentage, itemsDomain);
+    public BundleDomain toDomain() {
+       return new BundleDomain(name, description, new ArrayList<ProductDomain>(), discountPercentage);
     }
 }

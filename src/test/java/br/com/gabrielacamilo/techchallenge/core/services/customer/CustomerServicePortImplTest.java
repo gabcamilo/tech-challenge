@@ -89,13 +89,13 @@ class CustomerServicePortImplTest {
         assertSame(customerDomain, customerServicePortImpl.getCustomerByCpf(Mockito.<String>any()));
 
         verify(customerPersistencePort).getCustomerByCpf(Mockito.<String>any());
-        verify(customerValidationPort).mustExist(Mockito.<Optional<CustomerDomain>>any());
+        verify(customerValidationPort).mustExist(Mockito.<Optional<CustomerDomain>>any(), Mockito.<String>any());
     }
 
     @Test
     @DisplayName("[DOMAIN][CUSTOMER SERVICE] - should throw an error when trying to get a customer by cpf that does not exist")
     void testGetCustomerByCpfInvalidCpf() throws Throwable {
-        doThrow(new IllegalArgumentException()).when(customerValidationPort).mustExist(Mockito.<Optional<CustomerDomain>>any());
+        doThrow(new IllegalArgumentException()).when(customerValidationPort).mustExist(Mockito.<Optional<CustomerDomain>>any(), Mockito.<String>any());
         assertThrows(IllegalArgumentException.class,
                 () -> customerServicePortImpl.getCustomerByCpf(Mockito.<String>any()));
     }
@@ -112,13 +112,13 @@ class CustomerServicePortImplTest {
     void testGet() throws Throwable {
         assertSame(customerDomain, customerServicePortImpl.get(Mockito.<String>any()));
         verify(customerPersistencePort).get(Mockito.<String>any());
-        verify(customerValidationPort).mustExist(Mockito.<Optional<CustomerDomain>>any());
+        verify(customerValidationPort).mustExist(Mockito.<Optional<CustomerDomain>>any(), Mockito.<String>any());
     }
 
     @Test
     @DisplayName("[DOMAIN][CUSTOMER SERVICE] - should throw an error when trying to get a customer that does not exist")
     void testGetNonExistent() throws Throwable {
-        doThrow(new IllegalArgumentException()).when(customerValidationPort).mustExist(Mockito.<Optional<CustomerDomain>>any());
+        doThrow(new IllegalArgumentException()).when(customerValidationPort).mustExist(Mockito.<Optional<CustomerDomain>>any(), Mockito.<String>any());
         assertThrows(IllegalArgumentException.class,
                 () -> customerServicePortImpl.get(Mockito.<String>any()));
     }
@@ -127,7 +127,7 @@ class CustomerServicePortImplTest {
     @DisplayName("[DOMAIN][CUSTOMER SERVICE] - should validate delete business rules, validate the customer exists and delete it through persistence port")
     void testDelete() throws Throwable {
         customerServicePortImpl.delete(Mockito.<String>any());
-        verify(customerValidationPort).mustExist(Mockito.<Optional<CustomerDomain>>any());
+        verify(customerValidationPort).mustExist(Mockito.<Optional<CustomerDomain>>any(), Mockito.<String>any());
         verify(customerPersistencePort).get(Mockito.<String>any());
         verify(customerPersistencePort).delete(Mockito.<CustomerDomain>any());
         verify(customerValidationPort).validateDeleteBusinessRules(Mockito.<CustomerDomain>any(),
@@ -138,7 +138,7 @@ class CustomerServicePortImplTest {
     @Test
     @DisplayName("[DOMAIN][CUSTOMER SERVICE] - should throw an error when trying to delete a customer that does not exist")
     void testDeleteNonExistent() throws Throwable {
-        doThrow(new IllegalArgumentException()).when(customerValidationPort).mustExist(Mockito.<Optional<CustomerDomain>>any());
+        doThrow(new IllegalArgumentException()).when(customerValidationPort).mustExist(Mockito.<Optional<CustomerDomain>>any(), Mockito.<String>any());
         assertThrows(IllegalArgumentException.class,
                 () -> customerServicePortImpl.delete(Mockito.<String>any()));
     }
@@ -149,7 +149,7 @@ class CustomerServicePortImplTest {
         assertSame(customerDomain, customerServicePortImpl.update(customerDomain, Mockito.<String>any()));
 
         verify(customerPersistencePort).get(Mockito.<String>any());
-        verify(customerValidationPort).mustExist(Mockito.<Optional<CustomerDomain>>any());
+        verify(customerValidationPort).mustExist(Mockito.<Optional<CustomerDomain>>any(), Mockito.<String>any());
 
         verify(customerValidationPort).validateUpdateBusinessRules(Mockito.<CustomerDomain>any(),
                 Mockito.<CustomerDomain>any(), Mockito.<CustomerPersistencePort>any());
@@ -163,7 +163,7 @@ class CustomerServicePortImplTest {
     @Test
     @DisplayName("[DOMAIN][CUSTOMER SERVICE] - should throw an error when trying to update a customer that does not exist")
     void testUpdateNonExistent() throws Throwable {
-        doThrow(new IllegalArgumentException()).when(customerValidationPort).mustExist(Mockito.<Optional<CustomerDomain>>any());
+        doThrow(new IllegalArgumentException()).when(customerValidationPort).mustExist(Mockito.<Optional<CustomerDomain>>any(), Mockito.<String>any());
 
         assertThrows(IllegalArgumentException.class,
                 () -> customerServicePortImpl.update(customerDomain, Mockito.<String>any()));
@@ -208,8 +208,8 @@ class CustomerServicePortImplTest {
 
     private void setupValidationAllValid() {
         doNothing().when(customerValidationPort).validateDomainData(Mockito.<CustomerDomain>any());
-        when(customerValidationPort.mustExist(Mockito.<Optional<CustomerDomain>>any())).thenReturn(customerDomain);
-        doNothing().when(customerValidationPort).mustNotExist(Mockito.<Optional<CustomerDomain>>any());
+        when(customerValidationPort.mustExist(Mockito.<Optional<CustomerDomain>>any(), Mockito.<String>any())).thenReturn(customerDomain);
+        doNothing().when(customerValidationPort).mustNotExist(Mockito.<Optional<CustomerDomain>>any(), Mockito.<String>any());
 
         doNothing().when(customerValidationPort)
                 .validateCreationalBusinessRules(Mockito.<CustomerDomain>any(), Mockito.<CustomerPersistencePort>any());

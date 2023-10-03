@@ -22,12 +22,6 @@ public class OrderDomain extends BaseDomain {
     private PaymentStatus paymentStatus;
     private String note;
     private BigDecimal total;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
-
-    @Deprecated
-    public OrderDomain() {
-    }
 
     public OrderDomain(CustomerDomain customer, String note, List<OrderProductDomain> items) {
         this.customer = customer;
@@ -36,26 +30,25 @@ public class OrderDomain extends BaseDomain {
         this.status = OrderStatus.PENDING;
         this.paymentStatus = PaymentStatus.PENDING;
         this.total = calculateTotal();
-
-        createdAt = LocalDateTime.now();
-        updatedAt = LocalDateTime.now();
-
-        BaseDomain.isValid(this);
     }
 
     public OrderDomain(String id, CustomerDomain customer, List<OrderProductDomain> items, OrderStatus status, PaymentStatus paymentStatus, String note, BigDecimal total, LocalDateTime createdAt, LocalDateTime updatedAt) {
-        super(id);
+        super(id, createdAt, updatedAt);
         this.customer = customer;
         this.items = items;
         this.status = status;
         this.paymentStatus = paymentStatus;
         this.note = note;
         this.total = total;
+    }
 
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
+    @Deprecated
+    public OrderDomain() {
 
-        BaseDomain.isValid(this);
+    }
+
+    public void updateOrderStatus(OrderStatus status) {
+        this.status = status;
     }
 
     private BigDecimal calculateTotal() {
@@ -68,64 +61,24 @@ public class OrderDomain extends BaseDomain {
         return customer;
     }
 
-    public void setCustomer(CustomerDomain customer) {
-        this.customer = customer;
-    }
-
     public List<OrderProductDomain> getItems() {
         return items;
-    }
-
-    public void setItems(List<OrderProductDomain> items) {
-        this.items = items;
     }
 
     public OrderStatus getStatus() {
         return status;
     }
 
-    public void setStatus(OrderStatus status) {
-        this.status = status;
-    }
-
     public PaymentStatus getPaymentStatus() {
         return paymentStatus;
-    }
-
-    public void setPaymentStatus(PaymentStatus paymentStatus) {
-        this.paymentStatus = paymentStatus;
     }
 
     public String getNote() {
         return note;
     }
 
-    public void setNote(String note) {
-        this.note = note;
-    }
-
     public BigDecimal getTotal() {
         return total;
-    }
-
-    public void setTotal(BigDecimal total) {
-        this.total = total;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
     }
 
     public void processPayment() {
@@ -137,5 +90,12 @@ public class OrderDomain extends BaseDomain {
                 status = OrderStatus.CANCELED;
                 break;
         }
+    }
+
+    public void update(OrderDomain domain) {
+    }
+
+    public void updatePaymentStatus(PaymentStatus status) {
+        this.paymentStatus = status;
     }
 }

@@ -11,7 +11,7 @@ import java.util.HashSet;
 import java.util.List;
 
 public class CreateOrderRequest {
-    private String customer;
+    private String customerId;
     private List<OrderItem> items;
     private String note;
 
@@ -36,8 +36,8 @@ public class CreateOrderRequest {
     }
 
 
-    public String getCustomer() {
-        return customer;
+    public String getCustomerId() {
+        return customerId;
     }
 
     public List<OrderItem> getItems() {
@@ -48,23 +48,22 @@ public class CreateOrderRequest {
         return note;
     }
 
-    public OrderDomain toDomain(List<ProductDomain> products, CustomerDomain customer) {
-        HashMap<String, ProductDomain> productsDic = new HashMap<>();
-
-        products.forEach(product ->
-                productsDic.put(product.getId(), product)
-        );
-
-        List<OrderProductDomain> productsDomain = items.stream().map(item -> {
-            ProductDomain product = productsDic.get(item.getId());
-            List<ProductDomain> addOns = new ArrayList<>();
-            item.getAddOnds().forEach(addOnId ->
-                    addOns.add(productsDic.get(addOnId))
-            );
-            return new OrderProductDomain(product, item.getQuantity(), addOns);
-        }).toList();
-
-        return new OrderDomain(customer, note, productsDomain);
+    public OrderDomain toDomain(String customerId) {
+//        HashMap<String, ProductDomain> productsDic = new HashMap<>();
+//
+//        List<OrderProductDomain> productsDomain = items.stream().map(item -> {
+//            ProductDomain product = productsDic.get(item.getId());
+//            List<ProductDomain> addOns = new ArrayList<>();
+//            item.getAddOnds().forEach(addOnId ->
+//                    addOns.add(productsDic.get(addOnId))
+//            );
+//            return new OrderProductDomain(product, item.getQuantity(), addOns);
+//        }).toList();
+//
+//        CustomerDomain customerDomain = new CustomerDomain(customerId);
+//
+//        return new OrderDomain(customerDomain, note, productsDomain);
+        return null;
 
     }
 

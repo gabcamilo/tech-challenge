@@ -1,4 +1,4 @@
-package br.com.gabrielacamilo.techchallenge.core.services;
+package br.com.gabrielacamilo.techchallenge.core.services.bundle;
 
 import br.com.gabrielacamilo.techchallenge.core.domain.product.BundleDomain;
 import br.com.gabrielacamilo.techchallenge.core.ports.bundle.BundlePersistencePort;

@@ -8,6 +8,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -44,15 +45,7 @@ public class UpdateBundleRequest {
         return items;
     }
 
-    public BundleDomain toDomain(List<ProductDomain> products, String id) {
-        HashMap<String, ProductDomain> productsDic = new HashMap<>();
-        products.forEach(product ->
-                productsDic.put(product.getId(), product)
-        );
-
-        List<ProductDomain> itemsDomain = items.stream().map(item -> productsDic.put(item, productsDic.get(item))).toList();
-        BundleDomain bundle = new BundleDomain(name, description, discountPercentage, itemsDomain);
-        bundle.setId(id);
-        return bundle;
+    public BundleDomain toDomain() {
+        return new BundleDomain(name, description, new ArrayList<ProductDomain>(), discountPercentage);
     }
 }

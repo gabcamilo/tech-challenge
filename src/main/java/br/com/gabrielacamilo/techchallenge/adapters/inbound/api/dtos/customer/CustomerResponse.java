@@ -1,10 +1,12 @@
 package br.com.gabrielacamilo.techchallenge.adapters.inbound.api.dtos.customer;
 
 import br.com.gabrielacamilo.techchallenge.core.domain.customer.CustomerDomain;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class CustomerResponse implements Serializable {
 
     public CustomerResponse(CustomerDomain domain) {
@@ -14,9 +16,6 @@ public class CustomerResponse implements Serializable {
         this.cpf = domain.getCpf();
         this.createdAt = domain.getCreatedAt();
         this.updatedAt = domain.getUpdatedAt();
-    }
-
-    public CustomerResponse() {
     }
 
     private String id;
@@ -36,47 +35,23 @@ public class CustomerResponse implements Serializable {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public String getCpf() {
         return cpf;
-    }
-
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
     }
 
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
     public LocalDateTime getUpdatedAt() {
         return updatedAt;
-    }
-
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
     }
 }

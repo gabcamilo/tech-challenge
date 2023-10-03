@@ -21,7 +21,7 @@ public class PaymentPortImpl implements PaymentPort {
         PaymentStatus paymentStatus = paymentService.pay(order);
         return orderPersistencePort.get(order.getId())
                 .map(orderDomain -> {
-                    orderDomain.setPaymentStatus(paymentStatus);
+//                    orderDomain.setPaymentStatus(paymentStatus);
                     return orderPersistencePort.update(orderDomain);
                 }).get();
 

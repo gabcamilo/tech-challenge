@@ -20,6 +20,10 @@ public class ValidationExceptionHandler {
 
     private MessageSource messageSource;
 
+    public ValidationExceptionHandler(MessageSource messageSource) {
+        this.messageSource = messageSource;
+    }
+
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)
     @ExceptionHandler(ConstraintViolationException.class)
     public FormValidationErrorsResponse handle(ConstraintViolationException exception) {
@@ -37,7 +41,7 @@ public class ValidationExceptionHandler {
     @ExceptionHandler(IllegalArgumentException.class)
     public FormValidationErrorsResponse handle(IllegalArgumentException exception) {
 
-        List<FieldError> fieldErrors =new ArrayList<>();
+        List<FieldError> fieldErrors = new ArrayList<>();
 
         fieldErrors.add(new FieldError("", exception.getMessage(), exception.getMessage() + " already registered"  ));
 

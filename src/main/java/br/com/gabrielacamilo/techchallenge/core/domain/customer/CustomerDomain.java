@@ -18,22 +18,29 @@ public class CustomerDomain extends BaseDomain {
 
     @NotBlank
     @CPF
-    private String cpf;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+    private final String cpf;
 
     public CustomerDomain(
             String name,
             String email,
             String cpf) {
+        super();
         this.name = name;
         this.email = email;
         this.cpf = cpf;
-        createdAt = LocalDateTime.now();
-        updatedAt = LocalDateTime.now();
     }
 
-    public CustomerDomain() {
+    public CustomerDomain(
+            String id,
+            String name,
+            String email,
+            String cpf,
+            LocalDateTime createdAt,
+            LocalDateTime updatedAt) {
+        super(id, createdAt, updatedAt);
+        this.name = name;
+        this.email = email;
+        this.cpf = cpf;
     }
 
     public String getName() {
@@ -48,17 +55,9 @@ public class CustomerDomain extends BaseDomain {
         return cpf;
     }
 
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
     public void update(CustomerDomain customer) {
         this.name = customer.getName();
         this.email = customer.getEmail();
-        this.updatedAt = LocalDateTime.now();
+        update();
     }
 }

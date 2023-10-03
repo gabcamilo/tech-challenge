@@ -2,21 +2,21 @@ package br.com.gabrielacamilo.techchallenge.adapters.inbound.api.dtos.order;
 
 import br.com.gabrielacamilo.techchallenge.adapters.inbound.api.dtos.product.ProductResponse;
 import br.com.gabrielacamilo.techchallenge.core.domain.customer.CustomerDomain;
-import br.com.gabrielacamilo.techchallenge.core.domain.order.OrderDomain;
-import br.com.gabrielacamilo.techchallenge.core.domain.order.OrderProductDomain;
 import br.com.gabrielacamilo.techchallenge.core.domain.enums.OrderStatus;
 import br.com.gabrielacamilo.techchallenge.core.domain.enums.PaymentStatus;
-import br.com.gabrielacamilo.techchallenge.utils.GenericMapper;
+import br.com.gabrielacamilo.techchallenge.core.domain.order.OrderDomain;
+import br.com.gabrielacamilo.techchallenge.core.domain.order.OrderProductDomain;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class OrderResponse implements Serializable {
     private String id;
-    private Customer customer;
+    private OrderCustomer customer;
     private List<OrderItem> items;
     private String note;
     private OrderStatus status;
@@ -27,7 +27,7 @@ public class OrderResponse implements Serializable {
 
     public OrderResponse(OrderDomain order) {
         this.id = order.getId();
-        this.customer = new Customer(order.getCustomer());
+        this.customer = new OrderCustomer(order.getCustomer());
         this.items = generateItemsList(order);
         this.note = order.getNote();
         this.status = order.getStatus();
@@ -47,7 +47,7 @@ public class OrderResponse implements Serializable {
         return id;
     }
 
-    public Customer getCustomer() {
+    public OrderCustomer getCustomer() {
         return customer;
     }
 
@@ -79,8 +79,8 @@ public class OrderResponse implements Serializable {
         return updatedAt;
     }
 
-    private static class Customer {
-        public Customer(CustomerDomain customer) {
+    private static class OrderCustomer {
+        public OrderCustomer(CustomerDomain customer) {
             this.id = customer.getId();
             this.name = customer.getName();
             this.cpf = customer.getCpf();
@@ -111,18 +111,9 @@ public class OrderResponse implements Serializable {
         private List<ProductResponse> addOns;
 
         public OrderItem(OrderProductDomain domainItem) {
-            this.product = GenericMapper.map(domainItem.getProduct(), ProductResponse.class);
+            this.product = new ProductResponse(domainItem.getProduct());
             this.quantity = domainItem.getQuantity();
-            this.addOns = new ArrayList<>();
-
-            domainItem.getAddOns().forEach(addOn -> {
-                this.addOns.add(GenericMapper.map(addOn, ProductResponse.class));
-            });
-
-            System.out.printf("addOns: %s\n", this.addOns.toString());
-        }
-
-        public OrderItem() {
+            this.addOns = domainItem.getAddOns().stream().map(ProductResponse::new).toList();
         }
 
         public ProductResponse getProduct() {
@@ -137,5 +128,4 @@ public class OrderResponse implements Serializable {
             return addOns;
         }
     }
-
 }

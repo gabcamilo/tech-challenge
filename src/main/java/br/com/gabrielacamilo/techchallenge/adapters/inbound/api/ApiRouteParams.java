@@ -1,6 +1,6 @@
-package br.com.gabrielacamilo.techchallenge.adapters.inbound.api.controllers;
+package br.com.gabrielacamilo.techchallenge.adapters.inbound.api;
 
-public abstract class ApiParams {
+record ApiRouteParams() {
     static final String API_VERSION = "v1";
     static final String API_URL = "/api/" + API_VERSION;
     static final String CUSTOMERS_URL = API_URL + "/customers";

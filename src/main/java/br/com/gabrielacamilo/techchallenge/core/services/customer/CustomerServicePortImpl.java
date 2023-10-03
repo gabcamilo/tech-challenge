@@ -9,6 +9,9 @@ import java.util.List;
 
 public class CustomerServicePortImpl implements CustomerServicePort {
 
+    private static final String CUSTOMER = "Customer";
+    private static final String CPF = "CPF";
+
     private final CustomerPersistencePort persistencePort;
     private final CustomerValidationPort validationPort;
 
@@ -25,7 +28,7 @@ public class CustomerServicePortImpl implements CustomerServicePort {
 
     @Override
     public CustomerDomain getCustomerByCpf(String cpf) throws Throwable {
-        return validationPort.mustExist(persistencePort.getCustomerByCpf(cpf));
+        return validationPort.mustExist(persistencePort.getCustomerByCpf(cpf), CPF);
     }
 
     @Override
@@ -35,19 +38,19 @@ public class CustomerServicePortImpl implements CustomerServicePort {
 
     @Override
     public CustomerDomain get(String id) throws Throwable {
-        return validationPort.mustExist(persistencePort.get(id));
+        return validationPort.mustExist(persistencePort.get(id), CUSTOMER);
     }
 
     @Override
     public void delete(String id) throws Throwable {
-        CustomerDomain customerDomain = validationPort.mustExist(persistencePort.get(id));
+        CustomerDomain customerDomain = validationPort.mustExist(persistencePort.get(id), CUSTOMER);
         validationPort.validateDeleteBusinessRules(customerDomain, persistencePort);
         persistencePort.delete(customerDomain);
     }
 
     @Override
     public CustomerDomain update(CustomerDomain customerNewData, String id) throws Throwable {
-        var customerDomain = validationPort.mustExist(persistencePort.get(id));
+        var customerDomain = validationPort.mustExist(persistencePort.get(id), CUSTOMER);
         validationPort.validateUpdateBusinessRules(customerNewData, customerDomain, persistencePort);
         customerDomain.update(customerNewData);
         return validateDomainDataAndSave(customerNewData, validationPort, persistencePort);

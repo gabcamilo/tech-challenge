@@ -3,17 +3,14 @@ package br.com.gabrielacamilo.techchallenge.adapters.inbound.api.controllers;
 import br.com.gabrielacamilo.techchallenge.adapters.inbound.api.dtos.product.CreateProductRequest;
 import br.com.gabrielacamilo.techchallenge.adapters.inbound.api.dtos.product.ProductResponse;
 import br.com.gabrielacamilo.techchallenge.adapters.inbound.api.dtos.product.UpdateProductRequest;
-import br.com.gabrielacamilo.techchallenge.core.domain.product.ProductDomain;
 import br.com.gabrielacamilo.techchallenge.core.domain.enums.ProductType;
+import br.com.gabrielacamilo.techchallenge.core.domain.product.ProductDomain;
 import br.com.gabrielacamilo.techchallenge.core.ports.product.ProductServicePort;
-import br.com.gabrielacamilo.techchallenge.utils.GenericMapper;
-import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 @RequestMapping("/api/v1/products")
 @RestController
@@ -26,18 +23,17 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<ProductResponse> createProduct(@RequestBody @Valid CreateProductRequest request) {
+    public ResponseEntity<ProductResponse> createProduct(@RequestBody CreateProductRequest request) throws Throwable {
         ProductDomain product = request.toDomain();
-        ProductDomain saved = port.saveProduct(product);
+        ProductDomain saved = port.create(product);
         ProductResponse response = new ProductResponse(saved);
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ProductResponse> getProduct(@PathVariable String id) {
-        Optional<ProductDomain> product = port.getProduct(id);
-        return product.map(value -> ResponseEntity.ok(new ProductResponse(value)))
-                .orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<ProductResponse> getProduct(@PathVariable String id) throws Throwable {
+        ProductDomain product = port.get(id);
+        return ResponseEntity.ok(new ProductResponse(product));
     }
 
     @GetMapping("/types")
@@ -52,41 +48,28 @@ public class ProductController {
         ProductType typeEnum = ProductType.valueOf(type.toUpperCase());
 
         List<ProductDomain> products = port.listProductsByType(typeEnum);
-        List<ProductResponse> productsResponse = GenericMapper.map(products, ProductResponse.class);
+        List<ProductResponse> response = products.stream().map(ProductResponse::new).toList();
 
-        return ResponseEntity.ok(productsResponse);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping
-    public ResponseEntity<List<ProductResponse>> listAllProducts() {
-        List<ProductDomain> products = port.listAllProducts();
-        List<ProductResponse> productsResponse = GenericMapper.map(products, ProductResponse.class);
-
-        return ResponseEntity.ok(productsResponse);
+    public ResponseEntity<List<ProductResponse>> listAllProducts() throws Throwable {
+        List<ProductDomain> products = port.list();
+        List<ProductResponse> response = products.stream().map(ProductResponse::new).toList();
+        return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deleteProduct(@PathVariable String id) {
-        Optional<ProductDomain> product = port.getProduct(id);
-        if (product.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-        product.ifPresent(port::deleteProduct);
+    public ResponseEntity<Object> deleteProduct(@PathVariable String id) throws Throwable {
+        port.delete(id);
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ProductResponse> updateProduct(@RequestBody @Valid UpdateProductRequest request, @PathVariable String id) {
-        Optional<ProductDomain> productDomainOptional = port.getProduct(id);
-        return productDomainOptional.map(product -> {
-                    product.setName(request.getName());
-                    product.setDescription(request.getDescription());
-                    product.setPrice(request.getPrice());
-                    product.setType(request.getType());
-
-                    ProductDomain saved = port.saveProduct(product);
-                    return ResponseEntity.ok(new ProductResponse(saved));
-                })
-                .orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<ProductResponse> updateProduct(@RequestBody UpdateProductRequest request, @PathVariable String id) throws Throwable {
+        ProductDomain domain = request.toDomain();
+        ProductDomain updated = port.update(domain, id);
+        return ResponseEntity.ok(new ProductResponse(updated));
     }
 }

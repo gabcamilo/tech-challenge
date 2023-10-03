@@ -20,6 +20,8 @@ import java.util.List;
 public class CustomerController {
     private final CustomerServicePort port;
 
+    private static final String ENTITY = "Customer";
+
     public CustomerController(CustomerServicePort port) {
         this.port = port;
     }
@@ -29,7 +31,7 @@ public class CustomerController {
         CustomerDomain customer = request.toDomain();
         CustomerDomain saved = port.create(customer);
         CustomerResponse data = new CustomerResponse(saved);
-        ApiResponse response = new ApiResponse("Customer created successfully", 201, data);
+        ApiResponse response = new ApiResponse(ENTITY + " created successfully", 201, data);
 
         return ResponseEntity.created(new URI("/api/v1/customers/" + saved.getId())).body(response);
     }
@@ -38,7 +40,7 @@ public class CustomerController {
     public ResponseEntity<ApiResponse> getCustomerByCpf(@PathVariable String cpf) throws Throwable {
         var customer = port.getCustomerByCpf(cpf);
         CustomerResponse data = new CustomerResponse(customer);
-        ApiResponse response = new ApiResponse("Customer found successfully", 200, data);
+        ApiResponse response = new ApiResponse(ENTITY + " found successfully", 200, data);
         return ResponseEntity.ok(response);
     }
 
@@ -47,7 +49,7 @@ public class CustomerController {
         List<CustomerDomain> customers = port.list();
         ListCustomersResponse responseData = new ListCustomersResponse(customers);
 
-        ApiResponse response = new ApiResponse("List of customers obtained successfully", 200, responseData);
+        ApiResponse response = new ApiResponse(ENTITY + " listed successfully", 200, responseData);
         return ResponseEntity.ok(response);
     }
 
@@ -57,7 +59,7 @@ public class CustomerController {
         var responseData = new CustomerResponse(updatedData);
 
         var response = new ApiResponse(
-                "Customer updated successfully",
+                ENTITY + " updated successfully",
                 200,
                 responseData);
 
